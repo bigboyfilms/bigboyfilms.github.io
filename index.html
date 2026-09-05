@@ -953,7 +953,7 @@ function tplHome(){
 function tplFilms(){
   return `<div class="films">${FILMS.map(f => `
     <button class="card" data-open="film:${f.key}" aria-label="${esc(f.title)}">
-      <div class="poster ${f.fit==='wide'?'wide':''}">${f.poster ? `<img src="${f.poster}" alt="" loading="lazy" onerror="this.remove()">` : ''}<div class="t" aria-hidden="true" style="${f.poster?'display:none':''}">${esc(f.title)}</div>${f.trailer ? '<span class="badge">TRAILER</span>' : ''}</div>
+      <div class="poster ${f.fit==='wide'?'wide':''}">${f.poster ? `<img src="${f.poster}" alt="" loading="lazy" onerror="var t=this.parentNode.querySelector('.t');if(t)t.style.display='grid';this.remove()">` : ''}<div class="t" aria-hidden="true" style="${f.poster?'display:none':''}">${esc(f.title)}</div>${f.trailer ? '<span class="badge">TRAILER</span>' : ''}</div>
       <div><b>${esc(f.title)}</b><span>${f.year} · ${esc(f.program)}</span>${f.laurels.length ? `<em>${f.laurels.length} FESTIVAL${f.laurels.length===1?'':'S'}</em>` : ''}</div>
     </button>`).join('')}</div>`;
 }
@@ -975,7 +975,7 @@ function tplFilm(f){
 function tplClips(items, line){
   return `${line ? `<div class="lab-line">${esc(line).toUpperCase()}</div>` : ''}<div class="clips">${items.map(c => `
     <button class="card" data-open="clip:${c.key}" aria-label="${esc(c.title)}">
-      <div class="poster frame ${c.orient==='vertical'?'tall':''}">${c.frame ? `<img src="${c.frame}" alt="" loading="lazy" onerror="this.remove()">` : ''}<div class="t" aria-hidden="true" style="${c.frame?'display:none':''}">${esc(c.title)}</div><span class="badge">PLAY</span></div>
+      <div class="poster frame ${c.orient==='vertical'?'tall':''}">${c.frame ? `<img src="${c.frame}" alt="" loading="lazy" onerror="var t=this.parentNode.querySelector('.t');if(t)t.style.display='grid';this.remove()">` : ''}<div class="t" aria-hidden="true" style="${c.frame?'display:none':''}">${esc(c.title)}</div><span class="badge">PLAY</span></div>
       <div><b>${esc(c.title)}</b><span>${c.year ? c.year+' · ' : ''}${esc(c.program)}</span><em>${esc(c.kind).toUpperCase()}</em></div>
     </button>`).join('')}</div>`;
 }
@@ -1040,7 +1040,7 @@ function tplTerrorverse(){
     <img class="tvwm" src="${TERRORVERSE.wordmark}" alt="TERRORVERSE">
     <div class="status">${esc(TERRORVERSE.status)}</div>
     <p>${esc(TERRORVERSE.line)}</p>
-    <div class="strip">${TERRORVERSE.images.map(s=>`<img src="${s}" alt="" loading="lazy" onerror="this.remove()">`).join('')}</div>
+    <div class="strip">${TERRORVERSE.images.map(s=>`<img src="${s}" alt="" loading="lazy" onerror="var t=this.parentNode.querySelector('.t');if(t)t.style.display='grid';this.remove()">`).join('')}</div>
     <div class="foot">A BIGBOY PRODUCTION</div>
   </div>`;
 }
