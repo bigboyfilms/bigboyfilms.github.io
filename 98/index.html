@@ -565,7 +565,8 @@ const EDITS = [
     video:'../assets/edits/wf-the-best-fest-in-the-west-2024.mp4', frame:'../assets/edits/wf-the-best-fest-in-the-west-2024-frame.jpg', orient:'vertical', tools:'', blurb:'' }
 ];
 
-/* Gallery. Files live in assets/photos/ as <file>.jpg and <file>-thumb.jpg. */
+/* Gallery. Files live in ../assets/photos/ as <file>.jpg and <file>-thumb.jpg.
+   The ../ matters: this page is served from /98/, the assets sit at the root. */
 const PHOTOS = [
   { file:'tpain-stage-01',   cap:'T-Pain, Wonderfront Festival, San Diego 2024' },
   { file:'crowd-01',         cap:'Front row, Wonderfront Festival 2024' },
@@ -580,7 +581,7 @@ const PHOTOS = [
   { file:'performer-green',  cap:'Wonderfront Festival 2024' },
   { file:'crowd-wide',       cap:'The field, Wonderfront Festival 2024' },
   { file:'tpain-stage-wide', cap:'Main stage, Wonderfront Festival 2024' }
-].map(p => ({ src:`assets/photos/${p.file}.jpg`, thumb:`assets/photos/${p.file}-thumb.jpg`, cap:p.cap }));
+].map(p => ({ src:`../assets/photos/${p.file}.jpg`, thumb:`../assets/photos/${p.file}-thumb.jpg`, cap:p.cap }));
 
 const ABOUT = {
   photo: '../assets/photos/christopher-white.jpg',
