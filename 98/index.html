@@ -456,6 +456,7 @@ p{margin:0 0 10px}
         <div id="shutdown" class="phase">
           <div class="t">It's now safe to turn off<br>your computer.</div>
           <div class="hint">CLICK TO POWER ON AGAIN</div>
+          <a class="fastdoor" href="../">Selected Work, one page, no boot</a>
         </div>
 
         <div class="crt" id="scan"></div>
@@ -814,7 +815,7 @@ function restart(){ powerOff(); setTimeout(()=>powerOn({fast:false}), 700); }
 
 phase.off.addEventListener('click', e => { if(e.target.closest('a')) return; powerOn(); });
 phase.off.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); powerOn(); } });
-phase.down.addEventListener('click', () => { showPhase('off'); setTimeout(()=>powerOn(), 60); });
+phase.down.addEventListener('click', e => { if(e.target.closest('a')) return; showPhase('off'); setTimeout(()=>powerOn(), 60); });
 phase.bios.addEventListener('click', () => { skipBoot = true; });
 phase.splash.addEventListener('click', () => { skipBoot = true; });
 $('#pwrbtn').addEventListener('click', () => { AU.ensure(); if(powered||booting) powerOff(); else powerOn(); });
