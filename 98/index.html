@@ -850,7 +850,7 @@ const WM = {
   open(key, arg){
     if(this.wins.has(key)){ const w = this.wins.get(key); if(w.min) this.restore(key); this.focus(key); if(key==='photo' && arg!==undefined) viewerGo(arg); return w.el; }
     const spec = this.spec(key); if(!spec) return null;
-    if(key==='photo') viewer.i = (arg===undefined ? viewer.i : arg);
+    if(key==='photo') viewer.i = (arg===undefined ? viewer.i : ((arg % PHOTOS.length) + PHOTOS.length) % PHOTOS.length);
     const el = document.createElement('section');
     el.className = 'win'; el.dataset.key = key; el.setAttribute('role','dialog'); el.setAttribute('aria-label', spec.title);
     el.innerHTML = `<div class="tb"><span class="ti">${spec.icon}</span><span class="tt">${esc(spec.title)}</span>
@@ -1183,14 +1183,16 @@ function applyCrt(){ screen.classList.toggle('nocrt', store.get('crt','1')!=='1'
 let hashLock = false;
 function setHash(h){ if(hashLock) return; try{ history.replaceState(null, '', h ? '#'+h : location.pathname + location.search); }catch(e){} }
 function openFromHash(){
-  const h = decodeURIComponent(location.hash.replace(/^#/, '')); if(!h) return;
+  let h = ''; try{ h = decodeURIComponent(location.hash.replace(/^#/, '')); }catch(e){ return; }
+  if(!h) return;
   hashLock = true;
-  const [a, b] = h.split('/');
-  if(MAIN.includes(a)) WM.open(a);
-  else if(a==='film' && FILMS.some(f=>f.key===b)){ WM.open('films'); WM.open('film:'+b); }
-  else if(a==='clip' && CLIPS().some(c=>c.key===b)){ WM.open(AI.some(c=>c.key===b) ? 'ai' : 'edits'); WM.open('clip:'+b); }
-  else if(a==='photo'){ WM.open('photos'); WM.open('photo', Math.max(0, (parseInt(b,10)||1) - 1)); }
-  hashLock = false;
+  try{
+    const [a, b] = h.split('/');
+    if(MAIN.includes(a)) WM.open(a);
+    else if(a==='film' && FILMS.some(f=>f.key===b)){ WM.open('films'); WM.open('film:'+b); }
+    else if(a==='clip' && CLIPS().some(c=>c.key===b)){ WM.open(AI.some(c=>c.key===b) ? 'ai' : 'edits'); WM.open('clip:'+b); }
+    else if(a==='photo'){ WM.open('photos'); WM.open('photo', Math.max(0, (parseInt(b,10)||1) - 1)); }
+  } finally { hashLock = false; }
 }
 
 /* =====================================================================
