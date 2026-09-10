@@ -492,7 +492,7 @@ const SITE = {
   email: 'bigboyfilms@icloud.com',
   signature: '../assets/directed-by-white.svg',
   imdb: 'https://www.imdb.com/name/nm16449451/',
-  linkedin: '',            /* paste the profile URL and a LinkedIn line appears in Contact. Empty = hidden. */
+  /* No LinkedIn on the machine, by decision (2026-09-06). The slot is on the front door. */
   socials: [
     { key:'instagram', label:'Instagram', handle:'@directedbywhite', url:'https://instagram.com/directedbywhite' },
     { key:'x',         label:'X',         handle:'@directedbywhite', url:'https://x.com/directedbywhite' },
@@ -510,8 +510,8 @@ const FILMS = [
     laurels:[
       '48 Hour Film Project Los Angeles 2024, Best of the Fest: WON Best Trailer',
       'San Diego International Film Festival 2025, Official Selection',
-      'San Diego Film Week 2025, Official Selection',
       'Indie Short Fest 2025, Official Selection, Honorable Mention for Best Horror Short and Best Sound Design',
+      'San Diego Film Week 2025, Official Selection',
       'Night of Shorts 2025, Milano, WON Best Movie Poster',
       'Red Movie Awards 2025, Reims, Official Selection',
       'Los Angeles Lift-Off Film Festival, Official Selection',
@@ -959,7 +959,7 @@ function tplFilms(){
   return `<div class="films">${FILMS.map(f => `
     <button class="card" data-open="film:${f.key}" aria-label="${esc(f.title)}">
       <div class="poster ${f.fit==='wide'?'wide':''}">${f.poster ? `<img src="${f.poster}" alt="" loading="lazy" onerror="var t=this.parentNode.querySelector('.t');if(t)t.style.display='grid';this.remove()">` : ''}<div class="t" aria-hidden="true" style="${f.poster?'display:none':''}">${esc(f.title)}</div>${f.trailer ? '<span class="badge">TRAILER</span>' : ''}</div>
-      <div><b>${esc(f.title)}</b><span>${f.year} · ${esc(f.program)}</span>${f.laurels.length ? `<em>${f.laurels.length} FESTIVAL${f.laurels.length===1?'':'S'}</em>` : ''}</div>
+      <div><b>${esc(f.title)}</b><span>${f.year} · ${esc(f.program)}</span>${festivalCount(f) ? `<em>${festivalCount(f)} FESTIVAL${festivalCount(f)===1?'':'S'}</em>` : ''}</div>
     </button>`).join('')}</div>`;
 }
 function tplFilm(f){
@@ -998,6 +998,8 @@ function tplClip(c){
 function tplPhotos(){
   return `<div class="grid">${PHOTOS.map((p,i) => `<button class="thumb" data-photo="${i}" aria-label="${esc(p.cap)}"><img src="${p.thumb}" alt="" loading="lazy"></button>`).join('')}</div>`;
 }
+/* A festival can hand a film two results (a selection and a prize). Count festivals, not lines. */
+function festivalCount(f){ return new Set((f.laurels||[]).map(l => l.split(',')[0].trim())).size; }
 const viewer = { i: 0 };
 function tplViewer(){
   return `<div class="viewer"><div class="stage"><img id="vimg" alt=""></div>
@@ -1023,7 +1025,6 @@ function tplAbout(){
 function tplContact(){
   const rows = SITE.socials.map(s => ({ icon: ICON[s.key]||ICON.link, label:s.label, handle:s.handle, url:s.url }));
   if(SITE.imdb) rows.push({ icon: ICON.imdb, label:'IMDb', handle:'credits', url: SITE.imdb });
-  if(SITE.linkedin) rows.push({ icon: ICON.link, label:'LinkedIn', handle:'the other desk', url: SITE.linkedin });
   return `<div class="contact">
     <img class="sig" src="${SITE.signature}" alt="Directed by White, @directedbywhite">
     <div><div class="kicker">Contact</div><h2>Say hello.</h2><p>Screeners, bookings, photo commissions, collaborations. One email reaches ${esc(SITE.person.split(' ')[0])} directly.</p></div>
