@@ -115,8 +115,8 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .pair video{width:100%;aspect-ratio:16/9;background:#000;box-shadow:0 0 0 1px var(--rule)}
 .sheet{display:block}
 .sheet img{width:100%;height:auto;display:block;background:var(--dark);box-shadow:0 0 0 1px var(--rule)}
-.cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:11px;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.cap a{color:var(--muted)}
+.pair .cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:11px;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pair .cap a{color:var(--muted)}
 .panel p{margin:16px 0 0;max-width:58ch;font-size:15px;line-height:1.55}
 .fests{margin:16px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px 24px}
 .fests li{font-size:14px;line-height:1.45;padding-left:13px;position:relative;color:var(--muted)}
@@ -428,6 +428,36 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <p>A camera-headed robot shows up to set dressed for the dramatic lead. The movie keeps changing genre around him while he refuses to break character, until the world finally becomes the one he was right for all along.</p>
       </div>
     </details>
+    <details class="entry" id="hero">
+      <summary>
+        <span class="thumb"><img src="assets/ai/hero-frame.jpg" alt="Hero, a lone figure kneeling in a floodlit compound as armed figures advance" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="who">
+          <span class="title">Hero</span>
+          <span class="credit"><!-- ROLE: fill in --></span>
+          <span class="sub">2026 <span aria-hidden="true">&middot;</span> Concept <span aria-hidden="true">&middot;</span> Built from a character sheet</span>
+        </span>
+        <span class="open">Watch <span aria-hidden="true">&middot;</span> 0:29</span>
+      </summary>
+      <div class="panel">
+        <video controls playsinline preload="none" data-poster="assets/ai/hero-frame.jpg" src="assets/ai/hero.mp4" aria-label="Hero">Your browser blocked this video. <a href="assets/ai/hero.mp4">Open it directly</a>.</video>
+        <p>A concept, and a test of whether a character designed on paper first will hold across a shot. The figure was built as a three panel sheet, front, back and face, before any frame was generated. The sheet is in <a href="#hero-sheet">Method</a>.</p>
+      </div>
+    </details>
+    <details class="entry" id="last-light-film">
+      <summary>
+        <span class="thumb"><img src="assets/ai/last-light-frame.jpg" alt="The Last Light, a felt puppet boy in a corn field lifting a lid above a lit pumpkin" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="who">
+          <span class="title">The Last Light</span>
+          <span class="credit"><!-- ROLE: fill in --></span>
+          <span class="sub">2026 <span aria-hidden="true">&middot;</span> Dreamina Story Unboxed <span aria-hidden="true">&middot;</span> Seedance 2.5</span>
+        </span>
+        <span class="open">Watch <span aria-hidden="true">&middot;</span> 0:15</span>
+      </summary>
+      <div class="panel">
+        <video controls playsinline preload="none" data-poster="assets/ai/last-light-frame.jpg" src="assets/ai/last-light.mp4" aria-label="The Last Light">Your browser blocked this video. <a href="assets/ai/last-light.mp4">Open it directly</a>.</video>
+        <p>A boy, a corn field at dusk, and a lid that should have stayed shut. Built on a fixed motion reference every entrant received, so the choreography and the cuts were set before the world was. The plan it was built from is in <a href="#last-light">Method</a>.</p>
+      </div>
+    </details>
     <details class="entry" id="the-wrong">
       <summary>
         <span class="thumb"><img src="assets/ai/the-wrong-kitchen-frame.jpg" alt="The Wrong, a man standing over a running kitchen sink in a dark house" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
@@ -471,14 +501,29 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <div class="pair">
           <figure>
             <a class="sheet" href="assets/method/meridian-plan-b.jpg"><img src="assets/method/meridian-plan-b.jpg" alt="Five cut storyboard with lens, duration and camera move on each cut, a floor plan with numbered camera positions, and a side elevation" loading="lazy"></a>
-            <p class="cap">Five cuts <span aria-hidden="true">&middot;</span> floor plan <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-b.jpg">full size</a></p>
+            <p class="cap">Five cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-b.jpg">full size</a></p>
           </figure>
           <figure>
             <a class="sheet" href="assets/method/meridian-plan-a.jpg"><img src="assets/method/meridian-plan-a.jpg" alt="Four cut storyboard with character reference, injury continuity notes, colour palette and lighting plates" loading="lazy"></a>
-            <p class="cap">Four cuts <span aria-hidden="true">&middot;</span> continuity <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-a.jpg">full size</a></p>
+            <p class="cap">Four cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-a.jpg">full size</a></p>
           </figure>
         </div>
         <p>The first look at TERRORVERSE, and a test of how much can be decided before generation starts. Character continuity down to the healing bruise and the scar through the eyebrow, a fixed palette, a top down camera plan with numbered positions, and a lens, a duration and a move on every cut. The film itself is a rough draft, built to prove the workflow rather than to be delivered.</p>
+      </div>
+    </details>
+    <details class="entry" id="hero-sheet">
+      <summary>
+        <span class="thumb"><img src="assets/method/hero-character-sheet-thumb.jpg" alt="A three panel character sheet: front, back, and face, with the height marked" loading="lazy"></span>
+        <span class="who">
+          <span class="title">Hero</span>
+          <span class="credit"><!-- ROLE: fill in --></span>
+          <span class="sub">2026 <span aria-hidden="true">&middot;</span> Concept <span aria-hidden="true">&middot;</span> Character sheet</span>
+        </span>
+        <span class="open">Open the sheet</span>
+      </summary>
+      <div class="panel">
+        <a class="sheet" href="assets/method/hero-character-sheet.jpg"><img src="assets/method/hero-character-sheet.jpg" alt="Three panel character sheet: full figure front and back with the height marked at six feet four, and a face close up" loading="lazy"></a>
+        <p>Front, back, and face, with the height marked, settled before a frame was generated. A model will invent a new person on every shot unless it is given one, so the sheet is what keeps a character the same character. The film is in <a href="#hero">Generative video</a>.</p>
       </div>
     </details>
     <details class="entry" id="last-light">
@@ -495,11 +540,11 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <div class="pair">
           <figure>
             <a class="sheet" href="assets/method/last-light-blockout.jpg"><img src="assets/method/last-light-blockout.jpg" alt="A grey clay figure in a Blender blockout, reaching through a hatch, with the camera name burned into the frame" loading="lazy"></a>
-            <p class="cap">The blockout <span aria-hidden="true">&middot;</span> camera and timing <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-blockout.jpg">full size</a></p>
+            <p class="cap">The blockout <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-blockout.jpg">full size</a></p>
           </figure>
           <figure>
             <a class="sheet" href="assets/method/last-light-plate.jpg"><img src="assets/method/last-light-plate.jpg" alt="The reference plate: a felt puppet boy in a corn field at dusk, lifting a wooden lid above a carved pumpkin" loading="lazy"></a>
-            <p class="cap">The plate <span aria-hidden="true">&middot;</span> world and look <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-plate.jpg">full size</a></p>
+            <p class="cap">The plate <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-plate.jpg">full size</a></p>
           </figure>
         </div>
         <p>Every entrant in Dreamina's Story Unboxed contest is handed the same official reference animation. The choreography, the timing and the cuts are fixed for everyone; the world, the characters and the meaning are not. A grey model drives the camera, reference plates lock the look, and the finished world is generated on the fixed skeleton. The craft is in what survives the constraint.</p>
