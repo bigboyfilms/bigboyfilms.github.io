@@ -1,2 +1,12 @@
 .DS_Store
 .impeccable/
+
+# Master folders dropped into the asset slots are NOT publishable. The site serves
+# flat web copies made by tools/make_assets.py; anything in a subfolder here is a
+# master, a reference plate, or someone else's file. Ignoring the SUBFOLDERS keeps
+# the flat web copies tracked. Added 2026-09-11 after 145 MB of AI masters landed
+# in assets/ai/ while the documented publish command is still `git add -A`.
+assets/ai/*/
+assets/films/*/
+assets/edits/*/
+assets/photos/*/
