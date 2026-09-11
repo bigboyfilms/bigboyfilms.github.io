@@ -110,13 +110,17 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .panel{padding:0 8px 24px}
 .panel video{width:100%;background:#000;box-shadow:0 0 0 1px var(--rule)}
 .panel video.vertical{max-width:340px}
-.pair{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.sheets{display:grid;gap:20px}
+.sheets figure{margin:0}
 .pair figure{margin:0;min-width:0}
 .pair video{width:100%;aspect-ratio:16/9;background:#000;box-shadow:0 0 0 1px var(--rule)}
 .sheet{display:block}
-.sheet img{width:100%;height:auto;display:block;background:var(--dark);box-shadow:0 0 0 1px var(--rule)}
-.pair .cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:11px;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
-.pair .cap a{color:var(--muted)}
+.sheet img{width:100%;height:auto;display:block;background:var(--dark);box-shadow:0 0 0 1px var(--rule);transition:box-shadow .15s ease}
+.sheet:hover img{box-shadow:0 0 0 2px var(--red)}
+.sheet:focus-visible{outline:none} .sheet:focus-visible img{box-shadow:0 0 0 3px var(--red)}
+.pair .cap,.sheets .cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:11px;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pair .cap a:not(:hover),.sheets .cap a:not(:hover){color:var(--muted)}
 .panel p{margin:16px 0 0;max-width:58ch;font-size:15px;line-height:1.55}
 .fests{margin:16px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px 24px}
 .fests li{font-size:14px;line-height:1.45;padding-left:13px;position:relative;color:var(--muted)}
@@ -162,7 +166,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
   .entry > summary,.entry.static{grid-template-columns:104px 1fr;gap:12px;padding:16px 8px 16px 4px}
   .thumb{width:104px}
   .open{grid-column:2;padding-left:0}
-  .pair{grid-template-columns:1fr;gap:18px}
+  .pair{gap:18px}
   .fests{grid-template-columns:1fr}
   .strip{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:0 -24px;padding-left:24px}
   .ph{flex:0 0 calc(240px * var(--ar));height:240px;scroll-snap-align:start}
@@ -183,13 +187,13 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
   .meta,.meta a,.meta span{min-height:0;font-size:9.5pt}
   .intro{padding:10pt 0} .intro p{font-size:10.5pt}
   section{padding:10pt 0} h2{font-size:14pt;break-after:avoid}
-  #photography{display:none}
+  #photography,#method{display:none}
   .entry{break-inside:avoid}
   .entry > summary,.entry.static{grid-template-columns:1fr auto;padding:5pt 0}
   .title{font-size:11pt} .credit,.sub{font-size:9.5pt} .laurel,.open{font-size:8pt}
   .open::after{content:none!important}
   .panel{display:block!important;padding:0 0 6pt} .panel p{display:none}
-  .panel .pair,.panel .sheet{display:none}
+  .panel .pair,.panel .sheet,.panel .sheets{display:none}
   .fests{columns:2;display:block;margin-top:2pt} .fests li{font-size:9pt;break-inside:avoid}
   .capline{display:none} .caps-print{display:block;font-size:9.5pt}
   .caps-print h3,.caps-print p{display:inline;margin:0;font-size:9.5pt} .caps-print h3::after{content:": "} .caps-print div{margin-bottom:3pt}
@@ -472,11 +476,11 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <div class="pair">
           <figure>
             <video controls playsinline preload="none" data-poster="assets/ai/the-wrong-kitchen-frame.jpg" src="assets/ai/the-wrong-kitchen.mp4" aria-label="The Wrong, Kitchen Encounter">Your browser blocked this video. <a href="assets/ai/the-wrong-kitchen.mp4">Open it directly</a>.</video>
-            <p class="cap">Kitchen Encounter <span aria-hidden="true">&middot;</span> 0:15</p>
+            <figcaption class="cap">Kitchen Encounter <span aria-hidden="true">&middot;</span> 0:15</figcaption>
           </figure>
           <figure>
             <video controls playsinline preload="none" data-poster="assets/ai/the-wrong-corridor-frame.jpg" src="assets/ai/the-wrong-corridor.mp4" aria-label="The Wrong, Corridor Haunting">Your browser blocked this video. <a href="assets/ai/the-wrong-corridor.mp4">Open it directly</a>.</video>
-            <p class="cap">Corridor Haunting <span aria-hidden="true">&middot;</span> 0:12</p>
+            <figcaption class="cap">Corridor Haunting <span aria-hidden="true">&middot;</span> 0:12</figcaption>
           </figure>
         </div>
         <p>An ongoing series testing how far generative video can carry dread on its own, with no dialogue and no score to lean on. The work is in the restraint: what the camera declines to show, how long a shot is willing to hold, and whether a face reads as a person or as output. Two scenes here, more in the series.</p>
@@ -486,7 +490,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 
   <section id="method" aria-labelledby="h-method">
     <h2 id="h-method">Method</h2>
-    <p class="note">Generative work runs on a plan. These are working sheets from pieces in progress: character continuity, camera blocking, and a lens on every cut, settled before a frame is generated. The films below are drafts. The plan is the part worth showing.</p>
+    <p class="note">Generative work runs on a plan. These are the working sheets: character continuity, camera blocking, and a lens on every cut, settled before a frame is generated.</p>
     <details class="entry" id="meridian">
       <summary>
         <span class="thumb"><img src="assets/method/meridian-plan-b-thumb.jpg" alt="The Meridian shot plan sheet: character reference, floor plan, and a five cut storyboard" loading="lazy"></span>
@@ -498,14 +502,14 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Open the sheets</span>
       </summary>
       <div class="panel">
-        <div class="pair">
+        <div class="sheets">
           <figure>
-            <a class="sheet" href="assets/method/meridian-plan-b.jpg"><img src="assets/method/meridian-plan-b.jpg" alt="Five cut storyboard with lens, duration and camera move on each cut, a floor plan with numbered camera positions, and a side elevation" loading="lazy"></a>
-            <p class="cap">Five cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-b.jpg">full size</a></p>
+            <a class="sheet" href="assets/method/meridian-plan-b.jpg"><img src="assets/method/meridian-plan-b.jpg" width="1536" height="1024" alt="Five cut storyboard with lens, duration and camera move on each cut, a floor plan with numbered camera positions, and a side elevation" loading="lazy"></a>
+            <figcaption class="cap">Five cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-b.jpg" aria-hidden="true" tabindex="-1">full size</a></figcaption>
           </figure>
           <figure>
-            <a class="sheet" href="assets/method/meridian-plan-a.jpg"><img src="assets/method/meridian-plan-a.jpg" alt="Four cut storyboard with character reference, injury continuity notes, colour palette and lighting plates" loading="lazy"></a>
-            <p class="cap">Four cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-a.jpg">full size</a></p>
+            <a class="sheet" href="assets/method/meridian-plan-a.jpg"><img src="assets/method/meridian-plan-a.jpg" width="1536" height="1024" alt="Four cut storyboard with character reference, injury continuity notes, colour palette and lighting plates" loading="lazy"></a>
+            <figcaption class="cap">Four cuts <span aria-hidden="true">&middot;</span> <a href="assets/method/meridian-plan-a.jpg" aria-hidden="true" tabindex="-1">full size</a></figcaption>
           </figure>
         </div>
         <p>The first look at TERRORVERSE, and a test of how much can be decided before generation starts. Character continuity down to the healing bruise and the scar through the eyebrow, a fixed palette, a top down camera plan with numbered positions, and a lens, a duration and a move on every cut. The film itself is a rough draft, built to prove the workflow rather than to be delivered.</p>
@@ -522,7 +526,12 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Open the sheet</span>
       </summary>
       <div class="panel">
-        <a class="sheet" href="assets/method/hero-character-sheet.jpg"><img src="assets/method/hero-character-sheet.jpg" alt="Three panel character sheet: full figure front and back with the height marked at six feet four, and a face close up" loading="lazy"></a>
+        <div class="sheets">
+          <figure>
+            <a class="sheet" href="assets/method/hero-character-sheet.jpg"><img src="assets/method/hero-character-sheet.jpg" width="2000" height="1116" alt="Three panel character sheet: full figure front and back with the height marked at six feet four, and a face close up" loading="lazy"></a>
+            <figcaption class="cap">Character sheet <span aria-hidden="true">&middot;</span> <a href="assets/method/hero-character-sheet.jpg" aria-hidden="true" tabindex="-1">full size</a></figcaption>
+          </figure>
+        </div>
         <p>Front, back, and face, with the height marked, settled before a frame was generated. A model will invent a new person on every shot unless it is given one, so the sheet is what keeps a character the same character. The film is in <a href="#hero">Generative video</a>.</p>
       </div>
     </details>
@@ -532,22 +541,22 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="who">
           <span class="title">The Last Light</span>
           <span class="credit"><!-- ROLE: fill in --></span>
-          <span class="sub">2026 <span aria-hidden="true">&middot;</span> Dreamina Seedance 2.5 <span aria-hidden="true">&middot;</span> Blockout to film</span>
+          <span class="sub">2026 <span aria-hidden="true">&middot;</span> Dreamina Story Unboxed <span aria-hidden="true">&middot;</span> Reference plates</span>
         </span>
         <span class="open">Open the sheets</span>
       </summary>
       <div class="panel">
-        <div class="pair">
+        <div class="sheets">
           <figure>
-            <a class="sheet" href="assets/method/last-light-blockout.jpg"><img src="assets/method/last-light-blockout.jpg" alt="A grey clay figure in a Blender blockout, reaching through a hatch, with the camera name burned into the frame" loading="lazy"></a>
-            <p class="cap">The blockout <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-blockout.jpg">full size</a></p>
+            <a class="sheet" href="assets/method/last-light-plate-field.jpg"><img src="assets/method/last-light-plate-field.jpg" width="2000" height="1129" alt="A reference plate of the corn field at dusk, built to lock the look before any motion was generated" loading="lazy"></a>
+            <figcaption class="cap">Field plate <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-plate-field.jpg" aria-hidden="true" tabindex="-1">full size</a></figcaption>
           </figure>
           <figure>
-            <a class="sheet" href="assets/method/last-light-plate.jpg"><img src="assets/method/last-light-plate.jpg" alt="The reference plate: a felt puppet boy in a corn field at dusk, lifting a wooden lid above a carved pumpkin" loading="lazy"></a>
-            <p class="cap">The plate <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-plate.jpg">full size</a></p>
+            <a class="sheet" href="assets/method/last-light-plate.jpg"><img src="assets/method/last-light-plate.jpg" width="2000" height="1116" alt="The reference plate: a felt puppet boy in a corn field at dusk, lifting a wooden lid above a carved pumpkin" loading="lazy"></a>
+            <figcaption class="cap">The plate <span aria-hidden="true">&middot;</span> <a href="assets/method/last-light-plate.jpg" aria-hidden="true" tabindex="-1">full size</a></figcaption>
           </figure>
         </div>
-        <p>Every entrant in Dreamina's Story Unboxed contest is handed the same official reference animation. The choreography, the timing and the cuts are fixed for everyone; the world, the characters and the meaning are not. A grey model drives the camera, reference plates lock the look, and the finished world is generated on the fixed skeleton. The craft is in what survives the constraint.</p>
+        <p>Every entrant in Dreamina's Story Unboxed contest is handed the same reference animation, so the choreography, the timing and the cuts arrive already fixed. The world, the characters and the meaning do not. These are the plates built to answer that: the look locked frame by frame before a single second of motion was generated. The craft is in what survives the constraint.</p>
       </div>
     </details>
   </section>
@@ -607,6 +616,16 @@ document.querySelectorAll('details.entry').forEach(d => d.addEventListener('togg
   /* querySelectorAll, not querySelector: an entry can hold more than one clip. */
   d.querySelectorAll('video').forEach(v => { if (!v.poster && v.dataset.poster) v.poster = v.dataset.poster; });
 }));
+/* A link to #meridian lands on a closed row unless something opens it. The browser
+   will not open a <details> for its own id. Guarded: the legacy hashes are not valid
+   selectors and querySelector throws on them. */
+function openHashTarget(){
+  var el = null;
+  try { el = location.hash.length > 1 ? document.querySelector(location.hash) : null; } catch (err) { return; }
+  if (el && el.tagName === 'DETAILS' && !el.open) { el.open = true; el.scrollIntoView(); }
+}
+addEventListener('hashchange', openHashTarget);
+openHashTarget();
 document.addEventListener('play', e => {
   if (e.target.tagName !== 'VIDEO') return;
   document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause(); });
