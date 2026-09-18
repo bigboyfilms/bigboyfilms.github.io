@@ -104,12 +104,22 @@ img{display:block;max-width:100%}
 #screen.media #vig{opacity:.4}
 #screen.media #glare{opacity:.2}
 #screen.nocrt .crt{display:none}
-#screen.flash::after{content:"";position:absolute;inset:0;background:#fff;z-index:30;pointer-events:none;
-  transform-origin:50% 50%;animation:crtOn .55s ease-out forwards}
-@keyframes crtOn{0%{transform:scaleY(.004);opacity:1}35%{transform:scaleY(.004);opacity:1}65%{transform:scaleY(1);opacity:.85}100%{transform:scaleY(1);opacity:0}}
-#screen.off::after{content:"";position:absolute;inset:0;background:#000;z-index:30;pointer-events:none;
-  transform-origin:50% 50%;animation:crtOff .4s ease-in forwards}
-@keyframes crtOff{0%{transform:scaleY(1);opacity:0}40%{opacity:1;transform:scaleY(.01)}100%{opacity:1;transform:scaleY(0) scaleX(.01)}}
+/* Power on: the tube warms. A cream line strikes across the middle, opens, and is gone. It was a
+   full white frame at 85 percent, which is a flashbang in a dark room and nothing like a tube. */
+#screen.flash::after{content:"";position:absolute;inset:0;z-index:30;pointer-events:none;
+  background:radial-gradient(ellipse 70% 50% at center,rgba(242,239,232,.95) 0%,rgba(242,239,232,.5) 38%,rgba(242,239,232,0) 72%);
+  transform-origin:50% 50%;animation:crtOn .8s cubic-bezier(.2,.7,.3,1) forwards}
+@keyframes crtOn{0%{transform:scaleY(.004);opacity:0}10%{transform:scaleY(.004);opacity:1}32%{transform:scaleY(.012);opacity:1}70%{transform:scaleY(.7);opacity:.22}100%{transform:scaleY(1);opacity:0}}
+#bios.on{animation:warm 1.1s ease-out}
+@keyframes warm{0%{filter:brightness(.15)}55%{filter:brightness(1.18)}100%{filter:brightness(1)}}
+/* Power off: the PICTURE collapses, to a line, to a point, and the point lingers. The old version
+   shrank a black sheet over a screen that had already gone black, so no one ever saw it. */
+#screen.collapsing{pointer-events:none}
+#screen.collapsing #desktop,#screen.collapsing .phase.on{transform-origin:50% 50%;animation:tubeOff .46s cubic-bezier(.4,0,.9,.4) forwards}
+@keyframes tubeOff{0%{transform:scale(1,1);filter:brightness(1)}42%{transform:scale(1,.006);filter:brightness(5)}78%{transform:scale(.006,.006);filter:brightness(9)}100%{transform:scale(0,0);filter:brightness(9)}}
+#screen.collapsing::after{content:"";position:absolute;left:50%;top:50%;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;z-index:30;pointer-events:none;
+  background:#F2EFE8;box-shadow:0 0 14px 5px rgba(242,239,232,.55);animation:tubeDot 1s ease-out forwards}
+@keyframes tubeDot{0%,40%{opacity:0;transform:scale(1)}48%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(.25)}}
 
 /* ============================================================
    PHASES: power off, BIOS, splash, shutdown
@@ -126,7 +136,7 @@ img{display:block;max-width:100%}
 .phase .fastdoor{margin-top:18px;font:500 12px var(--ui);color:#948F86;text-decoration-color:var(--red);text-decoration-thickness:1.5px;text-underline-offset:3px}
 .phase .fastdoor:hover{color:var(--cream)}
 #poweroff .hint{font:clamp(10px,1.3vw,12px) var(--px);letter-spacing:.12em;text-transform:uppercase;color:#948F86}
-#bios{padding:4% 5%;color:#c9c7c1;font:clamp(8px,1.45vw,14px)/1.6 var(--mono);white-space:pre-wrap;flex-direction:column;cursor:pointer}
+#bios{padding:4% 5%;color:#c9c7c1;font:clamp(11px,1.45vw,14px)/1.6 var(--mono);white-space:pre-wrap;flex-direction:column;cursor:pointer}
 #bios .hdr{color:var(--cream);font-weight:700}
 #bios .ok{color:#8fd28a}
 #bios .red{color:var(--red-lift)}
@@ -303,6 +313,26 @@ p{margin:0 0 10px}
 .player{background:#000;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden}
 .player video{width:100%;height:100%;display:block;background:#000}
 .player img{width:100%;height:100%;object-fit:contain}
+/* The Media Player's own transport. Chrome's grey overlay controls were the largest break in the
+   illusion, in the one window where his films play. Mouse only: a phone keeps its native
+   controls, which are better at being a phone. The video keeps its controls attribute in the
+   markup, so with no script, or on touch, nothing is lost. */
+.player{position:relative}
+.player.idle{cursor:pointer}
+.player.idle::after{content:"";position:absolute;left:50%;top:50%;width:64px;height:64px;margin:-32px 0 0 -32px;border-radius:50%;pointer-events:none;
+  background:rgba(12,12,12,.72) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpolygon points='25,19 47,32 25,45' fill='%23F2EFE8'/%3E%3C/svg%3E") center/64px no-repeat;box-shadow:0 0 0 2px rgba(242,239,232,.85)}
+.xport{flex:none;display:flex;align-items:center;gap:5px;padding:6px 8px;background:var(--chrome);box-shadow:inset 0 1px 0 var(--chrome-white),inset 0 -1px 0 var(--chrome-dark)}
+.xport .xp{width:30px;height:24px;padding:0;display:grid;place-items:center;flex:none}
+.xport .xp:active{padding:1px 0 0 1px}
+.xport .xp svg{width:12px;height:12px;display:block}
+.xport .gap{width:2px;height:20px;margin:0 3px;border-left:1px solid var(--chrome-dark);border-right:1px solid var(--chrome-white);flex:none}
+.xseek{flex:1;height:22px;position:relative;cursor:pointer;touch-action:none;min-width:80px;margin:0 6px}
+.xseek::before{content:"";position:absolute;left:0;right:0;top:9px;height:4px;background:var(--ink);box-shadow:inset 1px 1px #000,1px 1px 0 var(--chrome-white),-1px -1px 0 var(--chrome-dark)}
+.xseek i{position:absolute;left:0;top:10px;height:2px;width:0;background:var(--red)}
+.xseek b{position:absolute;left:0;top:1px;width:11px;height:20px;margin-left:-5px;background:var(--chrome);
+  box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-white),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-light)}
+.xseek:focus-visible{outline:1px dotted var(--ink);outline-offset:2px}
+.xtime{flex:none;min-width:92px;text-align:center;font:11px/1 var(--mono);color:var(--cream);background:var(--ink);padding:6px 8px;box-shadow:inset 1px 1px #000,1px 1px 0 var(--chrome-white)}
 .player.portrait{aspect-ratio:auto;max-height:60vh}
 .player.portrait img{max-height:60vh;width:auto;margin:0 auto}
 .player.vertical{aspect-ratio:auto;height:min(62vh,540px)}
@@ -448,7 +478,62 @@ p{margin:0 0 10px}
   #screen.media #scan{opacity:0}
   .player.vertical{height:min(64vh,640px)}
 }
+/* ============================================================
+   TOUCH. A fingertip is about 44 px. The close box was 16 x 14
+   and it was the only way back on a phone. Same objects, same
+   bevels, sized for a hand. Keyed to the pointer, not the width,
+   so a tablet gets it too.
+   ============================================================ */
+@media (pointer:coarse){
+  :root{--tb-h:44px}
+  .tb{height:36px;padding:2px 4px 2px 8px}
+  .tb .tt{font-size:13px}
+  .tbb{width:34px;height:30px}
+  .tbb svg{width:11px;height:11px}
+  .tbb.x{margin-left:4px}
+  #start{height:36px;padding:0 13px 0 9px;font-size:13px}
+  #start.down{padding:1px 12px 0 10px}
+  #start .b{width:15px;height:19px}
+  #tbdiv{height:32px}
+  .task{height:36px;font-size:13px}
+  #tray{height:36px;gap:10px}
+  #mute{width:32px;height:32px}
+  #mute svg{width:18px;height:18px}
+  #clock{font-size:12px}
+  #startmenu{width:250px}
+  #startmenu li{padding:11px 12px 11px 10px;font-size:14px}
+  .btn98{padding:10px 18px;font-size:13px}
+  .btn98:active,.btn98.down{padding:11px 17px 9px 19px}
+  .viewer .bar .btn98{min-width:52px;padding:9px 14px 11px}
+  .viewer .bar .btn98:active{padding:10px 13px 10px 15px}
+  .social a{width:46px;height:46px}
+  .social svg{width:21px;height:21px}
+  .links a,.links button{padding:11px 14px;font-size:13px}
+  .phase .fastdoor{padding:14px 12px;margin-top:6px}
+  .dlg .opts label{padding:7px 0}
+  .dlg .opts input{width:20px;height:20px}
+  .thumb:hover{outline:0}
+}
+/* phone type floor: nothing a visitor has to read sits under 12 px */
+@media (max-width:640px){
+  .card b{font-size:13.5px}
+  .card span{font-size:12.5px;line-height:1.35}
+  .card em{font-size:11.5px}
+  .tile b{font-size:14px}
+  .tile span{font-size:12.5px}
+  .fbody .sub,.fbody .credit{font-size:12.5px}
+  .fbody .tools{font-size:12px}
+  .laurels li{font-size:13px}
+  .laurels ul.wins span{font-size:12.5px}
+  .kicker{font-size:11.5px}
+  .sb{font-size:12px}
+  .viewer .cap{font-size:13px;white-space:normal}
+  #poweroff .hint,#shutdown .hint,#splash .msg,#bios .skip{font-size:12px}
+}
 @media (prefers-reduced-motion:reduce){
+  #bios.on{animation:none}
+  #screen.flash::after,#screen.collapsing::after{display:none}
+  #screen.collapsing #desktop,#screen.collapsing .phase.on{animation:none}
   #poweroff .pwr::after{animation:none}
   #scan,#vig,#glare{transition:none}
   .thumb img{transition:none}
@@ -712,27 +797,29 @@ Christopher White
 BIGBOY PRODUCTIONS`;
 
 /* Lines the BIOS prints on power-on. {films} {photos} {ai} {edits} fill in. */
+/* [class, text, rest in ms after the line]. The rests are the performance: it thinks before the
+   drives, it holds on the joke, and it takes a breath before it boots. */
 const BIOS_LINES = [
-  ['hdr','BIGBOY BIOS  v1.9.98'],
-  ['',   'Copyright (C) 1998-2026  BIGBOY PRODUCTIONS'],
-  ['',   ''],
-  ['',   'Owner : CHRISTOPHER WHITE'],
-  ['',   'CPU   : DIRECTOR 486DX  @ 24 fps'],
-  ['',   'Memory Test : 640K OK  ........  65536K OK'],
-  ['',   ''],
-  ['',   'Detecting drives ...'],
-  ['ok', '  C:  FILMS         {films} titles'],
-  ['ok', '  D:  PHOTOGRAPHY   {photos} frames'],
-  ['ok', '  E:  AI LAB        {ai} shorts'],
-  ['ok', '  F:  EDITS         {edits} cuts'],
-  ['ok', '  G:  BIGBOY        1 house'],
-  ['red','  H:  TERRORVERSE   coming soon'],
-  ['',   ''],
-  ['',   'Keyboard ........ OK'],
-  ['',   'Mouse ........... OK'],
-  ['red','Camera .......... ROLLING'],
-  ['',   ''],
-  ['',   'Booting BIGBOY 98 ...']
+  ['hdr','BIGBOY BIOS  v1.9.98', 180],
+  ['',   'Copyright (C) 1998-2026  BIGBOY PRODUCTIONS', 90],
+  ['',   '', 50],
+  ['',   'Owner : CHRISTOPHER WHITE', 100],
+  ['',   'CPU   : DIRECTOR 486DX  @ 24 fps', 140],
+  ['mem','Memory Test : 640K OK  ........  65536K OK', 140],
+  ['',   '', 50],
+  ['',   'Detecting drives ...', 360],
+  ['ok', '  C:  FILMS         {films} titles', 130],
+  ['ok', '  D:  PHOTOGRAPHY   {photos} frames', 90],
+  ['ok', '  E:  AI LAB        {ai} shorts', 120],
+  ['ok', '  F:  EDITS         {edits} cuts', 80],
+  ['ok', '  G:  BIGBOY        1 house', 110],
+  ['red','  H:  TERRORVERSE   coming soon', 220],
+  ['',   '', 50],
+  ['',   'Keyboard ........ OK', 90],
+  ['',   'Mouse ........... OK', 90],
+  ['red','Camera .......... ROLLING', 320],
+  ['',   '', 50],
+  ['',   'Booting BIGBOY 98 ...', 400]
 ];
 
 /* =====================================================================
@@ -779,6 +866,15 @@ const GLYPH = {
   x:  `<svg viewBox="0 0 8 8"><path d="M1 1l6 6M7 1L1 7" stroke="#000" stroke-width="1.6"/></svg>`
 };
 
+const XG = {
+  play: `<svg viewBox="0 0 12 12" aria-hidden="true"><polygon points="2.5,1 10.5,6 2.5,11" fill="#141414"/></svg>`,
+  pause:`<svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="1.5" width="3" height="9" fill="#141414"/><rect x="7" y="1.5" width="3" height="9" fill="#141414"/></svg>`,
+  stop: `<svg viewBox="0 0 12 12" aria-hidden="true"><rect x="2" y="2" width="8" height="8" fill="#141414"/></svg>`,
+  vol:  `<svg viewBox="0 0 12 12" aria-hidden="true"><polygon points="1,4.5 3.5,4.5 6.5,2 6.5,10 3.5,7.5 1,7.5" fill="#141414"/><path d="M8.2 4.2q1.4 1.8 0 3.6M9.6 2.8q2.6 3.2 0 6.4" stroke="#141414" stroke-width="1.1" fill="none"/></svg>`,
+  muted:`<svg viewBox="0 0 12 12" aria-hidden="true"><polygon points="1,4.5 3.5,4.5 6.5,2 6.5,10 3.5,7.5 1,7.5" fill="#141414"/><path d="M8 4l3.2 4M11.2 4L8 8" stroke="#D6362B" stroke-width="1.3" fill="none"/></svg>`,
+  full: `<svg viewBox="0 0 12 12" aria-hidden="true"><path d="M1 4.5V1h3.5M7.5 1H11v3.5M11 7.5V11H7.5M4.5 11H1V7.5" stroke="#141414" stroke-width="1.4" fill="none"/></svg>`
+};
+
 /* =====================================================================
    3. HELPERS
    ===================================================================== */
@@ -788,6 +884,8 @@ const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>'
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const isMobile = () => matchMedia('(max-width:640px)').matches;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse = () => matchMedia('(pointer:coarse)').matches;
+const verb = () => coarse() ? 'Tap' : 'Click';   /* nobody clicks a phone */
 const store = {
   get(k, d){ try{ const v = localStorage.getItem('bb98.'+k); return v===null ? d : v; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem('bb98.'+k, v); }catch(e){} }
@@ -800,7 +898,8 @@ const CLIPS = () => [...AI, ...EDITS];
    ===================================================================== */
 const AU = {
   ctx:null, armed:false, muted: store.get('mute','0')==='1',
-  ensure(){ if(!this.ctx){ try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(this.ctx && this.ctx.state==='suspended') this.ctx.resume(); },
+  ensure(){ if(!this.armed) return;   /* no context before a gesture: a shared link boots from a timer, and the browser warns about it */
+    if(!this.ctx){ try{ this.ctx = new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} } if(this.ctx && this.ctx.state==='suspended') this.ctx.resume(); },
   tone(f, d, type='square', g=.035, when=0){
     if(this.muted || !this.ctx || !this.armed) return;   /* a shared link boots with no gesture: queue nothing */
     const t = this.ctx.currentTime + when, o = this.ctx.createOscillator(), a = this.ctx.createGain();
@@ -816,7 +915,7 @@ const AU = {
   chord(){ [523,659,784].forEach((f,i)=>this.tone(f,.5,'triangle',.03,i*.09)); },
   setMuted(m){ this.muted = m; store.set('mute', m?'1':'0'); renderMute(); }
 };
-['pointerdown','keydown'].forEach(ev => addEventListener(ev, () => { AU.armed = true; }, true));
+['pointerdown','keydown'].forEach(ev => addEventListener(ev, () => { AU.armed = true; AU.ensure(); }, true));
 function renderMute(){ const b = $('#mute'); b.innerHTML = AU.muted ? ICON.sndOff : ICON.sndOn; b.title = AU.muted ? 'Sound off' : 'Sound on'; }
 
 /* =====================================================================
@@ -834,7 +933,7 @@ function showPhase(name){ Object.entries(phase).forEach(([k,el]) => el.classList
 function flash(){ if(reduced()) return; screen.classList.remove('flash'); void screen.offsetWidth; screen.classList.add('flash'); setTimeout(()=>screen.classList.remove('flash'), 700); }
 
 async function powerOn(opts={}){
-  if(powered || booting) return;
+  if(powered || booting || screen.classList.contains('collapsing')) return;   /* a tube mid-collapse ignores the button, as a real one does */
   booting = true; skipBoot = false;
   /* Every boot gets a number. Press the chin button mid-boot and the old boot used to finish
      anyway, a few seconds later, underneath a dead power-on screen. A stale boot now stops. */
@@ -842,29 +941,35 @@ async function powerOn(opts={}){
   AU.ensure(); AU.power(); led.classList.add('on');
   showPhase(null); flash();
   const fast = opts.fast || reduced() || sessionStorage.getItem('bb98.booted')==='1';
-  if(!fast){ await runBios(); if(id !== bootId) return; }
-  await runSplash(fast ? 700 : 2000); if(id !== bootId) return;
-  showPhase(null); desktop.classList.add('on');
+  if(!fast){ await runBios(); if(id !== bootId) return;
+    showPhase(null); await wait(skipBoot ? 60 : 220); if(id !== bootId) return; }   /* black between the BIOS and the splash */
+  await runSplash(fast ? 700 : 1700); if(id !== bootId) return;
+  showPhase(null);
+  if(!fast && !skipBoot){ await wait(260); if(id !== bootId) return; }               /* and a held breath before the desktop */
+  desktop.classList.add('on');
   powered = true; booting = false;
   sessionStorage.setItem('bb98.booted','1');
-  if(!fast) AU.chord();
+  if(!fast){ AU.chord(); if(!location.hash || location.hash.length < 2){ await wait(360); if(id !== bootId || !powered) return; } }   /* the desktop lands, then the window opens */
   WM.open('home');
   openFromHash();
 }
 async function runBios(){
   const el = phase.bios; el.innerHTML = ''; showPhase('bios');
-  const skip = document.createElement('div'); skip.className = 'skip'; skip.textContent = 'CLICK TO SKIP';
+  const skip = document.createElement('div'); skip.className = 'skip'; skip.textContent = verb().toUpperCase() + ' TO SKIP';
   await wait(350); if(skipBoot) return;
   AU.beep();
-  for(const [cls, raw] of BIOS_LINES){
+  for(const [cls, raw, rest] of BIOS_LINES){
     if(skipBoot) return;
     const line = document.createElement('div');
-    if(cls) line.className = cls;
-    line.textContent = raw.replace('{films}', FILMS.length).replace('{photos}', PHOTOS.length).replace('{ai}', AI.length).replace('{edits}', EDITS.length) || ' ';
+    if(cls && cls!=='mem') line.className = cls;
+    const text = raw.replace('{films}', FILMS.length).replace('{photos}', PHOTOS.length).replace('{ai}', AI.length).replace('{edits}', EDITS.length) || ' ';
     el.appendChild(line); el.appendChild(skip);
-    await wait(raw==='' ? 60 : (cls==='ok' ? 190 : 110));
+    if(cls==='mem'){ /* the memory count actually counts */
+      for(let k = 0; k <= 8; k++){ if(skipBoot) return; line.textContent = 'Memory Test : 640K OK  ........  ' + String(Math.round(65536 * k / 8)).padStart(5, ' ') + 'K'; await wait(45); }
+    }
+    line.textContent = text;
+    await wait(rest || 110);
   }
-  await wait(500);
 }
 async function runSplash(ms){
   if(skipBoot && ms > 700) ms = 500;
@@ -880,20 +985,26 @@ async function runSplash(ms){
   }
   await wait(skipBoot ? 80 : 260);
 }
+const COLLAPSE_MS = 1000;
 function powerOff(){
   if(!powered && !booting) return;
   bootId++;
-  AU.close(); WM.closeAll(true); startMenu.classList.remove('open'); startBtn.setAttribute('aria-expanded','false');
-  desktop.classList.remove('on'); powered = false; booting = false; skipBoot = true;
+  AU.close(); startMenu.classList.remove('open'); startBtn.setAttribute('aria-expanded','false');
+  powered = false; booting = false; skipBoot = true;
   led.classList.remove('on'); sessionStorage.removeItem('bb98.booted');
-  screen.classList.add('off'); setTimeout(()=>{ screen.classList.remove('off'); showPhase('off'); }, 420);
+  /* the windows stay up while the picture collapses: it is the picture that dies, not the desktop */
+  const done = () => { screen.classList.remove('collapsing'); WM.closeAll(true); desktop.classList.remove('on'); showPhase('off'); };
+  if(reduced()){ done(); return; }
+  screen.classList.add('collapsing'); setTimeout(done, COLLAPSE_MS);
 }
 function shutDown(){
   AU.close(); WM.closeAll(true); startMenu.classList.remove('open');
   desktop.classList.remove('on'); powered = false; sessionStorage.removeItem('bb98.booted');
-  showPhase('down'); led.classList.remove('on');
+  led.classList.remove('on');
+  /* a beat of black, then the amber screen: the OS lets go before the message arrives */
+  showPhase(null); setTimeout(() => { if(!powered && !booting) showPhase('down'); }, reduced() ? 0 : 420);
 }
-function restart(){ powerOff(); setTimeout(()=>powerOn({fast:false}), 700); }
+function restart(){ powerOff(); setTimeout(()=>powerOn({fast:false}), reduced() ? 300 : COLLAPSE_MS + 350); }
 
 phase.off.addEventListener('click', e => { if(e.target.closest('a')) return; powerOn(); });
 phase.off.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); powerOn(); } });
@@ -909,9 +1020,9 @@ $('#pwrbtn').addEventListener('mouseenter', () => AU.ensure());
 const WM = {
   wins: new Map(), z: 100, cascade: 0,
   spec(key){
-    if(key==='home')        return { title:SITE.person, icon:ICON.bs, w:470, body:tplHome(), sb:['Click an icon to open', '8 objects'] };
+    if(key==='home')        return { title:SITE.person, icon:ICON.bs, w:470, body:tplHome(), sb:[verb() + ' an icon to open', '8 objects'] };
     if(key==='films')       return { title:'Films', icon:ICON.films, w:760, body:tplFilms(), sb:[`${FILMS.length} films`, `${FILMS.filter(f=>f.trailer).length} trailers`] };
-    if(key==='photos')      return { title:'Photography', icon:ICON.photos, w:620, body:tplPhotos(), sb:[`${PHOTOS.length} frames`, 'Click to view'] };
+    if(key==='photos')      return { title:'Photography', icon:ICON.photos, w:620, body:tplPhotos(), sb:[`${PHOTOS.length} frames`, verb() + ' to view'] };
     if(key==='ai')          return { title:'AI Lab', icon:ICON.ai, w:600, body:tplClips(AI, BIGBOY.manifesto[1]), sb:[`${AI.length} AI shorts`, 'Story first'] };
     if(key==='edits')       return { title:'Edits', icon:ICON.edits, w:600, body:tplClips(EDITS, ''), sb:[`${EDITS.length} cuts`, ''] };
     if(key==='bigboy')      return { title:SITE.house, icon:ICON.bigboy, w:520, body:tplBigboy(), sb:['The house', `${FILMS.length} films on file`] };
@@ -942,6 +1053,7 @@ const WM = {
       <div class="body ${spec.cls||''}">${spec.body}</div>
       ${spec.sb ? `<div class="sb"><span>${esc(spec.sb[0])}</span><span>${esc(spec.sb[1]||'')}</span></div>` : ''}`;
     layer.appendChild(el);
+    try{ this.transport(el); }catch(e){ const v = el.querySelector('video'); if(v) v.setAttribute('controls',''); }
     const W = layer.clientWidth, H = layer.clientHeight;
     const w = Math.min(spec.w, W - 12);
     el.style.width = w + 'px';
@@ -961,6 +1073,54 @@ const WM = {
     if(key.startsWith('film:')) setHash('film/'+key.slice(5));
     if(key.startsWith('clip:')) setHash('clip/'+key.slice(5));
     return el;
+  },
+  /* Swap the browser's controls for the machine's own, on a mouse. Progressive: the markup still
+     says controls, so touch, no-script and any failure here all fall back to the native bar. */
+  transport(el){
+    const v = el.querySelector('video'); if(!v || coarse()) return;
+    const player = v.closest('.player'); if(!player) return;
+    v.removeAttribute('controls'); player.classList.add('idle');
+    const bar = document.createElement('div'); bar.className = 'xport'; bar.setAttribute('role','group'); bar.setAttribute('aria-label','Player controls');
+    bar.innerHTML = `<button class="btn98 xp" data-x="play" aria-label="Play">${XG.play}</button><button class="btn98 xp" data-x="stop" aria-label="Stop">${XG.stop}</button><span class="gap"></span>
+      <div class="xseek" role="slider" tabindex="0" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i><b></b></div>
+      <span class="xtime" aria-live="off">0:00 / 0:00</span><span class="gap"></span>
+      <button class="btn98 xp" data-x="mute" aria-label="Mute">${XG.vol}</button><button class="btn98 xp" data-x="full" aria-label="Full screen">${XG.full}</button>`;
+    player.after(bar);
+    const q = sel => bar.querySelector(sel), seek = q('.xseek'), fill = seek.querySelector('i'), thumb = seek.querySelector('b'), time = q('.xtime'), bPlay = q('[data-x="play"]'), bMute = q('[data-x="mute"]');
+    const sb = el.querySelector('.sb span'), base = sb ? sb.textContent : '';
+    const fmt = t => { t = Math.max(0, Math.floor(t || 0)); return Math.floor(t / 60) + ':' + String(t % 60).padStart(2, '0'); };
+    let state = 'Stopped';
+    const paint = () => {
+      const d = isFinite(v.duration) ? v.duration : 0, pos = d ? Math.min(1, v.currentTime / d) : 0;
+      fill.style.width = (pos * 100) + '%'; thumb.style.left = (pos * 100) + '%';
+      time.textContent = fmt(v.currentTime) + ' / ' + fmt(d); seek.setAttribute('aria-valuenow', Math.round(pos * 100)); seek.setAttribute('aria-valuetext', fmt(v.currentTime) + ' of ' + fmt(d));
+      bPlay.innerHTML = v.paused ? XG.play : XG.pause; bPlay.setAttribute('aria-label', v.paused ? 'Play' : 'Pause');
+      bMute.innerHTML = v.muted ? XG.muted : XG.vol; bMute.setAttribute('aria-label', v.muted ? 'Unmute' : 'Mute');
+      if(sb) sb.textContent = base + ': ' + state;
+    };
+    const toggle = () => { if(v.paused){ const pr = v.play(); if(pr && pr.catch) pr.catch(() => {}); } else v.pause(); };
+    v.addEventListener('play',  () => { state = 'Playing'; player.classList.remove('idle'); paint(); });
+    v.addEventListener('pause', () => { if(state !== 'Stopped') state = 'Paused'; paint(); });
+    v.addEventListener('ended', () => { state = 'Stopped'; player.classList.add('idle'); paint(); });
+    ['timeupdate','loadedmetadata','durationchange','volumechange','seeked'].forEach(ev => v.addEventListener(ev, paint));
+    v.addEventListener('click', toggle);
+    v.addEventListener('dblclick', () => q('[data-x="full"]').click());
+    player.addEventListener('click', e => { if(e.target === player) toggle(); });
+    bar.addEventListener('click', e => { const b = e.target.closest('[data-x]'); if(!b) return; const a = b.dataset.x; AU.click();
+      if(a==='play') toggle();
+      if(a==='stop'){ state = 'Stopped'; v.pause(); v.load(); player.classList.add('idle'); paint(); }   /* Stop goes back to the title card, as it did */
+      if(a==='mute') v.muted = !v.muted;
+      if(a==='full'){ const f = v.requestFullscreen || v.webkitRequestFullscreen; if(f) f.call(v); } });
+    const seekTo = x => { const r = seek.getBoundingClientRect(), d = isFinite(v.duration) ? v.duration : 0; if(!d) return; v.currentTime = Math.max(0, Math.min(1, (x - r.left) / r.width)) * d; paint(); };
+    seek.addEventListener('pointerdown', e => { seek.setPointerCapture(e.pointerId); seekTo(e.clientX);
+      const mv = ev => seekTo(ev.clientX), up = () => { seek.removeEventListener('pointermove', mv); seek.removeEventListener('pointerup', up); seek.removeEventListener('pointercancel', up); };
+      seek.addEventListener('pointermove', mv); seek.addEventListener('pointerup', up); seek.addEventListener('pointercancel', up); });
+    seek.addEventListener('keydown', e => { const d = isFinite(v.duration) ? v.duration : 0; if(!d) return;
+      if(e.key==='ArrowRight'){ v.currentTime = Math.min(d, v.currentTime + 5); e.preventDefault(); e.stopPropagation(); }
+      if(e.key==='ArrowLeft'){ v.currentTime = Math.max(0, v.currentTime - 5); e.preventDefault(); e.stopPropagation(); }
+      if(e.key==='Home'){ v.currentTime = 0; e.preventDefault(); } if(e.key==='End'){ v.currentTime = d; e.preventDefault(); }
+      if(e.key===' ' || e.key==='Enter'){ toggle(); e.preventDefault(); } });
+    paint();
   },
   /* A window may be as tall as the glass, never taller, and never under the taskbar.
      max-height used to be the full layer height regardless of where the top edge sat, and
@@ -1293,6 +1453,11 @@ document.addEventListener('pointerdown', e => { const st = e.target.closest && e
 document.addEventListener('pointerup', e => { if(!swipe.on) return; swipe.on = false;
   const dx = e.clientX - swipe.x, dy = e.clientY - swipe.y;
   if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.5){ swipe.done = true; viewerGo(viewer.i + (dx < 0 ? 1 : -1)); AU.click(); } }, true);
+/* full screen has no machine around it, so the browser's controls come back for as long as it lasts */
+['fullscreenchange','webkitfullscreenchange'].forEach(ev => document.addEventListener(ev, () => {
+  const f = document.fullscreenElement || document.webkitFullscreenElement;
+  $$('.player video').forEach(v => { const film = v.closest('.film'); if(!film || !film.querySelector('.xport')) return; if(v === f) v.setAttribute('controls',''); else v.removeAttribute('controls'); });
+}));
 document.addEventListener('change', e => {
   if(e.target.id==='opt-sound') AU.setMuted(!e.target.checked);
   if(e.target.id==='opt-crt'){ store.set('crt', e.target.checked?'1':'0'); applyCrt(); }
@@ -1346,6 +1511,7 @@ function openFromHash(){
 function tick(){ const d = new Date(); let h = d.getHours(); const ap = h>=12?'PM':'AM'; h = h%12||12; $('#clock').textContent = `${h}:${String(d.getMinutes()).padStart(2,'0')} ${ap}`; }
 tick(); setInterval(tick, 15000);
 renderMute(); applyCrt();
+if(coarse()) $$('.phase .hint').forEach(h => { h.textContent = h.textContent.replace('CLICK', 'TAP'); });
 if(store.get('intro','1')!=='1') sessionStorage.setItem('bb98.booted','1');
 /* A shared link should land on the content, not on a power button: boot fast when a hash is present. */
 if(location.hash && location.hash.length > 1){ setTimeout(() => powerOn({fast:true}), 50); }
