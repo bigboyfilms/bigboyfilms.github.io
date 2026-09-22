@@ -1300,7 +1300,7 @@ function tplAbout(){
   return `<div class="about"><img class="photo" src="${ABOUT.photo}" alt="${esc(SITE.person)}">
     <div><div class="kicker">About</div><h2>${esc(SITE.person)}</h2><div class="role">${esc(SITE.role).toUpperCase()}</div>
     ${ABOUT.paragraphs.map(p=>`<p>${esc(p)}</p>`).join('')}
-    <div class="props"><div><span>REGISTERED TO</span><b>${esc(SITE.person)}</b></div><div><span>HOUSE</span><b>${esc(SITE.house)}</b></div><div><span>BASED IN</span><b>${esc(SITE.location)}</b></div><div><span>FILMS ON FILE</span><b>${FILMS.length + AI.length}</b></div></div>
+    <div class="props"><div><span>REGISTERED TO</span><b>${esc(SITE.person)}</b></div><div><span>HOUSE</span><b>${esc(SITE.house)}</b></div><div><span>BASED IN</span><b>${esc(SITE.location)}</b></div><div><span>FILMS + AI CLIPS</span><b>${FILMS.length + AI.length}</b></div></div>
     <div class="links">${SITE.imdb ? `<a href="${SITE.imdb}" target="_blank" rel="noopener">${ICON.imdb} Credits on IMDb</a>` : ''}<button data-open="bigboy">${ICON.bigboy} The house</button><button data-open="contact">${ICON.contact} Contact</button></div>
     <img class="sig" src="${SITE.signature}" alt="Directed by White, @directedbywhite">
     </div></div>`;
