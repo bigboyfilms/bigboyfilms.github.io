@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Christopher White | Director and photographer | BIGBOY PRODUCTIONS</title>
-<meta name="description" content="Christopher White is a director and photographer and the founder of BIGBOY PRODUCTIONS in San Diego. Films, photography, AI work, edits, and the horror label TERRORVERSE, coming soon.">
+<title>Christopher White | Creative producer, filmmaker and photographer | BIGBOY PRODUCTIONS</title>
+<meta name="description" content="Christopher White is a creative producer, filmmaker and photographer and the founder of BIGBOY PRODUCTIONS in San Diego. Films, photography, AI work, edits, and the horror label TERRORVERSE, coming soon.">
 <meta name="author" content="Christopher White">
 <meta name="theme-color" content="#0C0C0C">
 <link rel="icon" href="../assets/favicon.ico" sizes="any">
@@ -13,10 +13,10 @@
 <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Christopher White">
-<meta property="og:title" content="Christopher White, director and photographer">
+<meta property="og:title" content="Christopher White, creative producer, filmmaker and photographer">
 <meta property="og:description" content="Films, photography, AI work, and the house behind them. Power on.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Christopher White, director and photographer">
+<meta name="twitter:title" content="Christopher White, creative producer, filmmaker and photographer">
 <meta name="twitter:description" content="Films, photography, AI work, and the house behind them. Power on.">
 <link rel="canonical" href="https://bigboyfilms.github.io/98/">
 <meta property="og:url" content="https://bigboyfilms.github.io/98/">
@@ -545,7 +545,7 @@ p{margin:0 0 10px}
 <noscript>
   <div style="max-width:640px;margin:40px auto;padding:0 20px;font:14px/1.5 Inter,system-ui,sans-serif;color:#F2EFE8">
     <h1 style="font-family:Archivo,sans-serif">Christopher White</h1>
-    <p>Director and photographer, founder of BIGBOY PRODUCTIONS, San Diego. This site is an interactive desktop and needs JavaScript. Without it, here is the short version.</p>
+    <p>Creative producer, filmmaker and photographer, founder of BIGBOY PRODUCTIONS, San Diego. This site is an interactive desktop and needs JavaScript. Without it, here is the short version.</p>
     <p><b>Films</b>: COULROPHOBIA (2024), ECHOES OF VENGEANCE (2024), THE AMOUNT (2026), SOMEWHERE BIGGER (2026), KAI (2025), EVERETT'S SHADOW (2025). <b>AI shorts</b>: RISE ABOVE, MISCAST (AI on the Lot 2026). <b>TERRORVERSE</b>: horror label, coming soon.</p>
     <p><b>Contact</b>: <a style="color:#E8857C" href="mailto:bigboyfilms@icloud.com">bigboyfilms@icloud.com</a> · Instagram and X: @directedbywhite · YouTube: @bigboyuniverse · <a style="color:#E8857C" href="https://www.imdb.com/name/nm16449451/">IMDb</a></p>
   </div>
@@ -623,10 +623,10 @@ p{margin:0 0 10px}
    ===================================================================== */
 const SITE = {
   person: 'Christopher White',
-  role: 'Director and photographer',
+  role: 'Creative producer, filmmaker and photographer',
   house: 'BIGBOY PRODUCTIONS',
   os: 'BIGBOY 98',
-  tagline: 'Director, photographer, founder of BIGBOY PRODUCTIONS. This is my computer. Have a look around.',
+  tagline: 'Creative producer, filmmaker, photographer. Founder of BIGBOY PRODUCTIONS. This is my computer. Have a look around.',
   location: 'San Diego',
   email: 'bigboyfilms@icloud.com',
   signature: '../assets/directed-by-white.svg',
@@ -742,7 +742,7 @@ const PHOTOS = [
 const ABOUT = {
   photo: '../assets/photos/christopher-white.jpg',
   paragraphs: [
-    'I am a director and photographer, and the founder of BIGBOY PRODUCTIONS in San Diego. The house makes work that runs from psychological horror to intimate drama, all of it built around character.',
+    'I am a creative producer, filmmaker and photographer, and the founder of BIGBOY PRODUCTIONS in San Diego. The house makes work that runs from psychological horror to intimate drama, all of it built around character.',
     'Most of the films here were made inside 48 hours, through the 48 Hour Film Project in Los Angeles and San Diego and the ABGO No Sleep Film Fest. COULROPHOBIA kept going after its weekend: Best Trailer at Best of the Fest in Los Angeles, Best Movie Poster at Night of Shorts in Milano, official selections at the San Diego International Film Festival and San Diego Film Week, and a run of festivals after that.',
     'My photographs come from stages, fairgrounds, and the hour when the light gets interesting. Some have hung at the San Diego County Fair. On set my rule is the same as behind the camera: small crews, fast turnarounds, and every voice in the room worth hearing.'
   ]
@@ -890,6 +890,11 @@ const store = {
   get(k, d){ try{ const v = localStorage.getItem('bb98.'+k); return v===null ? d : v; }catch(e){ return d; } },
   set(k, v){ try{ localStorage.setItem('bb98.'+k, v); }catch(e){} }
 };
+const session = {
+  get(k){ try{ return sessionStorage.getItem(k); }catch(e){ return null; } },
+  set(k,v){ try{ sessionStorage.setItem(k,v); }catch(e){} },
+  remove(k){ try{ sessionStorage.removeItem(k); }catch(e){} }
+};
 const MAIN = ['films','photos','ai','edits','bigboy','terrorverse','about','contact','readme'];
 const CLIPS = () => [...AI, ...EDITS];
 
@@ -940,7 +945,7 @@ async function powerOn(opts={}){
   const id = ++bootId;
   AU.ensure(); AU.power(); led.classList.add('on');
   showPhase(null); flash();
-  const fast = opts.fast || reduced() || sessionStorage.getItem('bb98.booted')==='1';
+  const fast = opts.fast || reduced() || session.get('bb98.booted')==='1';
   if(!fast){ await runBios(); if(id !== bootId) return;
     showPhase(null); await wait(skipBoot ? 60 : 220); if(id !== bootId) return; }   /* black between the BIOS and the splash */
   await runSplash(fast ? 700 : 1700); if(id !== bootId) return;
@@ -948,7 +953,7 @@ async function powerOn(opts={}){
   if(!fast && !skipBoot){ await wait(260); if(id !== bootId) return; }               /* and a held breath before the desktop */
   desktop.classList.add('on');
   powered = true; booting = false;
-  sessionStorage.setItem('bb98.booted','1');
+  session.set('bb98.booted','1');
   if(!fast){ AU.chord(); if(!location.hash || location.hash.length < 2){ await wait(360); if(id !== bootId || !powered) return; } }   /* the desktop lands, then the window opens */
   WM.open('home');
   openFromHash();
@@ -991,7 +996,7 @@ function powerOff(){
   bootId++;
   AU.close(); startMenu.classList.remove('open'); startBtn.setAttribute('aria-expanded','false');
   powered = false; booting = false; skipBoot = true;
-  led.classList.remove('on'); sessionStorage.removeItem('bb98.booted');
+  led.classList.remove('on'); session.remove('bb98.booted');
   /* the windows stay up while the picture collapses: it is the picture that dies, not the desktop */
   const done = () => { screen.classList.remove('collapsing'); WM.closeAll(true); desktop.classList.remove('on'); showPhase('off'); };
   if(reduced()){ done(); return; }
@@ -999,7 +1004,7 @@ function powerOff(){
 }
 function shutDown(){
   AU.close(); WM.closeAll(true); startMenu.classList.remove('open');
-  desktop.classList.remove('on'); powered = false; sessionStorage.removeItem('bb98.booted');
+  desktop.classList.remove('on'); powered = false; session.remove('bb98.booted');
   led.classList.remove('on');
   /* a beat of black, then the amber screen: the OS lets go before the message arrives */
   showPhase(null); setTimeout(() => { if(!powered && !booting) showPhase('down'); }, reduced() ? 0 : 420);
@@ -1461,7 +1466,7 @@ document.addEventListener('pointerup', e => { if(!swipe.on) return; swipe.on = f
 document.addEventListener('change', e => {
   if(e.target.id==='opt-sound') AU.setMuted(!e.target.checked);
   if(e.target.id==='opt-crt'){ store.set('crt', e.target.checked?'1':'0'); applyCrt(); }
-  if(e.target.id==='opt-intro'){ store.set('intro', e.target.checked?'1':'0'); if(e.target.checked) sessionStorage.removeItem('bb98.booted'); }
+  if(e.target.id==='opt-intro'){ store.set('intro', e.target.checked?'1':'0'); if(e.target.checked) session.remove('bb98.booted'); }
 });
 document.addEventListener('keydown', e => {
   if(e.key==='Escape'){ if(startMenu.classList.contains('open')) toggleStart(false); else if(WM.active) WM.close(WM.active); }
@@ -1512,7 +1517,7 @@ function tick(){ const d = new Date(); let h = d.getHours(); const ap = h>=12?'P
 tick(); setInterval(tick, 15000);
 renderMute(); applyCrt();
 if(coarse()) $$('.phase .hint').forEach(h => { h.textContent = h.textContent.replace('CLICK', 'TAP'); });
-if(store.get('intro','1')!=='1') sessionStorage.setItem('bb98.booted','1');
+if(store.get('intro','1')!=='1') session.set('bb98.booted','1');
 /* A shared link should land on the content, not on a power button: boot fast when a hash is present. */
 if(location.hash && location.hash.length > 1){ setTimeout(() => powerOn({fast:true}), 50); }
 window.addEventListener('resize', () => { WM.wins.forEach(w => { if(isMobile()) WM.setMax(w.key, true); else WM.fit(w.el); }); });

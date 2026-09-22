@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Christopher White, Selected Work</title>
-<meta name="description" content="Christopher White, director and photographer. Selected film, motion, and photography work, with festival selections and awards.">
+<title>Christopher White | Creative Producer, Filmmaker &amp; Photographer</title>
+<meta name="description" content="Christopher White, creative producer, filmmaker and photographer in San Diego. Explore selected films, photography, motion work and the process behind them.">
 <meta name="author" content="Christopher White">
 <meta name="robots" content="index, follow">
 <meta name="theme-color" content="#FBFAF7">
@@ -13,7 +13,7 @@
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <meta property="og:type" content="profile">
 <meta property="og:title" content="Christopher White, Selected Work">
-<meta property="og:description" content="Director and photographer. Selected work with festival selections and awards.">
+<meta property="og:description" content="Creative producer, filmmaker and photographer. Selected work and the process behind it.">
 <meta property="og:url" content="https://bigboyfilms.github.io/">
 <meta property="og:image" content="https://bigboyfilms.github.io/assets/og.jpg">
 <link rel="canonical" href="https://bigboyfilms.github.io/">
@@ -62,18 +62,22 @@ h1{font:800 clamp(34px,7vw,54px)/1.05 var(--display);letter-spacing:-.02em;margi
 .meta{display:flex;flex-wrap:wrap;gap:0 24px;font-size:15px;color:var(--muted)}
 .meta a{font-weight:500;display:inline-flex;align-items:center;min-height:44px}
 .meta span{display:inline-flex;align-items:center;min-height:44px}
+.skip{position:absolute;top:8px;left:16px;transform:translateY(-160%);padding:12px;background:var(--paper);z-index:10}
+.skip:focus{transform:none}
+.section-nav{display:flex;flex-wrap:wrap;gap:4px 24px;margin-top:20px}
+.section-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:600}
 .door{color:var(--muted)}
 .door:hover{color:var(--red)}
 
 /* ---------- hero: the gold winner, playing, before any paragraph ---------- */
-.hero-wrap{margin:48px 0 0;aspect-ratio:16/9;background:var(--dark);position:relative}
-.hero{display:block;position:relative;width:100%;height:100%;color:var(--cream)}
+.hero-wrap{margin:32px 0 0;background:var(--dark);position:relative}
+.hero{display:block;position:relative;width:100%;aspect-ratio:16/9;color:var(--cream)}
 .hero img{width:100%;height:100%;object-fit:cover}
 .hero .play{position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%);transition:transform .15s ease}
 .hero:hover .play{transform:translate(-50%,-50%) scale(1.06)}
-.hero .cap{position:absolute;left:0;right:0;bottom:0;padding:24px 16px 12px;color:var(--cream);font-size:14px;background:linear-gradient(180deg,rgba(12,12,12,0) 0%,rgba(12,12,12,.78) 100%)}
-.hero .cap b{font-weight:600}
-.hero-wrap video{width:100%;height:100%;background:#000}
+.hero-wrap > .cap{padding:12px 16px;color:var(--cream);font-size:14px;line-height:1.5;margin:0;background:var(--dark)}
+.hero-wrap > .cap b{font-weight:600}
+.hero-wrap video{display:block;width:100%;aspect-ratio:16/9;background:#000}
 
 /* ---------- intro ---------- */
 .intro{padding:48px 0;border-bottom:1px solid var(--rule)}
@@ -110,7 +114,7 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .panel{padding:0 8px 24px}
 .panel video{width:100%;background:#000;box-shadow:0 0 0 1px var(--rule)}
 .panel video.vertical{max-width:340px}
-.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
 .sheets{display:grid;gap:20px}
 .sheets figure{margin:0}
 .pair figure{margin:0;min-width:0}
@@ -179,6 +183,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 /* ---------- print: a one-page attachment with the credits on it ---------- */
 @media print{
   @page{margin:18mm 18mm 22mm}
+  .section-nav,.skip{display:none}
   body{background:#fff;font-size:10.5pt;line-height:1.45}
   .wrap{max-width:135mm;padding:0}
   header{padding:0 0 12pt;border-bottom:1pt solid var(--red)}
@@ -208,8 +213,15 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 <body>
 <script>
 /* Links shared before the doors were split point at the machine. Send them there. */
-(function(){var h=location.hash;if(/^#(films|photos|ai|edits|bigboy|terrorverse|about|contact|readme|film\/|clip\/|photo\/)/.test(h)){location.replace('98/'+h);}})();
+(function(){
+  var h = location.hash;
+  /* The professional contact section owns #contact. Keep old machine links exact. */
+  if (/^#(?:(?:films|photos|ai|edits|bigboy|terrorverse|about|readme)$|(?:film|clip|photo)\/)/.test(h)) {
+    location.replace('98/' + h);
+  }
+})();
 </script>
+<a class="skip" href="#main">Skip to selected work</a>
 <div class="wrap">
 
   <header>
@@ -217,8 +229,8 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
       <div class="text">
         <h1>Christopher White</h1>
         <p class="sig">Directed by White</p>
-        <p class="role"><b>Director and photographer.</b> I make short-form narrative and brand work on tight schedules, at a standard that holds up on a big screen.</p>
-        <p class="proof mono">6 films <span aria-hidden="true">·</span> 48 hours each <span aria-hidden="true">·</span> 15 awards and festival selections</p>
+        <p class="role"><b>Creative Producer, Filmmaker &amp; Photographer.</b> I develop stories and bring them to the screen.</p>
+        <p class="proof mono">6 films <span aria-hidden="true">·</span> 15 awards and festival selections</p>
         <div class="meta">
           <span>San Diego</span>
           <!-- LINKEDIN slot. Front door only, never the machine (decided 2026-09-06).
@@ -226,22 +238,23 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
                once the Apple-on-the-site question is settled. -->
           <a href="mailto:bigboyfilms@icloud.com">bigboyfilms@icloud.com</a>
           <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>
-          <a class="door" href="98/">Boot BIGBOY 98</a>
         </div>
       </div>
       <img class="face" src="assets/photos/christopher-white.jpg" alt="Christopher White">
     </div>
+    <nav class="section-nav" aria-label="Selected work"><a href="#film">Film</a><a href="#photography">Photography</a><a href="#motion">Motion</a><a href="#method">Process</a><a href="#contact">Contact</a></nav>
     <figure class="hero-wrap">
       <a class="hero" href="assets/films/coulrophobia-trailer.mp4" data-video="assets/films/coulrophobia-trailer.mp4" data-poster="assets/films/coulrophobia-still.jpg" aria-label="Play the Coulrophobia trailer, 0:54">
         <img src="assets/films/coulrophobia-still.jpg" alt="" fetchpriority="high">
         <svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg>
-        <span class="cap"><b>Coulrophobia</b> trailer, 0:54. Won Best Trailer, Best of the Fest, 48 Hour Film Project Los Angeles 2024.</span>
       </a>
+      <figcaption class="cap"><b>Coulrophobia</b> trailer, 0:54. Won Best Trailer, Best of the Fest, 48 Hour Film Project Los Angeles 2024.</figcaption>
     </figure>
   </header>
 
+  <main id="main" tabindex="-1">
   <div class="intro">
-    <p>I direct, shoot, and cut. Each of the six films below was written, produced, and delivered inside a 48 hour window with a full crew: a hard deadline, a fixed team, and a finished piece at the end of it.</p>
+    <p>My work spans short films, photography, performance coverage, and generative filmmaking experiments. I bring a collaborative approach to developing stories and guiding creative work from an idea through production and finishing.</p>
     <p>That work has won Best Trailer at the 48 Hour Film Project in Los Angeles and Best Movie Poster at Night of Shorts in Milano, with an honorable mention at Indie Short Fest and two nominations in Toronto. The photographs have hung at the San Diego County Fair.</p>
   </div>
 
@@ -589,17 +602,18 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 
   <section class="contact" id="contact" aria-labelledby="h-contact">
     <h2 id="h-contact">Get in touch.</h2>
-    <p class="why">Trailers play above. Full films are shared by email.</p>
+    <p class="why">For project inquiries, collaborations, and creative roles, get in touch. Full films are shared by email.</p>
     <a class="mailto" href="mailto:bigboyfilms@icloud.com?subject=Project%20enquiry">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 7 9-7"/></svg>
       bigboyfilms@icloud.com
     </a>
-    <p class="elsewhere">Credits are listed on <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>. The long version of this page is a computer. <a class="door" href="98/">Boot BIGBOY 98</a>.</p>
+    <p class="elsewhere">Credits are listed on <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>.</p>
   </section>
 
+  </main>
   <footer>
     <div class="lockup"><svg viewBox="0 0 80 100" aria-hidden="true"><defs><mask id="bm"><path d="M 0 0 L 54 0 A 24 24 0 0 1 54 48 A 26 26 0 0 1 54 100 L 0 100 Z" fill="#fff"/><g fill="#000"><rect x="4" y="4.7" width="8" height="6" rx="1"/><rect x="4" y="14.1" width="8" height="6" rx="1"/><rect x="4" y="23.5" width="8" height="6" rx="1"/><rect x="4" y="32.9" width="8" height="6" rx="1"/><rect x="4" y="42.3" width="8" height="6" rx="1"/><rect x="4" y="51.7" width="8" height="6" rx="1"/><rect x="4" y="61.1" width="8" height="6" rx="1"/><rect x="4" y="70.5" width="8" height="6" rx="1"/><rect x="4" y="79.9" width="8" height="6" rx="1"/><rect x="4" y="89.3" width="8" height="6" rx="1"/></g></mask></defs><rect width="80" height="100" fill="#D6362B" mask="url(#bm)"/></svg><span class="wm">BIGBOY<small>Productions</small></span></div>
-    <p>Christopher White <span aria-hidden="true">·</span> San Diego, California <span aria-hidden="true">·</span> <a class="door" href="98/">Boot BIGBOY 98</a></p>
+    <p>Christopher White <span aria-hidden="true">·</span> San Diego, California</p>
   </footer>
 
 </div>
@@ -609,7 +623,8 @@ document.querySelectorAll('a.hero').forEach(a => a.addEventListener('click', e =
   e.preventDefault();
   const v = document.createElement('video'); v.controls = true; v.playsInline = true;
   v.src = a.dataset.video; v.poster = a.dataset.poster; v.setAttribute('aria-label', a.getAttribute('aria-label'));
-  a.replaceWith(v); v.play();
+  v.tabIndex = 0; a.replaceWith(v); v.focus();
+  v.play().catch(() => { /* Native controls remain available if playback is blocked. */ });
 }));
 document.querySelectorAll('details.entry').forEach(d => d.addEventListener('toggle', () => {
   if (!d.open) return;
