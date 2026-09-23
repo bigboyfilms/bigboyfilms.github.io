@@ -184,6 +184,8 @@ img{display:block;max-width:100%}
   display:flex;flex-direction:column;box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-light),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-white),4px 4px 0 rgba(0,0,0,.35)}
 .win.max{left:0!important;top:0!important;width:100%!important;height:100%!important;max-height:100%!important}
 .win.min{display:none}
+.win:focus-visible{outline:none}
+.win:focus-visible .tb{outline:1px dotted var(--cream);outline-offset:-4px}
 .tb{height:22px;flex:none;display:flex;align-items:center;gap:6px;padding:2px 4px 2px 6px;
   background:linear-gradient(90deg,var(--title-a),var(--title-b));color:var(--cream);font:700 11.5px var(--ui);
   box-shadow:inset 0 -2px 0 var(--red);cursor:default;user-select:none;touch-action:none}
@@ -430,7 +432,10 @@ p{margin:0 0 10px}
 /* my computer / settings */
 .drives{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:4px}
 .drives li{display:flex;align-items:center;gap:10px;padding:6px 8px;background:none;border:0;width:100%;text-align:left;cursor:pointer;font:12px var(--ui)}
-.drives li:hover{background:var(--red);color:#fff}
+.drives li.drive{padding:0}
+.drives button{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer}
+.drives button:hover,.drives button:focus-visible{background:var(--red);color:#fff}
+.drives button:focus-visible{outline:1px dotted var(--cream);outline-offset:-4px}
 .drives li svg{width:20px;height:20px;flex:none}
 .drives li span{margin-left:auto;font:600 11px var(--ui);letter-spacing:.04em;opacity:.75}
 .settings{display:grid;gap:8px;padding-top:10px;border-top:1px solid #cfcabd}
@@ -486,9 +491,9 @@ p{margin:0 0 10px}
    ============================================================ */
 @media (pointer:coarse){
   :root{--tb-h:44px}
-  .tb{height:36px;padding:2px 4px 2px 8px}
+  .tb{height:48px;padding:2px 4px 2px 8px}
   .tb .tt{font-size:13px}
-  .tbb{width:34px;height:30px}
+  .tbb{width:44px;height:44px}
   .tbb svg{width:11px;height:11px}
   .tbb.x{margin-left:4px}
   #start{height:36px;padding:0 13px 0 9px;font-size:13px}
@@ -1046,14 +1051,15 @@ const WM = {
     return null;
   },
   open(key, arg){
-    if(this.wins.has(key)){ const w = this.wins.get(key); if(w.min) this.restore(key); this.focus(key); if(key==='photo' && arg!==undefined) viewerGo(arg); return w.el; }
+    if(this.wins.has(key)){ const w = this.wins.get(key); if(w.min) this.restore(key); else this.enter(key); if(key==='photo' && arg!==undefined) viewerGo(arg); return w.el; }
     const spec = this.spec(key); if(!spec) return null;
     if(key==='photo') viewer.i = (arg===undefined ? viewer.i : ((arg % PHOTOS.length) + PHOTOS.length) % PHOTOS.length);
     const el = document.createElement('section');
-    el.className = 'win'; el.dataset.key = key; el.setAttribute('role','dialog'); el.setAttribute('aria-label', spec.title);
+    el.className = 'win'; el.dataset.key = key; el.tabIndex = -1; el.setAttribute('role','dialog'); el.setAttribute('aria-label', spec.title);
+    const opener = document.activeElement;
     el.innerHTML = `<div class="tb"><span class="ti">${spec.icon}</span><span class="tt">${esc(spec.title)}</span>
       ${spec.dialog ? '' : `<button class="tbb" data-act="min" aria-label="Minimize">${GLYPH.min}</button>
-      <button class="tbb" data-act="max" aria-label="Maximize">${GLYPH.max}</button>`}
+      <button class="tbb" data-act="max" aria-label="Maximize" aria-pressed="false">${GLYPH.max}</button>`}
       <button class="tbb x" data-act="close" aria-label="Close">${GLYPH.x}</button></div>
       <div class="body ${spec.cls||''}">${spec.body}</div>
       ${spec.sb ? `<div class="sb"><span>${esc(spec.sb[0])}</span><span>${esc(spec.sb[1]||'')}</span></div>` : ''}`;
@@ -1069,10 +1075,10 @@ const WM = {
     this.fit(el);
     /* posters and frames arrive late and change the height; fit again when they land */
     el.addEventListener('load', () => this.fit(el), true);
-    const rec = { el, spec, min:false, max:false, key };
+    const rec = { el, spec, min:false, max:false, key, opener, lastFocus:null };
     this.wins.set(key, rec);
     if(isMobile() || key==='photo') this.setMax(key, true);
-    this.focus(key); renderTasks(); AU.open();
+    this.enter(key); AU.open();
     if(key==='photo') viewerRender();
     if(MAIN.includes(key)) setHash(key);
     if(key.startsWith('film:')) setHash('film/'+key.slice(5));
@@ -1138,10 +1144,29 @@ const WM = {
     const t = Math.max(4, Math.min(parseFloat(el.style.top) || 4, H - el.offsetHeight - 4));
     el.style.top = t + 'px'; el.style.maxHeight = (H - t - 4) + 'px';
   },
+  /* Raising a window must not steal focus from a clicked input or player control. */
   focus(key){
-    const w = this.wins.get(key); if(!w) return;
+    const w = this.wins.get(key); if(!w || w.min || this.active===key) return;
     this.wins.forEach(o => o.el.classList.add('inactive'));
     w.el.classList.remove('inactive'); w.el.style.zIndex = ++this.z; this.active = key; renderTasks(); this.glass();
+  },
+  enter(key){
+    const w = this.wins.get(key); if(!w || w.min) return;
+    this.focus(key);
+    const target = w.lastFocus && w.lastFocus.isConnected && w.lastFocus.getClientRects().length ? w.lastFocus : w.el;
+    target.focus({preventScroll:true});
+  },
+  returnFocus(w){
+    const opener = w.opener;
+    if(opener && opener!==document.body && opener!==document.documentElement && opener.isConnected && opener.getClientRects().length){
+      const parent = opener.closest('.win');
+      if(parent) this.focus(parent.dataset.key);
+      opener.focus({preventScroll:true});
+      return;
+    }
+    const top = this.top();
+    if(top) this.enter(top.key);
+    else (Array.from(icons.querySelectorAll('[data-icon]')).find(b => b.dataset.icon===w.key) || startBtn).focus({preventScroll:true});
   },
   /* the tube calms while the active window is a film, a clip or a photograph */
   glass(){ screen.classList.toggle('media', !!this.active && /^(photo$|film:|clip:)/.test(this.active)); },
@@ -1149,26 +1174,40 @@ const WM = {
   close(key, silent){
     const w = this.wins.get(key); if(!w) return;
     const v = w.el.querySelector('video'); if(v) v.pause();
-    w.el.remove(); this.wins.delete(key); if(!silent) AU.close();
+    w.el.remove(); this.wins.delete(key); renderTasks(); if(!silent) AU.close();
     const t = this.top(); if(t) this.focus(t.key); else { this.active = null; renderTasks(); this.glass(); }
     if(!this.wins.size){ setHash(''); this.cascade = 0; }
+    if(!silent) this.returnFocus(w);
   },
   closeAll(silent){ Array.from(this.wins.keys()).forEach(k => this.close(k, silent)); },
-  minimize(key){ const w = this.wins.get(key); if(!w) return; w.min = true; w.el.classList.add('min'); AU.click(); const t = this.top(); if(t) this.focus(t.key); else { this.active=null; renderTasks(); this.glass(); } },
-  restore(key){ const w = this.wins.get(key); if(!w) return; w.min = false; w.el.classList.remove('min'); this.focus(key); },
-  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b) b.innerHTML = on ? GLYPH.rst : GLYPH.max; },
+  minimize(key){ const w = this.wins.get(key); if(!w) return; w.min = true; w.el.classList.add('min'); renderTasks(); AU.click(); const t = this.top(); if(t) this.enter(t.key); else { this.active=null; renderTasks(); this.glass(); const task = Array.from(tasks.children).find(b => b.dataset.task===key); (task || startBtn).focus({preventScroll:true}); } },
+  restore(key){ const w = this.wins.get(key); if(!w) return; w.min = false; w.el.classList.remove('min'); this.enter(key); },
+  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b){ b.innerHTML = on ? GLYPH.rst : GLYPH.max; b.setAttribute('aria-label', on ? 'Restore' : 'Maximize'); b.setAttribute('aria-pressed', String(on)); } if(!on) this.fit(w.el); },
   toggleMax(key){ const w = this.wins.get(key); if(w) this.setMax(key, !w.max); }
 };
 function renderTasks(){
-  tasks.innerHTML = '';
+  const existing = new Map(Array.from(tasks.children, b => [b.dataset.task, b]));
   WM.wins.forEach(w => {
     if(w.spec.dialog) return;
-    const b = document.createElement('button');
-    b.className = 'task btn98' + (WM.active===w.key && !w.min ? ' on' : '');
-    b.dataset.task = w.key; b.innerHTML = `${w.spec.icon}<b>${esc(w.spec.title)}</b>`;
-    tasks.appendChild(b);
+    let b = existing.get(w.key);
+    if(!b){
+      b = document.createElement('button'); b.dataset.task = w.key;
+      b.innerHTML = `${w.spec.icon}<b>${esc(w.spec.title)}</b>`;
+      b.setAttribute('aria-label', w.spec.title); b.title = w.spec.title;
+      tasks.appendChild(b);
+    }
+    const active = WM.active===w.key && !w.min;
+    b.className = 'task btn98' + (active ? ' on' : '');
+    b.setAttribute('aria-pressed', String(active)); existing.delete(w.key);
   });
+  existing.forEach(b => b.remove());
 }
+/* Keyboard navigation can enter any nonmodal window without being trapped there. */
+layer.addEventListener('focusin', e => {
+  const el = e.target.closest('.win'); if(!el) return;
+  const w = WM.wins.get(el.dataset.key); if(!w) return;
+  w.lastFocus = e.target; WM.focus(w.key);
+});
 /* dragging */
 (function(){
   let drag = null;
@@ -1335,12 +1374,12 @@ function tplTerrorverse(){
 }
 function tplComputer(){
   return `<ul class="drives">
-    <li data-open="films">${ICON.films}Films (C:)<span>${FILMS.length} TITLES</span></li>
-    <li data-open="photos">${ICON.photos}Photography (D:)<span>${PHOTOS.length} FRAMES</span></li>
-    <li data-open="ai">${ICON.ai}AI Lab (E:)<span>${AI.length} SHORTS</span></li>
-    <li data-open="edits">${ICON.edits}Edits (F:)<span>${EDITS.length} CUTS</span></li>
-    <li data-open="bigboy">${ICON.bigboy}BIGBOY (G:)<span>1 HOUSE</span></li>
-    <li data-open="terrorverse">${ICON.tv}TERRORVERSE (H:)<span>COMING SOON</span></li>
+    <li class="drive"><button data-open="films">${ICON.films}Films (C:)<span>${FILMS.length} TITLES</span></button></li>
+    <li class="drive"><button data-open="photos">${ICON.photos}Photography (D:)<span>${PHOTOS.length} FRAMES</span></button></li>
+    <li class="drive"><button data-open="ai">${ICON.ai}AI Lab (E:)<span>${AI.length} SHORTS</span></button></li>
+    <li class="drive"><button data-open="edits">${ICON.edits}Edits (F:)<span>${EDITS.length} CUTS</span></button></li>
+    <li class="drive"><button data-open="bigboy">${ICON.bigboy}BIGBOY (G:)<span>1 HOUSE</span></button></li>
+    <li class="drive"><button data-open="terrorverse">${ICON.tv}TERRORVERSE (H:)<span>COMING SOON</span></button></li>
   </ul>
   <div class="settings">
     <div class="kicker">Control panel</div>
@@ -1394,7 +1433,7 @@ const START = [
   { href:'../', label:'Selected Work', icon:ICON.about }, { k:'pc', label:'My Computer', icon:ICON.pc }, { k:'shutdown', label:'Shut Down...', icon:ICON.power }
 ];
 startList.innerHTML = START.map(s => s.sep ? '<li class="sep" aria-hidden="true"></li>'
-  : `<li tabindex="0" ${s.k?`data-open="${s.k}"`:''} ${s.url?`data-url="${s.url}"`:''} ${s.href?`data-href="${s.href}"`:''}>${s.icon}${esc(s.label)}</li>`).join('');
+  : `<li role="button" tabindex="0" ${s.k?`data-open="${s.k}"`:''} ${s.url?`data-url="${s.url}"`:''} ${s.href?`data-href="${s.href}"`:''}>${s.icon}${esc(s.label)}</li>`).join('');
 
 /* icon behaviour: single click selects, double click (or Enter) opens; on touch one tap opens */
 let lastTap = { k:null, t:0 };
@@ -1409,14 +1448,23 @@ icons.addEventListener('keydown', e => { const b = e.target.closest('.icon'); if
 desktop.addEventListener('pointerdown', e => { if(e.target.closest('#wall')) $$('.icon.sel').forEach(x=>x.classList.remove('sel')); });
 
 /* start menu */
-function toggleStart(force){
+function toggleStart(force, returnFocus=false){
   const open = force===undefined ? !startMenu.classList.contains('open') : force;
   startMenu.classList.toggle('open', open); startBtn.classList.toggle('down', open); startBtn.setAttribute('aria-expanded', String(open));
-  if(open) AU.click();
+  if(open){ AU.click(); const first = startList.querySelector('[tabindex]'); if(first) first.focus(); }
+  else if(returnFocus || startMenu.contains(document.activeElement)) startBtn.focus({preventScroll:true});
 }
 startBtn.addEventListener('click', () => toggleStart());
 document.addEventListener('pointerdown', e => { if(startMenu.classList.contains('open') && !e.target.closest('#startmenu') && !e.target.closest('#start')) toggleStart(false); });
-startList.addEventListener('keydown', e => { const li = e.target.closest('li'); if(li && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); li.click(); } });
+startList.addEventListener('keydown', e => {
+  const li = e.target.closest('[tabindex]'); if(!li) return;
+  if(e.key==='Enter'||e.key===' '){ e.preventDefault(); li.click(); }
+  if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
+    e.preventDefault(); const items = Array.from(startList.querySelectorAll('[tabindex]')), i = items.indexOf(li);
+    const next = e.key==='Home' ? 0 : e.key==='End' ? items.length-1 : (i + (e.key==='ArrowDown'?1:-1) + items.length) % items.length;
+    items[next].focus();
+  }
+});
 
 /* =====================================================================
    10. GLOBAL DELEGATED CLICKS
@@ -1434,7 +1482,7 @@ document.addEventListener('click', e => {
     if(a==='close') WM.close(key); else if(a==='min') WM.minimize(key); else if(a==='max') WM.toggleMax(key); return; }
   const task = t.closest('[data-task]');
   if(task){ const key = task.dataset.task, w = WM.wins.get(key); if(!w) return;
-    if(w.min) WM.restore(key); else if(WM.active===key) WM.minimize(key); else WM.focus(key); AU.click(); return; }
+    if(w.min) WM.restore(key); else if(WM.active===key) WM.minimize(key); else WM.enter(key); AU.click(); return; }
   const ph = t.closest('[data-photo]');
   if(ph){ WM.open('photo', +ph.dataset.photo); return; }
   const vn = t.closest('[data-vnav]');
@@ -1469,7 +1517,7 @@ document.addEventListener('change', e => {
   if(e.target.id==='opt-intro'){ store.set('intro', e.target.checked?'1':'0'); if(e.target.checked) session.remove('bb98.booted'); }
 });
 document.addEventListener('keydown', e => {
-  if(e.key==='Escape'){ if(startMenu.classList.contains('open')) toggleStart(false); else if(WM.active) WM.close(WM.active); }
+  if(e.key==='Escape'){ if(startMenu.classList.contains('open')) toggleStart(false, true); else if(WM.active) WM.close(WM.active); }
   if(WM.active==='photo' && (e.key==='ArrowLeft'||e.key==='ArrowRight')){ viewerGo(viewer.i + (e.key==='ArrowRight'?1:-1)); }
 });
 $('#mute').addEventListener('click', () => { AU.ensure(); AU.setMuted(!AU.muted); if(!AU.muted) AU.click(); const c = $('#opt-sound'); if(c) c.checked = !AU.muted; });
