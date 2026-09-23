@@ -240,7 +240,9 @@ img{display:block;max-width:100%}
 #startmenu ul{list-style:none;margin:0;padding:2px 0;flex:1}
 #startmenu li{display:flex;align-items:center;gap:9px;padding:5px 10px 5px 8px;font:12px var(--ui);cursor:pointer}
 #startmenu li svg{width:20px;height:20px;flex:none}
-#startmenu li:hover,#startmenu li:focus{background:var(--red);color:#fff;outline:0}
+/* Keyboard focus highlights an item, mouse and touch do not: Start opens with focus on its first
+   entry, and a plain :focus painted that entry red on every click, which 98 never did. */
+#startmenu li:hover,#startmenu li:focus-visible{background:var(--red);color:#fff;outline:0}
 #startmenu li.sep{padding:0;margin:3px 3px;height:0;border-top:1px solid var(--chrome-dark);border-bottom:1px solid var(--chrome-white);cursor:default}
 #startmenu li.sep:hover{background:none}
 
@@ -431,7 +433,7 @@ p{margin:0 0 10px}
 
 /* my computer / settings */
 .drives{list-style:none;margin:0 0 12px;padding:0;display:grid;gap:4px}
-.drives li{display:flex;align-items:center;gap:10px;padding:6px 8px;background:none;border:0;width:100%;text-align:left;cursor:pointer;font:12px var(--ui)}
+.drives li{display:flex;align-items:center;gap:10px;padding:6px 8px;background:none;border:0;width:100%;text-align:left;font:12px var(--ui)}
 .drives li.drive{padding:0}
 .drives button{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer}
 .drives button:hover,.drives button:focus-visible{background:var(--red);color:#fff}
@@ -1059,7 +1061,7 @@ const WM = {
     const opener = document.activeElement;
     el.innerHTML = `<div class="tb"><span class="ti">${spec.icon}</span><span class="tt">${esc(spec.title)}</span>
       ${spec.dialog ? '' : `<button class="tbb" data-act="min" aria-label="Minimize">${GLYPH.min}</button>
-      <button class="tbb" data-act="max" aria-label="Maximize" aria-pressed="false">${GLYPH.max}</button>`}
+      <button class="tbb" data-act="max" aria-label="Maximize">${GLYPH.max}</button>`}
       <button class="tbb x" data-act="close" aria-label="Close">${GLYPH.x}</button></div>
       <div class="body ${spec.cls||''}">${spec.body}</div>
       ${spec.sb ? `<div class="sb"><span>${esc(spec.sb[0])}</span><span>${esc(spec.sb[1]||'')}</span></div>` : ''}`;
@@ -1182,7 +1184,7 @@ const WM = {
   closeAll(silent){ Array.from(this.wins.keys()).forEach(k => this.close(k, silent)); },
   minimize(key){ const w = this.wins.get(key); if(!w) return; w.min = true; w.el.classList.add('min'); renderTasks(); AU.click(); const t = this.top(); if(t) this.enter(t.key); else { this.active=null; renderTasks(); this.glass(); const task = Array.from(tasks.children).find(b => b.dataset.task===key); (task || startBtn).focus({preventScroll:true}); } },
   restore(key){ const w = this.wins.get(key); if(!w) return; w.min = false; w.el.classList.remove('min'); this.enter(key); },
-  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b){ b.innerHTML = on ? GLYPH.rst : GLYPH.max; b.setAttribute('aria-label', on ? 'Restore' : 'Maximize'); b.setAttribute('aria-pressed', String(on)); } if(!on) this.fit(w.el); },
+  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b){ b.innerHTML = on ? GLYPH.rst : GLYPH.max; b.setAttribute('aria-label', on ? 'Restore' : 'Maximize');   /* the name changes, so no aria-pressed: "Restore, pressed" contradicts itself */ } if(!on) this.fit(w.el); },
   toggleMax(key){ const w = this.wins.get(key); if(w) this.setMax(key, !w.max); }
 };
 function renderTasks(){
