@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="only light">
 <title>Christopher White | Creative producer, filmmaker and photographer | BIGBOY PRODUCTIONS</title>
 <meta name="description" content="Christopher White is a creative producer, filmmaker and photographer and the founder of BIGBOY PRODUCTIONS in San Diego. Films, photography, AI work, edits, and the horror label TERRORVERSE, coming soon.">
 <meta name="author" content="Christopher White">
@@ -177,7 +178,10 @@ img{display:block;max-width:100%}
 .icon.sel span,.icon:focus-visible span{background:var(--red);color:#fff;text-shadow:none}
 .icon.sel,.icon:focus-visible{outline:0}
 .icon.sel span,.icon:focus-visible span{outline:1px dotted rgba(242,239,232,.85);outline-offset:-1px}
-#layer{position:absolute;left:0;top:0;right:0;bottom:var(--tb-h)}
+/* The layer spans the desktop but must not own it: it sat over every icon, so no double-click or
+   tap ever reached one. Only the windows inside it take the pointer. */
+#layer{position:absolute;left:0;top:0;right:0;bottom:var(--tb-h);pointer-events:none}
+#layer>.win{pointer-events:auto}
 
 /* ---- windows ---- */
 .win{position:absolute;min-width:200px;max-width:100%;max-height:100%;background:var(--chrome);padding:3px;
@@ -215,7 +219,8 @@ img{display:block;max-width:100%}
 #start .b{width:13px;height:16px}
 #start.down{padding:1px 8px 0 7px}
 #tbdiv{width:2px;height:22px;margin:0 2px;border-left:1px solid var(--chrome-dark);border-right:1px solid var(--chrome-white);flex:none}
-#tasks{flex:1;display:flex;gap:3px;overflow:hidden;min-width:0}
+#tasks{flex:1;display:flex;gap:3px;overflow-x:auto;overflow-y:hidden;min-width:0;scrollbar-width:none}
+#tasks::-webkit-scrollbar{display:none}
 .task{height:24px;flex:1 1 130px;min-width:44px;max-width:170px;display:flex;align-items:center;gap:5px;padding:0 8px;
   font:12px var(--ui);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
 .task svg{width:16px;height:16px;flex:none}
@@ -238,6 +243,9 @@ img{display:block;max-width:100%}
 #startmenu .band span{writing-mode:vertical-rl;transform:rotate(180deg);white-space:nowrap;font:800 14px/1 var(--display);color:var(--cream);letter-spacing:.04em;text-transform:uppercase}
 #startmenu .band span em{font-style:normal;font-weight:600;opacity:.85}
 #startmenu ul{list-style:none;margin:0;padding:2px 0;flex:1}
+/* never taller than the glass: on short screens the list scrolls, as a long 98 Start menu did */
+#startmenu{max-height:calc(100% - var(--tb-h))}
+#startmenu ul{overflow-y:auto;min-height:0;scrollbar-width:thin;scrollbar-color:var(--chrome-dark) var(--chrome)}
 #startmenu li{display:flex;align-items:center;gap:9px;padding:5px 10px 5px 8px;font:12px var(--ui);cursor:pointer}
 #startmenu li svg{width:20px;height:20px;flex:none}
 /* Keyboard focus highlights an item, mouse and touch do not: Start opens with focus on its first
@@ -293,6 +301,7 @@ p{margin:0 0 10px}
 .card .poster.frame{aspect-ratio:16/9}
 .card .poster img{width:100%;height:100%;object-fit:cover}
 .card .poster.wide img,.card .poster.tall img{object-fit:contain}
+.card .poster.frame.tall img{object-fit:cover;object-position:50% 40%}   /* the tile crops, the player shows the whole 9:16 */
 .card .poster .t{position:absolute;inset:0;display:grid;place-items:center;padding:12px;text-align:center;color:var(--cream);font:800 15px/1.05 var(--display);letter-spacing:-.01em}
 .card em.play::before{content:"";display:inline-block;border-left:7px solid var(--red);border-top:4.5px solid transparent;border-bottom:4.5px solid transparent;margin-right:6px;vertical-align:-1px}
 /* the lead film takes four cells: the poster that won Best Movie Poster is no longer 180 px */
@@ -309,13 +318,14 @@ p{margin:0 0 10px}
 .card.lead .poster.art .t{font-size:24px}
 .card:hover .poster,.card:focus-visible .poster{outline:2px solid var(--red);outline-offset:1px}
 .card b{display:block;font:700 12px/1.2 var(--ui)}
+.card,.fbody{overflow-wrap:anywhere}
 .card span{display:block;font:11px var(--ui);color:#4a4740}
 .card em{display:block;font:600 11px var(--ui);letter-spacing:.06em;text-transform:uppercase;color:var(--label);font-style:normal;margin-top:2px}
 
 /* one film or clip */
 .film{display:flex;flex-direction:column}
 .player{background:#000;aspect-ratio:16/9;display:grid;place-items:center;overflow:hidden}
-.player video{width:100%;height:100%;display:block;background:#000}
+.player video{position:absolute;inset:0;width:100%;height:100%;display:block;background:#000;object-fit:contain}
 .player img{width:100%;height:100%;object-fit:contain}
 /* The Media Player's own transport. Chrome's grey overlay controls were the largest break in the
    illusion, in the one window where his films play. Mouse only: a phone keeps its native
@@ -336,11 +346,12 @@ p{margin:0 0 10px}
 .xseek b{position:absolute;left:0;top:1px;width:11px;height:20px;margin-left:-5px;background:var(--chrome);
   box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-white),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-light)}
 .xseek:focus-visible{outline:1px dotted var(--ink);outline-offset:2px}
+/* narrow glass: the seek bar takes its own row, as Media Player 6.4 did */
+.xport{flex-wrap:wrap}
 .xtime{flex:none;min-width:92px;text-align:center;font:11px/1 var(--mono);color:var(--cream);background:var(--ink);padding:6px 8px;box-shadow:inset 1px 1px #000,1px 1px 0 var(--chrome-white)}
 .player.portrait{aspect-ratio:auto;max-height:60vh}
 .player.portrait img{max-height:60vh;width:auto;margin:0 auto}
 .player.vertical{aspect-ratio:auto;height:min(62vh,540px)}
-.player.vertical video{width:auto;height:100%;max-width:100%;margin:0 auto}
 .win.max .player.vertical{height:min(72vh,720px)}
 .fbody{padding:14px 14px 12px;background:var(--cream)}
 .fbody h2{font-size:22px}
@@ -373,7 +384,7 @@ p{margin:0 0 10px}
 .thumb img{width:100%;height:auto;display:block}
 .thumb:hover,.thumb:focus-visible{outline:2px solid var(--red);outline-offset:1px}
 .viewer{display:flex;flex-direction:column;height:100%;background:var(--dark)}
-.viewer .stage{flex:1;min-height:0;display:grid;place-items:center;padding:10px}
+.viewer .stage{flex:1;min-height:0;display:grid;place-items:center;padding:10px;grid-template-rows:minmax(0,1fr);grid-template-columns:minmax(0,1fr)}
 .viewer .stage img{max-width:100%;max-height:min(62vh,560px);object-fit:contain;box-shadow:0 8px 30px rgba(0,0,0,.6)}
 .win.max .viewer .stage img{max-height:calc(100% - 4px)}
 .viewer .stage{cursor:pointer;touch-action:pan-y pinch-zoom}
@@ -460,7 +471,7 @@ p{margin:0 0 10px}
    viewport, so the screen grows tall and every window opens
    maximized. The metaphor survives; the cramming does not.
    ============================================================ */
-@media (max-width:640px){
+@media (max-width:640px), (pointer:coarse) and (max-height:500px){
   #room{padding:0;align-items:stretch}
   #monitor{width:100%;border-radius:0;padding:14px 10px 0;box-shadow:none;background:var(--case)}
   #monitor::before{display:none}
@@ -484,6 +495,44 @@ p{margin:0 0 10px}
   #vig{background:radial-gradient(ellipse at center,transparent 70%,rgba(0,0,0,.26) 100%)}
   #screen.media #scan{opacity:0}
   .player.vertical{height:min(64vh,640px)}
+}
+/* Landscape phone: the chin gives back height, the home tiles and photographs use the width,
+   and a playing film never grows taller than its window. */
+@media (pointer:coarse) and (max-height:500px) and (orientation:landscape){
+  #chin{height:36px}
+  #screen{height:calc(100svh - 14px - 12px - 36px)}
+  .tiles{grid-template-columns:1fr 1fr}
+  .grid{columns:3}
+  .win.max .body{container-type:size}
+  .win.max .player,.win.max .player.vertical{max-height:100cqh}
+}
+/* phones: the taskbar is a row of icons, each still named for screen readers */
+@media (max-width:480px){
+  .task b{display:none}
+  .task{flex:0 0 48px;justify-content:center;padding:0}
+  .task:active,.task.on{padding:1px 0 0 1px}
+}
+/* 98 windows always showed their scroll bars. On a Mac trackpad the thin overlay bar vanished at
+   rest, and a window cut mid-line looked broken rather than long. Mouse screens only. */
+@media (pointer:fine){
+  .body{scrollbar-width:auto;scrollbar-color:auto}
+  .body::-webkit-scrollbar{width:16px;height:16px;background:var(--chrome)}
+  .body::-webkit-scrollbar-track{background:repeating-conic-gradient(var(--chrome) 0 25%,#fff 0 50%) 0 0/2px 2px}
+  .body::-webkit-scrollbar-thumb{background:var(--chrome);box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-light),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-white)}
+  .body::-webkit-scrollbar-button:single-button{display:block;width:16px;height:16px;background-color:var(--chrome);background-repeat:no-repeat;background-position:center;background-size:8px 8px;box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-light),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-white)}
+  .body::-webkit-scrollbar-button:single-button:vertical:decrement{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M4 2L7 6H1z' fill='%23000'/%3E%3C/svg%3E")}
+  .body::-webkit-scrollbar-button:single-button:vertical:increment{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M1 2h6L4 6z' fill='%23000'/%3E%3C/svg%3E")}
+  .body::-webkit-scrollbar-button:single-button:horizontal:decrement{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M2 4l4-3v6z' fill='%23000'/%3E%3C/svg%3E")}
+  .body::-webkit-scrollbar-button:single-button:horizontal:increment{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 8 8'%3E%3Cpath d='M6 4L2 1v6z' fill='%23000'/%3E%3C/svg%3E")}
+  .body::-webkit-scrollbar-corner{background:var(--chrome)}
+}
+@supports not selector(::-webkit-scrollbar){ @media (pointer:fine){ .body{scrollbar-color:var(--chrome-dark) var(--chrome)} } }
+/* Windows high contrast: every edge here is a box-shadow, which forced colours remove, so the
+   windows melted into one white field. Real borders come back only in that mode. */
+@media (forced-colors:active){
+  .win,#startmenu,.btn98,.tbb,.tile,.task,.links a,.links button,.social a{border:1px solid ButtonText}
+  .tb{forced-color-adjust:none;background:Highlight;color:HighlightText}
+  .win.inactive .tb{background:Canvas;color:GrayText}
 }
 /* ============================================================
    TOUCH. A fingertip is about 44 px. The close box was 16 x 14
@@ -522,7 +571,7 @@ p{margin:0 0 10px}
   .thumb:hover{outline:0}
 }
 /* phone type floor: nothing a visitor has to read sits under 12 px */
-@media (max-width:640px){
+@media (max-width:640px), (pointer:coarse) and (max-height:500px){
   .card b{font-size:13.5px}
   .card span{font-size:12.5px;line-height:1.35}
   .card em{font-size:11.5px}
@@ -536,6 +585,7 @@ p{margin:0 0 10px}
   .sb{font-size:12px}
   .viewer .cap{font-size:13px;white-space:normal}
   #poweroff .hint,#shutdown .hint,#splash .msg,#bios .skip{font-size:12px}
+  .xseek{flex:1 0 100%;order:-1;margin:0 0 4px}
 }
 @media (prefers-reduced-motion:reduce){
   #bios.on{animation:none}
@@ -889,7 +939,8 @@ const $ = (s, r=document) => r.querySelector(s);
 const $$ = (s, r=document) => Array.from(r.querySelectorAll(s));
 const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const wait = ms => new Promise(r => setTimeout(r, ms));
-const isMobile = () => matchMedia('(max-width:640px)').matches;
+/* a phone on its side is still a phone: same build, same maximized windows */
+const isMobile = () => matchMedia('(max-width:640px), (pointer:coarse) and (max-height:500px)').matches;
 const reduced = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
 const coarse = () => matchMedia('(pointer:coarse)').matches;
 const verb = () => coarse() ? 'Tap' : 'Click';   /* nobody clicks a phone */
@@ -1141,6 +1192,8 @@ const WM = {
      and buried their own status bar (in the Image Viewer, the arrows and the caption). */
   fit(el){
     if(el.classList.contains('max')) return;
+    const W = layer.clientWidth, L = parseFloat(el.style.left) || 4;
+    if(L + el.offsetWidth > W - 4) el.style.left = Math.max(0, W - el.offsetWidth - 4) + 'px';   /* keep Close on the glass; a window dragged off the left stays where it was put */
     const H = layer.clientHeight;
     el.style.maxHeight = (H - 8) + 'px';
     const t = Math.max(4, Math.min(parseFloat(el.style.top) || 4, H - el.offsetHeight - 4));
@@ -1203,6 +1256,7 @@ function renderTasks(){
     b.setAttribute('aria-pressed', String(active)); existing.delete(w.key);
   });
   existing.forEach(b => b.remove());
+  const on = tasks.querySelector('.task.on'); if(on) on.scrollIntoView({block:'nearest', inline:'nearest'});
 }
 /* Keyboard navigation can enter any nonmodal window without being trapped there. */
 layer.addEventListener('focusin', e => {
@@ -1444,7 +1498,8 @@ icons.addEventListener('click', e => {
   $$('.icon.sel').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); AU.click();
   const now = Date.now(), k = b.dataset.icon;
   const touch = matchMedia('(hover:none)').matches;
-  if(touch || (lastTap.k===k && now - lastTap.t < 450)){ if(b.dataset.href) location.href = b.dataset.href; else WM.open(k); lastTap = {k:null,t:0}; } else lastTap = { k, t: now };
+  /* detail 0 is a click with no pointer behind it: a screen reader or switch activating the icon */
+  if(touch || e.detail===0 || (lastTap.k===k && now - lastTap.t < 450)){ if(b.dataset.href) location.href = b.dataset.href; else WM.open(k); lastTap = {k:null,t:0}; } else lastTap = { k, t: now };
 });
 icons.addEventListener('keydown', e => { const b = e.target.closest('.icon'); if(b && (e.key==='Enter'||e.key===' ')){ e.preventDefault(); if(b.dataset.href) location.href = b.dataset.href; else WM.open(b.dataset.icon); } });
 desktop.addEventListener('pointerdown', e => { if(e.target.closest('#wall')) $$('.icon.sel').forEach(x=>x.classList.remove('sel')); });
