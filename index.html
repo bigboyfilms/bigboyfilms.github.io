@@ -38,7 +38,7 @@
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--ui);font-size:1rem;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 img,video{display:block;max-width:100%}
 video{color:var(--cream)}
 video a{color:var(--cream)}
@@ -47,52 +47,58 @@ a:hover{color:var(--red)}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px}
 ::selection{background:#F5D6D1;color:var(--ink)}
 .wrap{max-width:var(--col);margin:0 auto;padding:0 24px}
-.mono{font-family:var(--mono);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:.08em}
+.mono{font-family:var(--mono);font-weight:500;font-size:0.75rem;line-height:1.4;letter-spacing:.08em}
+p{text-wrap:pretty}
+/* the editor accepts 500 characters; one pasted link must wrap, never push a phone page sideways */
+.who>span,.fests li,.panel p,.cap,.note,.why,.elsewhere,.intro p,.role{overflow-wrap:anywhere}
 
 /* ---------- header: the person, then the proof, then a frame ---------- */
 header{padding:64px 0 48px;border-bottom:2px solid var(--red)}
 .id{display:flex;gap:32px;align-items:flex-start;justify-content:space-between}
 .id .text{min-width:0}
-h1{font:800 clamp(34px,7vw,54px)/1.05 var(--display);letter-spacing:-.02em;margin:0 0 8px}
-.sig{font-family:var(--display);font-weight:600;font-size:12px;line-height:1.4;letter-spacing:.36em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
-.role{font-family:var(--ui);font-weight:500;font-size:clamp(18px,2.4vw,21px);line-height:1.4;margin:0 0 16px;max-width:40ch}
+h1{font:800 clamp(1.875rem,8.5vw,3.375rem)/1.05 var(--display);letter-spacing:-.02em;word-spacing:.05em;margin:0 0 8px}
+.sig{font-family:var(--display);font-weight:600;font-size:0.75rem;line-height:1.4;letter-spacing:.36em;text-transform:uppercase;color:var(--muted);margin:0 0 24px}
+.role{font-family:var(--ui);font-weight:500;font-size:clamp(1.125rem,2.4vw,1.3125rem);line-height:1.4;margin:0 0 16px;max-width:40ch;text-wrap:balance}
 .role b{display:block;font-weight:600;color:var(--red);margin-bottom:6px}
 .proof{color:var(--ink);letter-spacing:.02em;margin:0 0 24px}
 .face{flex:none;width:112px;height:112px;object-fit:cover;object-position:50% 20%;box-shadow:0 0 0 1px var(--rule),4px 4px 0 var(--red)}
-.meta{display:flex;flex-wrap:wrap;gap:0 24px;font-size:15px;color:var(--muted)}
+.meta{display:flex;flex-wrap:wrap;gap:0 24px;font-size:0.9375rem;color:var(--muted)}
 .meta a{font-weight:500;display:inline-flex;align-items:center;min-height:44px}
 .meta span{display:inline-flex;align-items:center;min-height:44px}
 .skip{position:absolute;top:8px;left:16px;transform:translateY(-160%);padding:12px;background:var(--paper);z-index:10}
 .skip:focus{transform:none}
 .section-nav{display:flex;flex-wrap:wrap;gap:4px 24px;margin-top:20px}
-.section-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:14px;font-weight:600}
+.section-nav a{display:inline-flex;align-items:center;min-height:44px;font-size:0.875rem;font-weight:600}
 .door{color:var(--muted)}
 .door:hover{color:var(--red)}
 
 /* ---------- hero: the gold winner, playing, before any paragraph ---------- */
 .hero-wrap{margin:32px 0 0;background:var(--dark);position:relative}
-.hero{display:block;position:relative;width:100%;aspect-ratio:16/9;color:var(--cream)}
+/* The trailer file is 1280x720 with the picture burned in at 1280x532 and 94 px of black above and
+   below (ffmpeg cropdetect, and the still measures the same). Frame the picture, not the bars.
+   A new hero file needs this ratio checked again. */
+.hero{display:block;position:relative;width:100%;aspect-ratio:1280/532;color:var(--cream)}
 .hero img{width:100%;height:100%;object-fit:cover}
 .hero .play{position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%);transition:transform .15s ease}
 .hero:hover .play{transform:translate(-50%,-50%) scale(1.06)}
-.hero-wrap > .cap{padding:12px 16px;color:var(--cream);font-size:14px;line-height:1.5;margin:0;background:var(--dark)}
+.hero-wrap > .cap{padding:12px 16px;color:var(--cream);font-size:0.875rem;line-height:1.5;margin:0;background:var(--dark)}
 .hero-wrap > .cap b{font-weight:600}
-.hero-wrap video{display:block;width:100%;aspect-ratio:16/9;background:#000}
+.hero-wrap video{display:block;width:100%;aspect-ratio:1280/532;object-fit:cover;max-height:100svh;background:#000}
 
 /* ---------- intro ---------- */
 .intro{padding:48px 0;border-bottom:1px solid var(--rule)}
-.intro p{margin:0 0 16px;max-width:58ch;font-size:clamp(17px,2vw,18px);line-height:1.55}
+.intro p{margin:0 0 16px;max-width:58ch;font-size:clamp(1.0625rem,2vw,1.125rem);line-height:1.55}
 .intro p:last-child{margin-bottom:0}
 
 /* ---------- sections ---------- */
 section{padding:48px 0;border-bottom:1px solid var(--rule)}
-h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
-.note{color:var(--muted);margin:0 0 24px;max-width:58ch;font-size:15px;line-height:1.55}
+h2{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3.2vw,1.75rem);line-height:1.15;letter-spacing:-.02em;margin:0 0 8px}
+.note{color:var(--muted);margin:0 0 24px;max-width:58ch;font-size:0.9375rem;line-height:1.55}
 
 /* ---------- rows: one shape everywhere, the frame is the button ---------- */
 .entry{border-top:1px solid var(--rule)}
 .entry:first-of-type{border-top:0}
-.entry > summary,.entry.static{list-style:none;display:grid;grid-template-columns:128px 1fr auto;gap:16px;align-items:start;padding:16px 12px 16px 8px;border-radius:3px}
+.entry > summary,.entry.static{list-style:none;display:grid;grid-template-columns:128px 1fr auto;gap:16px;align-items:start;padding:16px 8px;margin-inline:-8px;border-radius:3px}   /* the hover pill bleeds 8 px; the content sits on the column edge */
 .entry > summary{cursor:pointer}
 .entry > summary::-webkit-details-marker{display:none}
 .entry > summary:hover{background:var(--cream)}
@@ -101,18 +107,18 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .thumb .play{position:absolute;left:50%;top:50%;width:32px;height:32px;transform:translate(-50%,-50%)}
 .who{min-width:0;display:block}
 .who > span{display:block}
-.title{font-family:var(--ui);font-weight:600;font-size:17px;line-height:1.3;letter-spacing:-.01em}
-.credit{font-family:var(--ui);font-weight:500;font-size:14px;line-height:1.45;margin-top:2px}
+.title{font-family:var(--ui);font-weight:600;font-size:1.0625rem;line-height:1.3;letter-spacing:-.01em}
+.credit{font-family:var(--ui);font-weight:500;font-size:0.875rem;line-height:1.45;margin-top:2px}
 .credit:empty{display:none}
-.sub{font-family:var(--ui);font-weight:400;font-size:14px;line-height:1.45;color:var(--muted);margin-top:2px}
-.laurel{font-family:var(--mono);font-weight:500;font-size:12px;line-height:1.4;letter-spacing:.02em;margin-top:8px;padding-left:13px;position:relative}
+.sub{font-family:var(--ui);font-weight:400;font-size:0.875rem;line-height:1.45;color:var(--muted);margin-top:2px}
+.laurel{font-family:var(--mono);font-weight:500;font-size:0.75rem;line-height:1.4;letter-spacing:.02em;margin-top:8px;padding-left:13px;position:relative}
 .laurel::before{content:"";position:absolute;left:0;top:6px;width:5px;height:5px;background:var(--red)}
-.open{font-family:var(--mono);font-weight:500;font-size:12px;line-height:1.4;padding-top:2px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);white-space:nowrap;padding-left:8px}
+.open{font-family:var(--mono);font-weight:500;font-size:0.75rem;line-height:1.4;padding-top:2px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);white-space:nowrap;padding-left:8px}
 .open.muted{color:var(--muted)}
-.entry[open] > summary .open::after{content:" \2212"}
-.entry:not([open]) > summary .open::after{content:" +"}
-.panel{padding:0 8px 24px}
-.panel video{width:100%;background:#000;box-shadow:0 0 0 1px var(--rule)}
+.entry[open] > summary .open::after{content:" \2212";content:" \2212" / ""}
+.entry:not([open]) > summary .open::after{content:" +";content:" +" / ""}
+.panel{padding:0 0 24px}
+.panel video{width:100%;max-height:100svh;background:#000;box-shadow:0 0 0 1px var(--rule)}
 .panel video.vertical{max-width:340px}
 .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:14px}
 .sheets{display:grid;gap:20px}
@@ -123,11 +129,11 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .sheet img{width:100%;height:auto;display:block;background:var(--dark);box-shadow:0 0 0 1px var(--rule);transition:box-shadow .15s ease}
 .sheet:hover img{box-shadow:0 0 0 2px var(--red)}
 .sheet:focus-visible{outline:none} .sheet:focus-visible img{box-shadow:0 0 0 3px var(--red)}
-.pair .cap,.sheets .cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:11px;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.pair .cap,.sheets .cap{margin:6px 0 0;font-family:var(--mono);font-weight:500;font-size:0.6875rem;line-height:1.45;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
 .pair .cap a:not(:hover),.sheets .cap a:not(:hover){color:var(--muted)}
-.panel p{margin:16px 0 0;max-width:58ch;font-size:15px;line-height:1.55}
+.panel p{margin:16px 0 0;max-width:58ch;font-size:0.9375rem;line-height:1.55}
 .fests{margin:16px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:8px 24px}
-.fests li{font-size:14px;line-height:1.45;padding-left:13px;position:relative;color:var(--muted)}
+.fests li{font-size:0.875rem;line-height:1.45;padding-left:13px;position:relative;color:var(--muted)}
 .fests li::before{content:"";position:absolute;left:0;top:8px;width:5px;height:5px;background:var(--red)}
 
 /* ---------- photography: his crops, not squares ---------- */
@@ -138,47 +144,52 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(24px,3.2vw,28px);l
 .brk{flex-basis:100%;height:0}
 
 /* ---------- capabilities: one line on screen, the six blocks on paper ---------- */
-.capline{margin:0;font-size:17px;line-height:1.7;max-width:58ch}
-.capline a{font-weight:500}
-.caps-print h3{font-family:var(--ui);font-weight:600;font-size:14px;line-height:1.45}
+.capline{margin:0;font-size:1.0625rem;line-height:1.7;max-width:58ch}
+.capline a{font-weight:500;white-space:nowrap}
+.caps-print h3{font-family:var(--ui);font-weight:600;font-size:0.875rem;line-height:1.45}
 .caps-print{display:none}
 
 /* ---------- contact ---------- */
 .contact{padding:48px 0 24px;border-bottom:0}
 .contact h2{margin-bottom:8px}
-.why{margin:0 0 24px;max-width:58ch;font-size:15px;line-height:1.55;color:var(--muted)}
-.mailto{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:var(--cream);text-decoration:none;font-family:var(--ui);font-weight:600;font-size:16px;line-height:1.4;padding:16px 24px;border-radius:3px;transition:background .15s ease}
+.why{margin:0 0 24px;max-width:58ch;font-size:0.9375rem;line-height:1.55;color:var(--muted)}
+.mailto{display:inline-flex;align-items:center;gap:12px;background:var(--ink);color:var(--cream);text-decoration:none;font-family:var(--ui);font-weight:600;font-size:1rem;line-height:1.4;padding:16px 24px;border-radius:3px;transition:background .15s ease}
 .mailto:hover{background:var(--red);color:#fff}
+.mailto{max-width:100%;overflow-wrap:anywhere}
 .mailto svg{width:20px;height:20px;flex:none}
-.elsewhere{margin:24px 0 0;max-width:60ch;font-size:15px;line-height:1.55;color:var(--muted)}
+.elsewhere{margin:24px 0 0;max-width:60ch;font-size:0.9375rem;line-height:1.55;color:var(--muted)}
 
 /* ---------- footer: the house signs the page ---------- */
 footer{padding:24px 0 64px;border-top:1px solid var(--rule);display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px 32px}
 .lockup{display:flex;align-items:center;gap:12px}
 .lockup svg{width:22px;height:28px;flex:none}
-.lockup .wm{font-family:var(--display);font-weight:800;font-size:18px;line-height:1.2;letter-spacing:-.02em}
-.lockup .wm small{display:block;font-family:var(--display);font-weight:600;font-size:11px;line-height:1.3;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:2px}
-footer p{margin:0;font-size:13px;color:var(--muted)}
+.lockup .wm{font-family:var(--display);font-weight:800;font-size:1.125rem;line-height:1.2;letter-spacing:-.02em}
+.lockup .wm small{display:block;font-family:var(--display);font-weight:600;font-size:0.6875rem;line-height:1.3;letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
 
 @media (max-width:640px){
   header{padding:48px 0 32px}
-  .id{gap:16px}
-  .face{width:72px;height:72px}
+  .id{flex-direction:column-reverse;align-items:flex-start;gap:16px}
+  .face{width:64px;height:64px}
+  .meta{gap:0 16px}
+  .section-nav{gap:4px 12px}
+  .section-nav a{font-size:0.8125rem}
+  .open{white-space:normal}
   .sig{margin-bottom:16px}
   .hero-wrap{margin-top:32px}
   .hero .play{width:56px;height:56px}
-  .entry > summary,.entry.static{grid-template-columns:104px 1fr;gap:12px;padding:16px 8px 16px 4px}
+  .entry > summary,.entry.static{grid-template-columns:104px 1fr;gap:12px;padding:16px 8px}
   .thumb{width:104px}
   .open{grid-column:2;padding-left:0}
   .pair{gap:18px}
   .fests{grid-template-columns:1fr}
-  .strip{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:0 -24px;padding-left:24px}
+  .strip{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:24px;padding-bottom:8px;margin:0 -24px;padding-left:24px}
   .ph{flex:0 0 calc(240px * var(--ar));height:240px;scroll-snap-align:start}
   .ph img{width:100%;height:100%;max-width:none;aspect-ratio:auto}
   .brk{display:none}
   .contact{padding-top:40px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}html{scroll-behavior:auto!important}}
 
 /* ---------- print: a one-page attachment with the credits on it ---------- */
 @media print{
@@ -194,7 +205,8 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
   section{padding:10pt 0} h2{font-size:14pt;break-after:avoid}
   #photography,#method{display:none}
   .entry{break-inside:avoid}
-  .entry > summary,.entry.static{grid-template-columns:1fr auto;padding:5pt 0}
+  .entry > summary,.entry.static{grid-template-columns:1fr auto;padding:5pt 0;margin-inline:0}
+  .open{display:none!important}
   .title{font-size:11pt} .credit,.sub{font-size:9.5pt} .laurel,.open{font-size:8pt}
   .open::after{content:none!important}
   .panel{display:block!important;padding:0 0 6pt} .panel p{display:none}
@@ -204,7 +216,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
   .caps-print h3,.caps-print p{display:inline;margin:0;font-size:9.5pt} .caps-print h3::after{content:": "} .caps-print div{margin-bottom:3pt}
   .mailto{background:none;color:var(--ink);padding:0;font-size:11pt} .mailto svg{display:none}
   .elsewhere{font-size:9pt;margin-top:6pt}
-  a{text-decoration:none;color:var(--ink)} a[href^="http"]::after{content:" (" attr(href) ")";font-size:7.5pt;color:#666}
+  a{text-decoration:none;color:var(--ink)} a[href^="http"]::after{content:"\00a0(" attr(href) ")";font-size:7.5pt;color:#666}
   p{orphans:3;widows:3}
   footer{padding:8pt 0 0;border-top:1pt solid #999} .lockup svg{display:inline-block}
 }
@@ -233,18 +245,16 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <p class="proof mono">6 films <span aria-hidden="true">·</span> 15 awards and festival selections</p>
         <div class="meta">
           <span>San Diego</span>
-          <!-- LINKEDIN slot. Front door only, never the machine (decided 2026-09-06).
-               Paste <a href="https://www.linkedin.com/in/iamchristopherwhite">LinkedIn</a> here
-               once the Apple-on-the-site question is settled. -->
+          <!-- LinkedIn slot, pending -->
           <a href="mailto:bigboyfilms@icloud.com">bigboyfilms@icloud.com</a>
           <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>
         </div>
       </div>
       <img class="face" src="assets/photos/christopher-white.jpg" alt="Christopher White">
     </div>
-    <nav class="section-nav" aria-label="Selected work"><a href="#film">Film</a><a href="#photography">Photography</a><a href="#motion">Motion</a><a href="#method">Process</a><a href="#contact">Contact</a></nav>
+    <nav class="section-nav" aria-label="Selected work"><a href="#film">Film</a><a href="#photography">Photography</a><a href="#motion">Motion</a><a href="#method">Method</a><a href="#contact">Contact</a></nav>
     <figure class="hero-wrap">
-      <a class="hero" href="assets/films/coulrophobia-trailer.mp4" data-video="assets/films/coulrophobia-trailer.mp4" data-poster="assets/films/coulrophobia-still.jpg" aria-label="Play the Coulrophobia trailer, 0:54">
+      <a class="hero" href="assets/films/coulrophobia-trailer.mp4" data-video="assets/films/coulrophobia-trailer.mp4" data-poster="assets/films/coulrophobia-still.jpg" aria-label="Play the Coulrophobia trailer, 0:54" data-name="Coulrophobia trailer">
         <img src="assets/films/coulrophobia-still.jpg" alt="" fetchpriority="high">
         <svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg>
       </a>
@@ -622,7 +632,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 document.querySelectorAll('a.hero').forEach(a => a.addEventListener('click', e => {
   e.preventDefault();
   const v = document.createElement('video'); v.controls = true; v.playsInline = true;
-  v.src = a.dataset.video; v.poster = a.dataset.poster; v.setAttribute('aria-label', a.getAttribute('aria-label'));
+  v.src = a.dataset.video; v.poster = a.dataset.poster; v.setAttribute('aria-label', a.dataset.name || a.getAttribute('aria-label'));
   v.tabIndex = 0; a.replaceWith(v); v.focus();
   v.play().catch(() => { /* Native controls remain available if playback is blocked. */ });
 }));
