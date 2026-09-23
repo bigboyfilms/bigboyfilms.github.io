@@ -38,7 +38,7 @@
   --ink:#141414; --cream:#F2EFE8; --red:#D6362B; --red-deep:#7E1F17; --red-lift:#E8857C;
   --dark:#0C0C0C; --abyss:#080607; --gray:#8A867E; --label:#5F5B53;
   --chrome:#C0C0C0; --chrome-light:#DFDFDF; --chrome-white:#FFFFFF; --chrome-dark:#808080; --chrome-black:#000000;
-  --title-a:#1A1A1A; --title-b:#3D3D3D; --title-ia:#555555; --title-ib:#747474;
+  --title-a:#1A1A1A; --title-b:#3D3D3D; --title-ia:#555555; --title-ib:#5E5E5E;
   --case:#E9E4D6; --case-2:#D9D3C2; --case-3:#B9B2A0;
   --ui:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
   --px:'Silkscreen','Courier New',monospace;
@@ -130,11 +130,13 @@ img{display:block;max-width:100%}
 #poweroff{align-items:center;justify-content:center;flex-direction:column;gap:14px;cursor:pointer;color:#7a766e;user-select:none}
 #poweroff .pwr{width:64px;height:64px;border-radius:50%;border:3px solid var(--red);display:grid;place-items:center;position:relative;
   box-shadow:0 0 14px rgba(214,54,43,.25),inset 0 0 12px rgba(214,54,43,.2)}
+#poweroff .pwr{background:none;padding:0;cursor:pointer;color:inherit}
+#poweroff .pwr:focus-visible{outline:1px dotted var(--cream);outline-offset:6px}
 #poweroff .pwr::after{content:"";position:absolute;inset:-3px;border-radius:50%;box-shadow:0 0 34px rgba(214,54,43,.6);opacity:.25;animation:pulse 2.4s ease-in-out infinite}
 #poweroff .pwr svg{width:28px;height:28px}
 @keyframes pulse{0%,100%{opacity:.25}50%{opacity:1}}
 #poweroff .name{font:800 clamp(14px,2.4vw,22px)/1 var(--display);color:var(--cream);letter-spacing:-.02em;margin-top:6px}
-.phase .fastdoor{margin-top:18px;font:500 12px var(--ui);color:#948F86;text-decoration-color:var(--red);text-decoration-thickness:1.5px;text-underline-offset:3px}
+.phase .fastdoor{display:inline-block;padding:5px 0;margin-top:18px;font:500 12px var(--ui);color:#948F86;text-decoration-color:var(--red);text-decoration-thickness:1.5px;text-underline-offset:3px}
 .phase .fastdoor:hover{color:var(--cream)}
 #poweroff .hint{font:clamp(10px,1.3vw,12px) var(--px);letter-spacing:.12em;text-transform:uppercase;color:#948F86}
 #bios{padding:4% 5%;color:#c9c7c1;font:clamp(11px,1.45vw,14px)/1.6 var(--mono);white-space:pre-wrap;flex-direction:column;cursor:pointer}
@@ -182,6 +184,10 @@ img{display:block;max-width:100%}
    tap ever reached one. Only the windows inside it take the pointer. */
 #layer{position:absolute;left:0;top:0;right:0;bottom:var(--tb-h);pointer-events:none}
 #layer>.win{pointer-events:auto}
+/* a focused icon comes forward so a keyboard user never tabs onto something hidden under a window */
+.icon:focus-visible{position:relative;z-index:8999}
+/* read by screen readers, never drawn */
+.vh{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
 /* ---- windows ---- */
 .win{position:absolute;min-width:200px;max-width:100%;max-height:100%;background:var(--chrome);padding:3px;
@@ -193,7 +199,7 @@ img{display:block;max-width:100%}
 .tb{height:22px;flex:none;display:flex;align-items:center;gap:6px;padding:2px 4px 2px 6px;
   background:linear-gradient(90deg,var(--title-a),var(--title-b));color:var(--cream);font:700 11.5px var(--ui);
   box-shadow:inset 0 -2px 0 var(--red);cursor:default;user-select:none;touch-action:none}
-.win.inactive .tb{background:linear-gradient(90deg,var(--title-ia),var(--title-ib));color:var(--chrome);box-shadow:none}
+.win.inactive .tb{background:linear-gradient(90deg,var(--title-ia),var(--title-ib));color:var(--chrome-light);box-shadow:none}   /* 4.87:1 at its lightest, still dimmer than the active bar */
 .tb .ti{width:16px;height:16px;flex:none}
 .tb .ti svg{width:16px;height:16px}
 .tb .tt{flex:1;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;letter-spacing:.01em}
@@ -275,7 +281,7 @@ p{margin:0 0 10px}
 .home .hero{background:linear-gradient(90deg,#0C0C0C 44%,rgba(12,12,12,.3)),url(../assets/films/coulrophobia-still.jpg) right center/cover}
 .tiles{display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:1fr;gap:8px}
 .tile[data-open="contact"]{background:var(--red);color:#fff;box-shadow:inset -1px -1px #3d0d09,inset 1px 1px #f0a19a,inset -2px -2px #7e1f17,inset 2px 2px #e46b60}
-.tile[data-open="contact"] span{color:#ffe1dc}
+.tile[data-open="contact"] span{color:#fff}
 .tile[data-open="contact"]:active{box-shadow:inset 1px 1px #3d0d09,inset -1px -1px #f0a19a}
 .tile{display:flex;align-items:center;gap:10px;padding:10px 10px;text-align:left;background:var(--chrome);border:0;cursor:pointer;
   box-shadow:inset -1px -1px var(--chrome-black),inset 1px 1px var(--chrome-white),inset -2px -2px var(--chrome-dark),inset 2px 2px var(--chrome-light)}
@@ -449,6 +455,8 @@ p{margin:0 0 10px}
 .drives button{display:flex;align-items:center;gap:10px;width:100%;padding:6px 8px;border:0;background:none;color:inherit;text-align:left;font:inherit;cursor:pointer}
 .drives button:hover,.drives button:focus-visible{background:var(--red);color:#fff}
 .drives button:focus-visible{outline:1px dotted var(--cream);outline-offset:-4px}
+.drives button:hover span,.drives button:focus-visible span{opacity:1}
+.body.chrome .kicker{color:#4A4740}
 .drives li svg{width:20px;height:20px;flex:none}
 .drives li span{margin-left:auto;font:600 11px var(--ui);letter-spacing:.04em;opacity:.75}
 .settings{display:grid;gap:8px;padding-top:10px;border-top:1px solid #cfcabd}
@@ -463,6 +471,22 @@ p{margin:0 0 10px}
 .dlg .opts{display:grid;gap:6px;margin:8px 0 4px}
 .dlg .opts label{display:flex;align-items:center;gap:8px;cursor:pointer}
 .dlg .opts input{accent-color:var(--red);margin:0}
+/* 98 check boxes and option buttons: a white well in a sunken bevel, an ink tick or dot, never a
+   modern rounded control inside a verbatim 98 dialog. The label carries the 24 px hit area. */
+.settings input,.dlg .opts input{appearance:none;-webkit-appearance:none;flex:none;width:13px;height:13px;margin:0;background:#fff;cursor:pointer;
+  box-shadow:inset -1px -1px var(--chrome-white),inset 1px 1px var(--chrome-dark),inset -2px -2px var(--chrome-light),inset 2px 2px var(--chrome-black)}
+.dlg .opts input{border-radius:50%}
+.settings input:checked{background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 13 13'%3E%3Cpath d='M3 6l2 2 5-5v2l-5 5-2-2z' fill='%23141414'/%3E%3C/svg%3E") center/100% 100% no-repeat}
+.dlg .opts input:checked{background:radial-gradient(circle,var(--ink) 0 22%,#fff 27%)}
+.settings input:focus-visible,.dlg .opts input:focus-visible{outline:1px dotted var(--ink);outline-offset:2px}
+.settings label,.dlg .opts label{min-height:24px}
+/* title-bar buttons stay 16 x 14 to the eye and take a 24 x 24 target under a mouse; the three
+   hit areas meet exactly in the gaps between them and never overlap */
+@media (pointer:fine){
+  .tbb{position:relative}
+  .tbb::before{content:"";position:absolute;inset:-5px -5px -5px -3px}
+  .tbb[data-act="min"]::before{inset:-5px -3px -5px -5px}
+}
 .actions{display:flex;justify-content:flex-end;gap:6px;margin-top:12px}
 .actions .btn98{min-width:76px}
 
@@ -567,7 +591,7 @@ p{margin:0 0 10px}
   .links a,.links button{padding:11px 14px;font-size:13px}
   .phase .fastdoor{padding:14px 12px;margin-top:6px}
   .dlg .opts label{padding:7px 0}
-  .dlg .opts input{width:20px;height:20px}
+  .dlg .opts input,.settings input{width:20px;height:20px}
   .thumb:hover{outline:0}
 }
 /* phone type floor: nothing a visitor has to read sits under 12 px */
@@ -608,12 +632,13 @@ p{margin:0 0 10px}
   </div>
 </noscript>
 
-<div id="room">
+<main id="room">
+  <h1 class="vh">Christopher White, BIGBOY 98</h1>
   <div id="monitor">
     <div id="bezel">
       <div id="screen">
 
-        <div id="desktop" aria-label="BIGBOY 98 desktop">
+        <div id="desktop">
           <div id="wall">
             <svg class="wmark" viewBox="0 0 80 100" aria-hidden="true"><defs><mask id="m-wall"><path d="M 0 0 L 54 0 A 24 24 0 0 1 54 48 A 26 26 0 0 1 54 100 L 0 100 Z" fill="#fff"/><g fill="#000"><rect x="4" y="4.7" width="8" height="6" rx="1"/><rect x="4" y="14.1" width="8" height="6" rx="1"/><rect x="4" y="23.5" width="8" height="6" rx="1"/><rect x="4" y="32.9" width="8" height="6" rx="1"/><rect x="4" y="42.3" width="8" height="6" rx="1"/><rect x="4" y="51.7" width="8" height="6" rx="1"/><rect x="4" y="61.1" width="8" height="6" rx="1"/><rect x="4" y="70.5" width="8" height="6" rx="1"/><rect x="4" y="79.9" width="8" height="6" rx="1"/><rect x="4" y="89.3" width="8" height="6" rx="1"/></g></mask></defs><rect width="80" height="100" fill="#F2EFE8" mask="url(#m-wall)"/></svg>
             <div class="build">BIGBOY 98<br>BUILD 1998.09</div>
@@ -622,26 +647,26 @@ p{margin:0 0 10px}
           <div id="layer"></div>
           <nav id="startmenu" aria-label="Start menu">
             <div class="band"><span>BIGBOY <em>98</em></span></div>
-            <ul id="startlist"></ul>
+            <ul id="startlist" role="menu" aria-label="Start"></ul>
           </nav>
           <div id="taskbar">
-            <button id="start" class="btn98" aria-haspopup="true" aria-expanded="false"><span class="b" id="startlogo"></span>Start</button>
+            <button id="start" class="btn98" aria-haspopup="menu" aria-controls="startlist" aria-expanded="false"><span class="b" id="startlogo"></span>Start</button>
             <div id="tbdiv"></div>
             <div id="tasks"></div>
             <div id="tray">
-              <button id="mute" aria-label="Sound on or off" title="Sound"></button>
+              <button id="mute" aria-label="Sound effects" aria-pressed="true" title="Sound"></button>
               <span id="clock">12:00 AM</span>
             </div>
           </div>
         </div>
 
-        <div id="poweroff" class="phase on" role="button" tabindex="0" aria-label="Power on">
-          <div class="pwr"><svg viewBox="0 0 24 24" fill="none" stroke="#D6362B" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></div>
+        <div id="poweroff" class="phase on">
+          <button class="pwr" type="button" aria-label="Power on"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="#D6362B" stroke-width="2.4" stroke-linecap="round"><path d="M12 3v9"/><path d="M6.3 6.3a8 8 0 1 0 11.4 0"/></svg></button>
           <div class="name">CHRISTOPHER WHITE</div>
           <div class="hint">CLICK TO POWER ON</div>
           <a class="fastdoor" href="../">Selected Work, one page, no boot</a>
         </div>
-        <div id="bios" class="phase" aria-live="polite"></div>
+        <div id="bios" class="phase" aria-hidden="true"></div>
         <div id="splash" class="phase">
           <svg class="mark" viewBox="0 0 80 100" aria-hidden="true"><defs><mask id="m-splash"><path d="M 0 0 L 54 0 A 24 24 0 0 1 54 48 A 26 26 0 0 1 54 100 L 0 100 Z" fill="#fff"/><g fill="#000"><rect x="4" y="4.7" width="8" height="6" rx="1"/><rect x="4" y="14.1" width="8" height="6" rx="1"/><rect x="4" y="23.5" width="8" height="6" rx="1"/><rect x="4" y="32.9" width="8" height="6" rx="1"/><rect x="4" y="42.3" width="8" height="6" rx="1"/><rect x="4" y="51.7" width="8" height="6" rx="1"/><rect x="4" y="61.1" width="8" height="6" rx="1"/><rect x="4" y="70.5" width="8" height="6" rx="1"/><rect x="4" y="79.9" width="8" height="6" rx="1"/><rect x="4" y="89.3" width="8" height="6" rx="1"/></g></mask></defs><rect width="80" height="100" fill="#D6362B" mask="url(#m-splash)"/></svg>
           <div class="wm">BIGBOY</div>
@@ -662,15 +687,15 @@ p{margin:0 0 10px}
       </div>
     </div>
     <div id="chin">
-      <div id="brandplate">
+      <div id="brandplate" aria-hidden="true">
         <svg class="b" viewBox="0 0 80 100" aria-hidden="true"><path d="M 0 0 L 54 0 A 24 24 0 0 1 54 48 A 26 26 0 0 1 54 100 L 0 100 Z" fill="#D6362B"/></svg>
         <span class="wm">BIGBOY</span><span class="model">CRT-98</span>
         <div id="vents"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </div>
-      <div id="hw"><span id="led"></span><button id="pwrbtn" aria-label="Power button" title="Power"></button></div>
+      <div id="hw"><span id="led"></span><button id="pwrbtn" aria-label="Power" aria-pressed="false" title="Power"></button></div>
     </div>
   </div>
-</div>
+</main>
 
 <script>
 /* =====================================================================
@@ -979,7 +1004,7 @@ const AU = {
   setMuted(m){ this.muted = m; store.set('mute', m?'1':'0'); renderMute(); }
 };
 ['pointerdown','keydown'].forEach(ev => addEventListener(ev, () => { AU.armed = true; AU.ensure(); }, true));
-function renderMute(){ const b = $('#mute'); b.innerHTML = AU.muted ? ICON.sndOff : ICON.sndOn; b.title = AU.muted ? 'Sound off' : 'Sound on'; }
+function renderMute(){ const b = $('#mute'); b.innerHTML = AU.muted ? ICON.sndOff : ICON.sndOn; b.title = AU.muted ? 'Sound off' : 'Sound on'; b.setAttribute('aria-pressed', String(!AU.muted)); }
 
 /* =====================================================================
    5. DOM REFS
@@ -1001,7 +1026,7 @@ async function powerOn(opts={}){
   /* Every boot gets a number. Press the chin button mid-boot and the old boot used to finish
      anyway, a few seconds later, underneath a dead power-on screen. A stale boot now stops. */
   const id = ++bootId;
-  AU.ensure(); AU.power(); led.classList.add('on');
+  AU.ensure(); AU.power(); led.classList.add('on'); $('#pwrbtn').setAttribute('aria-pressed','true'); bootStamp = performance.now();
   showPhase(null); flash();
   const fast = opts.fast || reduced() || session.get('bb98.booted')==='1';
   if(!fast){ await runBios(); if(id !== bootId) return;
@@ -1018,7 +1043,7 @@ async function powerOn(opts={}){
 }
 async function runBios(){
   const el = phase.bios; el.innerHTML = ''; showPhase('bios');
-  const skip = document.createElement('div'); skip.className = 'skip'; skip.textContent = verb().toUpperCase() + ' TO SKIP';
+  const skip = document.createElement('div'); skip.className = 'skip'; skip.textContent = coarse() ? 'TAP TO SKIP' : 'CLICK OR PRESS ESC TO SKIP';
   await wait(350); if(skipBoot) return;
   AU.beep();
   for(const [cls, raw, rest] of BIOS_LINES){
@@ -1054,7 +1079,7 @@ function powerOff(){
   bootId++;
   AU.close(); startMenu.classList.remove('open'); startBtn.setAttribute('aria-expanded','false');
   powered = false; booting = false; skipBoot = true;
-  led.classList.remove('on'); session.remove('bb98.booted');
+  led.classList.remove('on'); $('#pwrbtn').setAttribute('aria-pressed','false'); session.remove('bb98.booted');
   /* the windows stay up while the picture collapses: it is the picture that dies, not the desktop */
   const done = () => { screen.classList.remove('collapsing'); WM.closeAll(true); desktop.classList.remove('on'); showPhase('off'); };
   if(reduced()){ done(); return; }
@@ -1063,17 +1088,19 @@ function powerOff(){
 function shutDown(){
   AU.close(); WM.closeAll(true); startMenu.classList.remove('open');
   desktop.classList.remove('on'); powered = false; session.remove('bb98.booted');
-  led.classList.remove('on');
+  led.classList.remove('on'); $('#pwrbtn').setAttribute('aria-pressed','false');
   /* a beat of black, then the amber screen: the OS lets go before the message arrives */
-  showPhase(null); setTimeout(() => { if(!powered && !booting) showPhase('down'); }, reduced() ? 0 : 420);
+  showPhase(null); setTimeout(() => { if(!powered && !booting){ showPhase('down'); $('#pwrbtn').focus({preventScroll:true}); } }, reduced() ? 0 : 420);   /* the amber screen has one control: the power button */
 }
 function restart(){ powerOff(); setTimeout(()=>powerOn({fast:false}), reduced() ? 300 : COLLAPSE_MS + 350); }
 
 phase.off.addEventListener('click', e => { if(e.target.closest('a')) return; powerOn(); });
-phase.off.addEventListener('keydown', e => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); powerOn(); } });
 phase.down.addEventListener('click', e => { if(e.target.closest('a')) return; showPhase('off'); setTimeout(()=>powerOn(), 60); });
 phase.bios.addEventListener('click', () => { skipBoot = true; });
 phase.splash.addEventListener('click', () => { skipBoot = true; });
+/* the boot skips from the keyboard too; the key press that started it does not count */
+let bootStamp = 0;
+document.addEventListener('keydown', e => { if(booting && !skipBoot && (e.key==='Escape'||e.key==='Enter'||e.key===' ') && e.timeStamp - bootStamp > 250){ skipBoot = true; e.preventDefault(); } });
 $('#pwrbtn').addEventListener('click', () => { AU.ensure(); if(powered||booting) powerOff(); else powerOn(); });
 $('#pwrbtn').addEventListener('mouseenter', () => AU.ensure());
 
@@ -1180,8 +1207,8 @@ const WM = {
       const mv = ev => seekTo(ev.clientX), up = () => { seek.removeEventListener('pointermove', mv); seek.removeEventListener('pointerup', up); seek.removeEventListener('pointercancel', up); };
       seek.addEventListener('pointermove', mv); seek.addEventListener('pointerup', up); seek.addEventListener('pointercancel', up); });
     seek.addEventListener('keydown', e => { const d = isFinite(v.duration) ? v.duration : 0; if(!d) return;
-      if(e.key==='ArrowRight'){ v.currentTime = Math.min(d, v.currentTime + 5); e.preventDefault(); e.stopPropagation(); }
-      if(e.key==='ArrowLeft'){ v.currentTime = Math.max(0, v.currentTime - 5); e.preventDefault(); e.stopPropagation(); }
+      const step = {ArrowRight:5, ArrowUp:5, PageUp:15, ArrowLeft:-5, ArrowDown:-5, PageDown:-15}[e.key];
+      if(step){ v.currentTime = Math.max(0, Math.min(d, v.currentTime + step)); e.preventDefault(); e.stopPropagation(); }
       if(e.key==='Home'){ v.currentTime = 0; e.preventDefault(); } if(e.key==='End'){ v.currentTime = d; e.preventDefault(); }
       if(e.key===' ' || e.key==='Enter'){ toggle(); e.preventDefault(); } });
     paint();
@@ -1324,7 +1351,7 @@ function tplFilms(){
     const tags = [f.trailer ? 'TRAILER' : '', n ? `${n} FESTIVAL${n===1?'':'S'}` : ''].filter(Boolean).join(' · ');
     const wins = i===0 ? f.laurels.filter(isWin) : [];
     return `
-    <button class="card${i===0?' lead':''}" data-open="film:${f.key}" aria-label="${esc(f.title)}">
+    <button class="card${i===0?' lead':''}" data-open="film:${f.key}">
       <div class="${posterCls(f,'poster')}">${f.poster ? `<img src="${f.poster}" alt="" loading="lazy" ${f.pos?`style="object-position:${f.pos}"`:''} ${ONERR}>` : ''}<div class="t" aria-hidden="true" style="${f.poster && f.fit!=='art' ? 'display:none' : ''}">${esc(f.title)}</div></div>
       <div><b>${esc(f.title)}</b><span>${f.year} · ${esc(f.program)}</span>${tags ? `<em${f.trailer?' class="play"':''}>${tags}</em>` : ''}${wins.length ? `<span class="wins">${wins.map(w => { const [a, fest] = winParts(w); return `<i><b>${esc(a)}</b>${esc(fest)}</i>`; }).join('')}</span>` : ''}</div>
     </button>`; };
@@ -1342,7 +1369,7 @@ function laurelBlock(f){
 }
 function tplFilm(f){
   const media = f.trailer
-    ? `<div class="player"><video controls playsinline preload="metadata" ${f.frame?`poster="${f.frame}"`:''} src="${f.trailer}"></video></div>`
+    ? `<div class="player"><video controls playsinline preload="metadata" aria-label="${esc(f.title)} trailer" ${f.frame?`poster="${f.frame}"`:''} src="${f.trailer}"></video></div>`
     : (f.poster ? `<div class="${posterCls(f,'fposter')}"><img src="${f.poster}" alt="${esc(f.title)} poster" ${f.pos?`style="object-position:${f.pos}"`:''}><div class="t" aria-hidden="true">${esc(f.title)}</div></div>` : '');
   return `<div class="film${f.trailer ? '' : ' split'}">${media}
     <div class="fbody">
@@ -1357,14 +1384,14 @@ function tplFilm(f){
 }
 function tplClips(items, line){
   return `${line ? `<div class="lab-line">${esc(line).toUpperCase()}</div>` : ''}<div class="clips">${items.map(c => `
-    <button class="card" data-open="clip:${c.key}" aria-label="${esc(c.title)}">
+    <button class="card" data-open="clip:${c.key}">
       <div class="poster frame ${c.orient==='vertical'?'tall':''}">${c.frame ? `<img src="${c.frame}" alt="" loading="lazy" onerror="var t=this.parentNode.querySelector('.t');if(t)t.style.display='grid';this.remove()">` : ''}<div class="t" aria-hidden="true" style="${c.frame?'display:none':''}">${esc(c.title)}</div></div>
       <div><b>${esc(c.title)}</b><span>${c.year ? c.year+' · ' : ''}${esc(c.program)}</span><em class="play">${esc(c.kind).toUpperCase()}</em></div>
     </button>`).join('')}</div>`;
 }
 function tplClip(c){
   return `<div class="film">
-    <div class="player ${c.orient==='vertical'?'vertical':''}"><video controls playsinline preload="metadata" ${c.frame?`poster="${c.frame}"`:''} src="${c.video}"></video></div>
+    <div class="player ${c.orient==='vertical'?'vertical':''}"><video controls playsinline preload="metadata" aria-label="${esc(c.title)}" ${c.frame?`poster="${c.frame}"`:''} src="${c.video}"></video></div>
     <div class="fbody">
       <div class="kicker">${esc(c.kind)}${c.year ? ' · '+c.year : ''}</div>
       <h2>${esc(c.title)}</h2>
@@ -1380,13 +1407,14 @@ function tplPhotos(){
 function festivalCount(f){ return new Set((f.laurels||[]).map(l => l.split(',')[0].trim())).size; }
 const viewer = { i: 0 };
 function tplViewer(){
-  return `<div class="viewer"><div class="stage"><img id="vimg" alt=""></div>
+  return `<div class="viewer"><span class="vh" id="vlive" aria-live="polite"></span><div class="stage"><img id="vimg" alt=""></div>
     <div class="bar"><button class="btn98" data-vnav="-1" aria-label="Previous">&lsaquo;</button><button class="btn98" data-vnav="1" aria-label="Next">&rsaquo;</button>
     <div class="cap" id="vcap"></div><div class="n" id="vn"></div></div></div>`;
 }
 function viewerRender(){
   const p = PHOTOS[viewer.i]; const img = $('#vimg'); if(!img) return;
   img.src = p.src; img.alt = p.cap; $('#vcap').textContent = p.cap; $('#vn').textContent = `${viewer.i+1} / ${PHOTOS.length}`;
+  const lv = $('#vlive'); if(lv) lv.textContent = `${p.cap}, ${viewer.i+1} of ${PHOTOS.length}`;
   setHash('photo/'+(viewer.i+1));
   const nx = PHOTOS[(viewer.i+1)%PHOTOS.length]; const pre = new Image(); pre.src = nx.src;
 }
@@ -1454,8 +1482,8 @@ function tplBin(){
   <div class="actions"><button class="btn98" data-do="empty">Empty Recycle Bin</button></div>`;
 }
 function tplShutdown(){
-  return `<div class="dlg">${ICON.power.replace('<svg','<svg class="ic"')}<div class="msg"><p>What do you want the computer to do?</p>
-    <div class="opts"><label><input type="radio" name="sd" value="down" checked> Shut down</label><label><input type="radio" name="sd" value="restart"> Restart</label><label><input type="radio" name="sd" value="stay"> Stay right here</label></div></div></div>
+  return `<div class="dlg">${ICON.power.replace('<svg','<svg class="ic"')}<div class="msg"><p id="sd-q">What do you want the computer to do?</p>
+    <div class="opts" role="radiogroup" aria-labelledby="sd-q"><label><input type="radio" name="sd" value="down" checked> Shut down</label><label><input type="radio" name="sd" value="restart"> Restart</label><label><input type="radio" name="sd" value="stay"> Stay right here</label></div></div></div>
     <div class="actions"><button class="btn98" data-do="sd-ok">OK</button><button class="btn98" data-do="sd-cancel">Cancel</button></div>`;
 }
 
@@ -1488,8 +1516,8 @@ const START = [
   ...(SITE.imdb ? [{ url:SITE.imdb, label:'IMDb', icon:ICON.imdb }] : []), { sep:true },
   { href:'../', label:'Selected Work', icon:ICON.about }, { k:'pc', label:'My Computer', icon:ICON.pc }, { k:'shutdown', label:'Shut Down...', icon:ICON.power }
 ];
-startList.innerHTML = START.map(s => s.sep ? '<li class="sep" aria-hidden="true"></li>'
-  : `<li role="button" tabindex="0" ${s.k?`data-open="${s.k}"`:''} ${s.url?`data-url="${s.url}"`:''} ${s.href?`data-href="${s.href}"`:''}>${s.icon}${esc(s.label)}</li>`).join('');
+startList.innerHTML = START.map(s => s.sep ? '<li class="sep" role="separator"></li>'
+  : `<li role="menuitem" tabindex="-1" ${s.k?`data-open="${s.k}"`:''} ${s.url?`data-url="${s.url}"`:''} ${s.href?`data-href="${s.href}"`:''}>${s.icon}${esc(s.label)}</li>`).join('');
 
 /* icon behaviour: single click selects, double click (or Enter) opens; on touch one tap opens */
 let lastTap = { k:null, t:0 };
@@ -1505,19 +1533,22 @@ icons.addEventListener('keydown', e => { const b = e.target.closest('.icon'); if
 desktop.addEventListener('pointerdown', e => { if(e.target.closest('#wall')) $$('.icon.sel').forEach(x=>x.classList.remove('sel')); });
 
 /* start menu */
-function toggleStart(force, returnFocus=false){
+function toggleStart(force, returnFocus=false, byPointer=false){
   const open = force===undefined ? !startMenu.classList.contains('open') : force;
   startMenu.classList.toggle('open', open); startBtn.classList.toggle('down', open); startBtn.setAttribute('aria-expanded', String(open));
-  if(open){ AU.click(); const first = startList.querySelector('[tabindex]'); if(first) first.focus(); }
+  if(open){ AU.click(); const first = startList.querySelector('[role="menuitem"]'); if(first) first.focus(byPointer ? {focusVisible:false} : undefined); }   /* a mouse or finger opening never paints the first entry, even right after keyboard use */
   else if(returnFocus || startMenu.contains(document.activeElement)) startBtn.focus({preventScroll:true});
 }
-startBtn.addEventListener('click', () => toggleStart());
+startBtn.addEventListener('click', e => toggleStart(undefined, false, e.detail > 0));
+/* focus leaving the menu for anything but Start closes it */
+startMenu.addEventListener('focusout', e => { const to = e.relatedTarget; if(startMenu.classList.contains('open') && to && !startMenu.contains(to) && to !== startBtn) toggleStart(false); });
 document.addEventListener('pointerdown', e => { if(startMenu.classList.contains('open') && !e.target.closest('#startmenu') && !e.target.closest('#start')) toggleStart(false); });
 startList.addEventListener('keydown', e => {
-  const li = e.target.closest('[tabindex]'); if(!li) return;
+  const li = e.target.closest('[role="menuitem"]'); if(!li) return;
   if(e.key==='Enter'||e.key===' '){ e.preventDefault(); li.click(); }
+  if(e.key==='Tab'){ e.preventDefault(); toggleStart(false, true); }
   if(['ArrowDown','ArrowUp','Home','End'].includes(e.key)){
-    e.preventDefault(); const items = Array.from(startList.querySelectorAll('[tabindex]')), i = items.indexOf(li);
+    e.preventDefault(); const items = Array.from(startList.querySelectorAll('[role="menuitem"]')), i = items.indexOf(li);
     const next = e.key==='Home' ? 0 : e.key==='End' ? items.length-1 : (i + (e.key==='ArrowDown'?1:-1) + items.length) % items.length;
     items[next].focus();
   }
