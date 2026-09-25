@@ -145,14 +145,14 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3.2vw,1.75r
 .brk{flex-basis:100%;height:0}
 
 /* ---------- recreations: the film's frame above, his below ---------- */
-.subhead{font-family:var(--ui);font-weight:600;font-size:1.0625rem;line-height:1.3;letter-spacing:-.01em;margin:48px 0 0}
-p.laurel{margin:8px 0 0}
-.rec-note{color:var(--muted);margin:16px 0 0;max-width:58ch;font-size:0.9375rem;line-height:1.55}
-.rec-set{margin:24px 0 0}
+.subhead{font-family:var(--display);font-weight:800;font-size:1.375rem;line-height:1.15;letter-spacing:-.02em;margin:48px 0 0}
+p.laurel{margin:16px 0 0}
+.rec-note{color:var(--muted);margin:8px 0 0;max-width:58ch;font-size:0.9375rem;line-height:1.55}
+.rec-set{margin:32px 0 0}
 .recs{display:flex;gap:16px;align-items:flex-start}
 .rec{flex:var(--ar) 1 0%;min-width:0}
 .rec img{aspect-ratio:var(--ar)}
-.rec-set figcaption{margin-top:8px;font-size:0.875rem;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
+.rec-set figcaption{margin:0 0 8px;font-size:0.875rem;line-height:1.45;color:var(--muted);overflow-wrap:anywhere}
 .rec-set figcaption b{font-weight:600;color:var(--ink)}
 
 /* ---------- capabilities: one line on screen, the six blocks on paper ---------- */
@@ -196,7 +196,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
   .pair{gap:18px}
   .fests{grid-template-columns:1fr}
   .strip{flex-wrap:nowrap;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:24px;padding-bottom:8px;margin:0 -24px;padding-left:24px}
-  .ph{flex:0 0 calc(240px * var(--ar));height:240px;scroll-snap-align:start}
+  .ph{flex:0 0 calc(320px * var(--ar));height:320px;scroll-snap-align:start}
   .ph img{width:100%;height:100%;max-width:none;aspect-ratio:auto}
   .brk{display:none}
   .recs{flex-direction:column;gap:16px}
@@ -287,7 +287,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     <p class="note">Open a row to watch the trailer. Full films are shared by email.</p>
     <details class="entry" id="coulrophobia">
       <summary>
-        <span class="thumb"><img src="assets/films/coulrophobia-still.jpg" alt="Coulrophobia, a figure in blue light" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/films/coulrophobia-still-thumb.jpg" alt="Coulrophobia, a figure in blue light" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Coulrophobia</span>
           <span class="credit"><!-- ROLE: fill in, e.g. Director, Cinematographer --></span>
@@ -313,7 +313,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="echoes-of-vengeance">
       <summary>
-        <span class="thumb"><img src="assets/films/echoes-of-vengeance-still.jpg" alt="Echoes of Vengeance, a man raising a camera" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/films/echoes-of-vengeance-still-thumb.jpg" alt="Echoes of Vengeance, a man raising a camera" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Echoes of Vengeance</span>
           <span class="credit">Producer</span>
@@ -332,7 +332,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="the-amount">
       <summary>
-        <span class="thumb"><img src="assets/films/the-amount-still.jpg" alt="The Amount, two people across a table" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/films/the-amount-still-thumb.jpg" alt="The Amount, two people across a table" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">The Amount</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -347,7 +347,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="kai">
       <summary>
-        <span class="thumb"><img src="assets/films/kai-still.jpg" alt="Kai, three people talking in a glass lounge above the city" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/films/kai-still-thumb.jpg" alt="Kai, three people talking in a glass lounge above the city" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Kai</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -365,7 +365,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
       </div>
     </details>
     <div class="entry static" id="somewhere-bigger">
-      <span class="thumb"><img src="assets/films/somewhere-bigger-poster.jpg" alt="Somewhere Bigger poster, a figure at an airfield at sunset" loading="lazy"></span>
+      <span class="thumb"><img src="assets/films/somewhere-bigger-poster-thumb.jpg" alt="Somewhere Bigger poster, a figure at an airfield at sunset" loading="lazy"></span>
       <span class="who">
         <span class="title">Somewhere Bigger</span>
         <span class="credit"><!-- ROLE: fill in --></span>
@@ -374,7 +374,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
       <span class="open muted">Trailer in progress</span>
     </div>
     <div class="entry static" id="everetts-shadow">
-      <span class="thumb"><img src="assets/films/everetts-shadow-poster.jpg" alt="Everett's Shadow poster, a meteor over two figures on a bench" loading="lazy"></span>
+      <span class="thumb"><img src="assets/films/everetts-shadow-poster-thumb.jpg" alt="Everett's Shadow poster, a meteor over two figures on a bench" loading="lazy"></span>
       <span class="who">
         <span class="title">Everett's Shadow</span>
         <span class="credit"><!-- ROLE: fill in --></span>
@@ -389,7 +389,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     <p class="note">Brand films, performance coverage, and promotional cuts, shot and edited end to end.</p>
     <details class="entry" id="cinepacks">
       <summary>
-        <span class="thumb"><img src="assets/edits/cinepacks-x-suigeneris-north-hills-final-still.jpg" alt="A performer in neon wings on stage" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/edits/cinepacks-x-suigeneris-north-hills-final-still-thumb.jpg" alt="A performer in neon wings on stage" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">CinePacks x Suigeneris, North Hills</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -404,7 +404,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="tpain-wonderfront">
       <summary>
-        <span class="thumb"><img src="assets/edits/t-pain-wonderfront-2024-frame.jpg" alt="Stage rigging and lights at Wonderfront" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/edits/t-pain-wonderfront-2024-frame-thumb.jpg" alt="Stage rigging and lights at Wonderfront" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">T-Pain at Wonderfront</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -419,7 +419,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="best-fest">
       <summary>
-        <span class="thumb"><img src="assets/edits/wf-the-best-fest-in-the-west-2024-frame.jpg" alt="Wonderfront Festival promo frame" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/edits/wf-the-best-fest-in-the-west-2024-frame-thumb.jpg" alt="Wonderfront Festival promo frame" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">The Best Fest in the West</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -439,7 +439,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     <p class="note">Short films built with generative image and video tools, directed the same way as live action: story, blocking, and performance first.</p>
     <details class="entry" id="rise-above">
       <summary>
-        <span class="thumb"><img src="assets/ai/rise-above-still.jpg" alt="Rise Above, a hooded figure landing in dust at the Culver Studios gate" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/ai/rise-above-still-thumb.jpg" alt="Rise Above, a hooded figure landing in dust at the Culver Studios gate" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Rise Above</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -455,7 +455,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="miscast">
       <summary>
-        <span class="thumb"><img src="assets/ai/miscast-still.jpg" alt="Miscast, a small robot in a black and white monster movie street" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/ai/miscast-still-thumb.jpg" alt="Miscast, a small robot in a black and white monster movie street" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Miscast</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -471,7 +471,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="hero">
       <summary>
-        <span class="thumb"><img src="assets/ai/hero-frame.jpg" alt="Hero, a lone figure kneeling in a floodlit compound as armed figures advance" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/ai/hero-frame-thumb.jpg" alt="Hero, a lone figure kneeling in a floodlit compound as armed figures advance" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">Hero</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -486,7 +486,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="last-light-film">
       <summary>
-        <span class="thumb"><img src="assets/ai/last-light-frame.jpg" alt="The Last Light, a felt puppet boy in a corn field lifting a lid above a lit pumpkin" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/ai/last-light-frame-thumb.jpg" alt="The Last Light, a felt puppet boy in a corn field lifting a lid above a lit pumpkin" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">The Last Light</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -501,7 +501,7 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     </details>
     <details class="entry" id="the-wrong">
       <summary>
-        <span class="thumb"><img src="assets/ai/the-wrong-kitchen-frame.jpg" alt="The Wrong, a man standing over a running kitchen sink in a dark house" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
+        <span class="thumb"><img src="assets/ai/the-wrong-kitchen-frame-thumb.jpg" alt="The Wrong, a man standing over a running kitchen sink in a dark house" loading="lazy"><svg class="play" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="23" fill="rgba(12,12,12,.72)" stroke="#F2EFE8" stroke-width="1.5"/><polygon points="19,15 34,24 19,33" fill="#F2EFE8"/></svg></span>
         <span class="who">
           <span class="title">The Wrong</span>
           <span class="credit"><!-- ROLE: fill in --></span>
@@ -602,31 +602,31 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
     <h2 id="h-photo">Photography</h2>
     <p class="note">Live music, festivals, and portraiture. Exhibited at the San Diego County Fair. Open any frame for the full image.</p>
     <div class="strip">
-      <a class="ph" style="--ar:0.8" href="assets/photos/noir-elegance.jpg"><img src="assets/photos/noir-elegance-thumb.jpg" alt="Noir Elegance, studio portrait in a wide-brimmed hat" loading="lazy"></a>
-      <a class="ph" style="--ar:0.8" href="assets/photos/tpain-stage-01.jpg"><img src="assets/photos/tpain-stage-01-thumb.jpg" alt="T-Pain on stage at Wonderfront Festival, San Diego, 2024" loading="lazy"></a>
-      <a class="ph" style="--ar:0.8" href="assets/photos/back-to-the-fair.jpg"><img src="assets/photos/back-to-the-fair-thumb.jpg" alt="Back to the San Diego Fair, two women with a DeLorean" loading="lazy"></a>
+      <a class="ph" style="--ar:0.8" href="assets/photos/noir-elegance.jpg"><img src="assets/photos/noir-elegance-thumb.jpg" srcset="assets/photos/noir-elegance-thumb.jpg 384w, assets/photos/noir-elegance.jpg 1280w" sizes="(max-width:640px) 256px, (max-width:820px) calc((100vw - 64px) / 3), 252px" alt="Noir Elegance, studio portrait in a wide-brimmed hat" loading="lazy"></a>
+      <a class="ph" style="--ar:0.8" href="assets/photos/tpain-stage-01.jpg"><img src="assets/photos/tpain-stage-01-thumb.jpg" srcset="assets/photos/tpain-stage-01-thumb.jpg 384w, assets/photos/tpain-stage-01.jpg 960w" sizes="(max-width:640px) 256px, (max-width:820px) calc((100vw - 64px) / 3), 252px" alt="T-Pain on stage at Wonderfront Festival, San Diego, 2024" loading="lazy"></a>
+      <a class="ph" style="--ar:0.8" href="assets/photos/back-to-the-fair.jpg"><img src="assets/photos/back-to-the-fair-thumb.jpg" srcset="assets/photos/back-to-the-fair-thumb.jpg 384w, assets/photos/back-to-the-fair.jpg 1280w" sizes="(max-width:640px) 256px, (max-width:820px) calc((100vw - 64px) / 3), 252px" alt="Back to the San Diego Fair, two women with a DeLorean" loading="lazy"></a>
       <span class="brk"></span>
-      <a class="ph" style="--ar:1.6" href="assets/photos/edge-of-history.jpg"><img src="assets/photos/edge-of-history-thumb.jpg" alt="Edge of History, an island under a broken sky" loading="lazy"></a>
-      <a class="ph" style="--ar:0.8" href="assets/photos/unspoken-bond.jpg"><img src="assets/photos/unspoken-bond-thumb.jpg" alt="Unspoken Bond, a couple in a golden field" loading="lazy"></a>
-      <a class="ph" style="--ar:0.8" href="assets/photos/dj-silhouette.jpg"><img src="assets/photos/dj-silhouette-thumb.jpg" alt="A DJ set in silhouette, Wonderfront Festival, 2024" loading="lazy"></a>
+      <a class="ph" style="--ar:1.6" href="assets/photos/edge-of-history.jpg"><img src="assets/photos/edge-of-history-thumb.jpg" srcset="assets/photos/edge-of-history-thumb.jpg 480w, assets/photos/edge-of-history.jpg 1600w" sizes="(max-width:640px) 512px, (max-width:820px) calc((100vw - 64px) / 2), 378px" alt="Edge of History, an island under a broken sky" loading="lazy"></a>
+      <a class="ph" style="--ar:0.8" href="assets/photos/unspoken-bond.jpg"><img src="assets/photos/unspoken-bond-thumb.jpg" srcset="assets/photos/unspoken-bond-thumb.jpg 384w, assets/photos/unspoken-bond.jpg 1280w" sizes="(max-width:640px) 256px, (max-width:820px) calc((100vw - 64px) / 4), 189px" alt="Unspoken Bond, a couple in a golden field" loading="lazy"></a>
+      <a class="ph" style="--ar:0.8" href="assets/photos/dj-silhouette.jpg"><img src="assets/photos/dj-silhouette-thumb.jpg" srcset="assets/photos/dj-silhouette-thumb.jpg 384w, assets/photos/dj-silhouette.jpg 930w" sizes="(max-width:640px) 256px, (max-width:820px) calc((100vw - 64px) / 4), 189px" alt="A DJ set in silhouette, Wonderfront Festival, 2024" loading="lazy"></a>
     </div>
     <h3 class="subhead" id="recreations">Recreations</h3>
-    <p class="laurel">Pearl: Grand Prize, Best Costume Design, <a href="https://community.shotdeck.com/recreations/2024/grand-prize-winners/2024-best-costume-design-grand-prize-christopher-white/">ShotDeck Recreations Contest 2024</a></p>
     <p class="rec-note">Film frames rebuilt from scratch: the film's frame above, mine below.</p>
+    <p class="laurel">Pearl: Grand Prize, Best Costume Design, ShotDeck Recreations Contest 2024. <a href="https://community.shotdeck.com/recreations/2024/grand-prize-winners/2024-best-costume-design-grand-prize-christopher-white/">See the winning frame on ShotDeck</a></p>
     <figure class="rec-set">
-      <div class="recs">
-        <a class="sheet rec" style="--ar:0.8888" href="assets/photos/recreation-sinners-gunfire.jpg"><img src="assets/photos/recreation-sinners-gunfire-thumb.jpg" srcset="assets/photos/recreation-sinners-gunfire-thumb.jpg 427w, assets/photos/recreation-sinners-gunfire.jpg 1422w" sizes="(max-width:640px) calc(100vw - 48px), 300px" alt="Two frames stacked: above, a shot from Sinners; below, the same shot recreated. A man in a stained tank top fires a drum-fed submachine gun toward the camera on a dirt road." loading="lazy"></a>
-        <a class="sheet rec" style="--ar:1.3793" href="assets/photos/recreation-sinners-club.jpg"><img src="assets/photos/recreation-sinners-club-thumb.jpg" srcset="assets/photos/recreation-sinners-club-thumb.jpg 480w, assets/photos/recreation-sinners-club.jpg 1600w" sizes="(max-width:640px) calc(100vw - 48px), 460px" alt="Two frames stacked: above, a shot from Sinners; below, the same shot recreated. A man and a woman in sunglasses stand in a red-lit doorway beside a Checkerboard Lounge poster." loading="lazy"></a>
-      </div>
       <figcaption><b>Sinners</b>: two frames recreated for the ShotDeck Recreations Contest 2025</figcaption>
+      <div class="recs">
+        <a class="sheet rec" style="--ar:0.8888" href="assets/photos/recreation-sinners-gunfire.jpg"><img src="assets/photos/recreation-sinners-gunfire-thumb.jpg" srcset="assets/photos/recreation-sinners-gunfire-thumb.jpg 427w, assets/photos/recreation-sinners-gunfire.jpg 1422w" sizes="(max-width:640px) calc(100vw - 48px), 316px" alt="Two frames stacked: above, a shot from Sinners; below, the same shot recreated. A man in a stained tank top fires a drum-fed submachine gun toward the camera on a dirt road." loading="lazy"></a>
+        <a class="sheet rec" style="--ar:1.2392" href="assets/photos/recreation-sinners-club.jpg"><img src="assets/photos/recreation-sinners-club-thumb.jpg" srcset="assets/photos/recreation-sinners-club-thumb.jpg 480w, assets/photos/recreation-sinners-club.jpg 1600w" sizes="(max-width:640px) calc(100vw - 48px), 440px" alt="Two frames stacked: above, a shot from Sinners; below, the same shot recreated. A man and a woman in sunglasses stand in a red-lit doorway beside a Checkerboard Lounge poster." loading="lazy"></a>
+      </div>
     </figure>
   </section>
 
   <section id="capabilities" aria-labelledby="h-caps">
     <h2 id="h-caps">What I do</h2>
-    <p class="capline"><a href="#film">Direction</a> <span aria-hidden="true">·</span> <a href="#film">Camera</a> <span aria-hidden="true">·</span> <a href="#motion">Editing and finishing</a> <span aria-hidden="true">·</span> <a href="#photography">Photography</a> <span aria-hidden="true">·</span> <a href="#generative">Generative video pipeline</a></p>
+    <p class="capline"><a href="#film">Direction</a>&nbsp;<span aria-hidden="true">·</span> <a href="#film">Camera</a>&nbsp;<span aria-hidden="true">·</span> <a href="#motion">Editing and finishing</a>&nbsp;<span aria-hidden="true">·</span> <a href="#photography">Photography</a>&nbsp;<span aria-hidden="true">·</span> <a href="#generative">Generative video pipeline</a></p>
     <div class="caps-print">
-      <div><h3>Direction</h3><p>story, casting, blocking, and performance; six shorts delivered with full crews under a 48 hour clock.</p></div>
+      <div><h3>Direction</h3><p>story, casting, blocking, and performance.</p></div>
       <div><h3>Camera</h3><p>lighting and camera for narrative, live music, and brand work, indoors and on location.</p></div>
       <div><h3>Editing and finishing</h3><p>assembly through picture lock, sound, color, titles, delivery in horizontal and vertical formats.</p></div>
       <div><h3>Photography</h3><p>events, live performance, and portraiture, shot and retouched to exhibition standard.</p></div>
@@ -661,7 +661,8 @@ document.querySelectorAll('a.hero').forEach(a => a.addEventListener('click', e =
   v.play().catch(() => { /* Native controls remain available if playback is blocked. */ });
 }));
 document.querySelectorAll('details.entry').forEach(d => d.addEventListener('toggle', () => {
-  if (!d.open) return;
+  /* Closing a row hides its player, so it must not keep playing out of sight. */
+  if (!d.open) { d.querySelectorAll('video').forEach(v => v.pause()); return; }
   /* querySelectorAll, not querySelector: an entry can hold more than one clip. */
   d.querySelectorAll('video').forEach(v => { if (!v.poster && v.dataset.poster) v.poster = v.dataset.poster; });
 }));
@@ -675,6 +676,11 @@ function openHashTarget(){
 }
 addEventListener('hashchange', openHashTarget);
 openHashTarget();
+/* Clicking the same link twice leaves the hash unchanged, so hashchange stays silent. */
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]');
+  if (a && a.getAttribute('href') === location.hash) setTimeout(openHashTarget, 0);
+});
 document.addEventListener('play', e => {
   if (e.target.tagName !== 'VIDEO') return;
   document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause(); });
