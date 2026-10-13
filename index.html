@@ -16,7 +16,17 @@
 <meta property="og:description" content="Creative producer, filmmaker and photographer. Selected work and the process behind it.">
 <meta property="og:url" content="https://bigboyfilms.github.io/">
 <meta property="og:image" content="https://bigboyfilms.github.io/assets/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:site_name" content="Christopher White">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Christopher White, Selected Work">
+<meta name="twitter:description" content="Creative producer, filmmaker and photographer. Selected work and the process behind it.">
+<meta name="twitter:image" content="https://bigboyfilms.github.io/assets/og.jpg">
 <link rel="canonical" href="https://bigboyfilms.github.io/">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Christopher White","jobTitle":"Creative Producer, Filmmaker and Photographer","url":"https://bigboyfilms.github.io/","image":"https://bigboyfilms.github.io/assets/photos/christopher-white.jpg","email":"mailto:bigboyfilms@icloud.com","address":{"@type":"PostalAddress","addressLocality":"San Diego","addressRegion":"CA","addressCountry":"US"},"sameAs":["https://www.imdb.com/name/nm16449451/","https://instagram.com/directedbywhite","https://x.com/directedbywhite","https://youtube.com/@bigboyuniverse","https://bigboyfilms.github.io/98/"]}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -180,10 +190,20 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
 
+
+/* ---------- full frame: stay on the page when a still opens ---------- */
+#viewer{border:0;padding:0;margin:auto;background:transparent;max-width:none;max-height:none;overflow:visible}
+#viewer::backdrop{background:rgba(12,12,12,.92)}
+#viewer .stage{margin:0;display:flex;flex-direction:column;align-items:center;gap:12px}
+#viewer img{max-width:min(1100px,calc(100vw - 48px));max-height:calc(100vh - 128px);width:auto;height:auto;object-fit:contain;background:var(--dark);box-shadow:0 0 0 1px var(--rule),8px 8px 0 var(--red)}
+#viewer .cap{margin:0;max-width:min(62ch,calc(100vw - 48px));color:var(--cream);font-family:var(--mono);font-weight:500;font-size:12px;line-height:1.45;letter-spacing:.04em;text-align:center}
+#viewer .x{position:fixed;top:16px;right:16px;min-width:44px;min-height:44px;padding:0 14px;border:0;border-radius:3px;background:var(--paper);color:var(--ink);font-family:var(--mono);font-weight:500;font-size:12px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer}
+#viewer .x:hover{background:var(--red);color:#fff}
+
 /* ---------- print: a one-page attachment with the credits on it ---------- */
 @media print{
   @page{margin:18mm 18mm 22mm}
-  .section-nav,.skip{display:none}
+  .section-nav,.skip,#viewer{display:none}
   body{background:#fff;font-size:10.5pt;line-height:1.45}
   .wrap{max-width:135mm;padding:0}
   header{padding:0 0 12pt;border-bottom:1pt solid var(--red)}
@@ -242,7 +262,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
       </div>
       <img class="face" src="assets/photos/christopher-white.jpg" alt="Christopher White">
     </div>
-    <nav class="section-nav" aria-label="Selected work"><a href="#film">Film</a><a href="#photography">Photography</a><a href="#motion">Motion</a><a href="#method">Process</a><a href="#contact">Contact</a></nav>
+    <nav class="section-nav" aria-label="Selected work"><a href="#film">Film</a><a href="#motion">Motion</a><a href="#generative">Generative</a><a href="#method">Process</a><a href="#photography">Photography</a><a href="#contact">Contact</a></nav>
     <figure class="hero-wrap">
       <a class="hero" href="assets/films/coulrophobia-trailer.mp4" data-video="assets/films/coulrophobia-trailer.mp4" data-poster="assets/films/coulrophobia-still.jpg" aria-label="Play the Coulrophobia trailer, 0:54">
         <img src="assets/films/coulrophobia-still.jpg" alt="" fetchpriority="high">
@@ -254,7 +274,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 
   <main id="main" tabindex="-1">
   <div class="intro">
-    <p>My work spans short films, photography, performance coverage, and generative filmmaking experiments. I bring a collaborative approach to developing stories and guiding creative work from an idea through production and finishing.</p>
+    <p>Most of the films here were made inside 48 hours. With them: photographs from stages and fairgrounds, performance cuts, and generative pieces directed the same way as the live action.</p>
     <p>That work has won Best Trailer at the 48 Hour Film Project in Los Angeles and Best Movie Poster at Night of Shorts in Milano, with an honorable mention at Indie Short Fest and two nominations in Toronto. The photographs have hung at the San Diego County Fair.</p>
   </div>
 
@@ -273,7 +293,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Trailer <span aria-hidden="true">·</span> 0:54</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/films/coulrophobia-still.jpg" src="assets/films/coulrophobia-trailer.mp4" aria-label="Coulrophobia trailer">Your browser blocked this video. <a href="assets/films/coulrophobia-trailer.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/films/coulrophobia-still.jpg" data-poster="assets/films/coulrophobia-still.jpg" src="assets/films/coulrophobia-trailer.mp4" aria-label="Coulrophobia trailer">Your browser blocked this video. <a href="assets/films/coulrophobia-trailer.mp4">Open it directly</a>.</video>
         <ul class="fests">
           <li>48 Hour Film Project Los Angeles 2024, Best of the Fest: WON Best Trailer</li>
           <li>San Diego International Film Festival 2025, Official Selection</li>
@@ -299,7 +319,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Trailer <span aria-hidden="true">·</span> 0:48</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/films/echoes-of-vengeance-still.jpg" src="assets/films/echoes-of-vengeance-trailer.mp4" aria-label="Echoes of Vengeance trailer">Your browser blocked this video. <a href="assets/films/echoes-of-vengeance-trailer.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/films/echoes-of-vengeance-still.jpg" data-poster="assets/films/echoes-of-vengeance-still.jpg" src="assets/films/echoes-of-vengeance-trailer.mp4" aria-label="Echoes of Vengeance trailer">Your browser blocked this video. <a href="assets/films/echoes-of-vengeance-trailer.mp4">Open it directly</a>.</video>
         <ul class="fests">
           <li>Toronto International Nollywood Film Festival 2025, nominated for Best Short Film and Best Female Filmmaker</li>
           <li>San Diego Film Week 2025, Official Selection</li>
@@ -318,7 +338,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Trailer <span aria-hidden="true">·</span> 0:48</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/films/the-amount-still.jpg" src="assets/films/the-amount-trailer.mp4" aria-label="The Amount trailer">Your browser blocked this video. <a href="assets/films/the-amount-trailer.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/films/the-amount-still.jpg" data-poster="assets/films/the-amount-still.jpg" src="assets/films/the-amount-trailer.mp4" aria-label="The Amount trailer">Your browser blocked this video. <a href="assets/films/the-amount-trailer.mp4">Open it directly</a>.</video>
       </div>
     </details>
     <details class="entry" id="kai">
@@ -333,7 +353,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Trailer <span aria-hidden="true">·</span> 0:48</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/films/kai-still.jpg" src="assets/films/kai-trailer.mp4" aria-label="Kai trailer">Your browser blocked this video. <a href="assets/films/kai-trailer.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/films/kai-still.jpg" data-poster="assets/films/kai-still.jpg" src="assets/films/kai-trailer.mp4" aria-label="Kai trailer">Your browser blocked this video. <a href="assets/films/kai-trailer.mp4">Open it directly</a>.</video>
         <ul class="fests">
           <li>San Diego 48 Hour Film Project 2025, Best of 2025 Gala, Best Trailer runner up</li>
           <li>San Diego 48 Hour Film Project 2025, Official Selection</li>
@@ -375,7 +395,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">·</span> 1:28</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/edits/cinepacks-x-suigeneris-north-hills-final-still.jpg" src="assets/edits/cinepacks-x-suigeneris-north-hills-final.mp4" aria-label="CinePacks x Suigeneris brand film">Your browser blocked this video. <a href="assets/edits/cinepacks-x-suigeneris-north-hills-final.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/edits/cinepacks-x-suigeneris-north-hills-final-still.jpg" data-poster="assets/edits/cinepacks-x-suigeneris-north-hills-final-still.jpg" src="assets/edits/cinepacks-x-suigeneris-north-hills-final.mp4" aria-label="CinePacks x Suigeneris brand film">Your browser blocked this video. <a href="assets/edits/cinepacks-x-suigeneris-north-hills-final.mp4">Open it directly</a>.</video>
       </div>
     </details>
     <details class="entry" id="tpain-wonderfront">
@@ -390,7 +410,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">·</span> 2:22</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/edits/t-pain-wonderfront-2024-frame.jpg" src="assets/edits/t-pain-wonderfront-2024.mp4" aria-label="T-Pain at Wonderfront, performance edit" class="vertical">Your browser blocked this video. <a href="assets/edits/t-pain-wonderfront-2024.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/edits/t-pain-wonderfront-2024-frame.jpg" data-poster="assets/edits/t-pain-wonderfront-2024-frame.jpg" src="assets/edits/t-pain-wonderfront-2024.mp4" aria-label="T-Pain at Wonderfront, performance edit" class="vertical">Your browser blocked this video. <a href="assets/edits/t-pain-wonderfront-2024.mp4">Open it directly</a>.</video>
       </div>
     </details>
     <details class="entry" id="best-fest">
@@ -405,7 +425,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">·</span> 0:24</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/edits/wf-the-best-fest-in-the-west-2024-frame.jpg" src="assets/edits/wf-the-best-fest-in-the-west-2024.mp4" aria-label="The Best Fest in the West, festival promo" class="vertical">Your browser blocked this video. <a href="assets/edits/wf-the-best-fest-in-the-west-2024.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/edits/wf-the-best-fest-in-the-west-2024-frame.jpg" data-poster="assets/edits/wf-the-best-fest-in-the-west-2024-frame.jpg" src="assets/edits/wf-the-best-fest-in-the-west-2024.mp4" aria-label="The Best Fest in the West, festival promo" class="vertical">Your browser blocked this video. <a href="assets/edits/wf-the-best-fest-in-the-west-2024.mp4">Open it directly</a>.</video>
       </div>
     </details>
   </section>
@@ -425,7 +445,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">·</span> 0:49</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/ai/rise-above-still.jpg" src="assets/ai/rise-above.mp4" aria-label="Rise Above">Your browser blocked this video. <a href="assets/ai/rise-above.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/ai/rise-above-still.jpg" data-poster="assets/ai/rise-above-still.jpg" src="assets/ai/rise-above.mp4" aria-label="Rise Above">Your browser blocked this video. <a href="assets/ai/rise-above.mp4">Open it directly</a>.</video>
         <p>A commute across Los Angeles the way it plays in your head, from a perch on the Hollywood sign to the Culver Studios gate. Stills generated and locked first, then animated, scored, and cut.</p>
       </div>
     </details>
@@ -441,7 +461,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">·</span> 0:40</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/ai/miscast-still.jpg" src="assets/ai/miscast.mp4" aria-label="Miscast">Your browser blocked this video. <a href="assets/ai/miscast.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/ai/miscast-still.jpg" data-poster="assets/ai/miscast-still.jpg" src="assets/ai/miscast.mp4" aria-label="Miscast">Your browser blocked this video. <a href="assets/ai/miscast.mp4">Open it directly</a>.</video>
         <p>A camera-headed robot shows up to set dressed for the dramatic lead. The movie keeps changing genre around him while he refuses to break character, until the world finally becomes the one he was right for all along.</p>
       </div>
     </details>
@@ -456,7 +476,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">&middot;</span> 0:29</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/ai/hero-frame.jpg" src="assets/ai/hero.mp4" aria-label="Hero">Your browser blocked this video. <a href="assets/ai/hero.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/ai/hero-frame.jpg" data-poster="assets/ai/hero-frame.jpg" src="assets/ai/hero.mp4" aria-label="Hero">Your browser blocked this video. <a href="assets/ai/hero.mp4">Open it directly</a>.</video>
         <p>A concept, and a test of whether a character designed on paper first will hold across a shot. The figure was built as a three panel sheet, front, back and face, before any frame was generated. The sheet is in <a href="#hero-sheet">Method</a>.</p>
       </div>
     </details>
@@ -471,7 +491,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
         <span class="open">Watch <span aria-hidden="true">&middot;</span> 0:15</span>
       </summary>
       <div class="panel">
-        <video controls playsinline preload="none" data-poster="assets/ai/last-light-frame.jpg" src="assets/ai/last-light.mp4" aria-label="The Last Light">Your browser blocked this video. <a href="assets/ai/last-light.mp4">Open it directly</a>.</video>
+        <video controls playsinline preload="none" poster="assets/ai/last-light-frame.jpg" data-poster="assets/ai/last-light-frame.jpg" src="assets/ai/last-light.mp4" aria-label="The Last Light">Your browser blocked this video. <a href="assets/ai/last-light.mp4">Open it directly</a>.</video>
         <p>A boy, a corn field at dusk, and a lid that should have stayed shut. Built on a fixed motion reference every entrant received, so the choreography and the cuts were set before the world was. The plan it was built from is in <a href="#last-light">Method</a>.</p>
       </div>
     </details>
@@ -488,11 +508,11 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
       <div class="panel">
         <div class="pair">
           <figure>
-            <video controls playsinline preload="none" data-poster="assets/ai/the-wrong-kitchen-frame.jpg" src="assets/ai/the-wrong-kitchen.mp4" aria-label="The Wrong, Kitchen Encounter">Your browser blocked this video. <a href="assets/ai/the-wrong-kitchen.mp4">Open it directly</a>.</video>
+            <video controls playsinline preload="none" poster="assets/ai/the-wrong-kitchen-frame.jpg" data-poster="assets/ai/the-wrong-kitchen-frame.jpg" src="assets/ai/the-wrong-kitchen.mp4" aria-label="The Wrong, Kitchen Encounter">Your browser blocked this video. <a href="assets/ai/the-wrong-kitchen.mp4">Open it directly</a>.</video>
             <figcaption class="cap">Kitchen Encounter <span aria-hidden="true">&middot;</span> 0:15</figcaption>
           </figure>
           <figure>
-            <video controls playsinline preload="none" data-poster="assets/ai/the-wrong-corridor-frame.jpg" src="assets/ai/the-wrong-corridor.mp4" aria-label="The Wrong, Corridor Haunting">Your browser blocked this video. <a href="assets/ai/the-wrong-corridor.mp4">Open it directly</a>.</video>
+            <video controls playsinline preload="none" poster="assets/ai/the-wrong-corridor-frame.jpg" data-poster="assets/ai/the-wrong-corridor-frame.jpg" src="assets/ai/the-wrong-corridor.mp4" aria-label="The Wrong, Corridor Haunting">Your browser blocked this video. <a href="assets/ai/the-wrong-corridor.mp4">Open it directly</a>.</video>
             <figcaption class="cap">Corridor Haunting <span aria-hidden="true">&middot;</span> 0:12</figcaption>
           </figure>
         </div>
@@ -576,7 +596,7 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
 
   <section id="photography" aria-labelledby="h-photo">
     <h2 id="h-photo">Photography</h2>
-    <p class="note">Live music, festivals, and portraiture. Exhibited at the San Diego County Fair. Open any frame for the full image.</p>
+    <p class="note">Live music, festivals, and portraiture. Exhibited at the San Diego County Fair. Open any frame for the full image. The rest of the set is on <a class="door" href="98/#photos">the computer</a>.</p>
     <div class="strip">
       <a class="ph" style="--ar:0.8" href="assets/photos/noir-elegance.jpg"><img src="assets/photos/noir-elegance-thumb.jpg" alt="Noir Elegance, studio portrait in a wide-brimmed hat" loading="lazy"></a>
       <a class="ph" style="--ar:0.8" href="assets/photos/tpain-stage-01.jpg"><img src="assets/photos/tpain-stage-01-thumb.jpg" alt="T-Pain on stage at Wonderfront Festival, San Diego, 2024" loading="lazy"></a>
@@ -607,16 +627,23 @@ footer p{margin:0;font-size:13px;color:var(--muted)}
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 7l9 7 9-7"/></svg>
       bigboyfilms@icloud.com
     </a>
-    <p class="elsewhere">Credits are listed on <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>.</p>
+    <p class="elsewhere"><a href="https://instagram.com/directedbywhite">Instagram</a> and <a href="https://x.com/directedbywhite">X</a> @directedbywhite <span aria-hidden="true">·</span> <a href="https://youtube.com/@bigboyuniverse">YouTube</a> @bigboyuniverse <span aria-hidden="true">·</span> Credits on <a href="https://www.imdb.com/name/nm16449451/">IMDb</a>.</p>
   </section>
 
   </main>
   <footer>
     <div class="lockup"><svg viewBox="0 0 80 100" aria-hidden="true"><defs><mask id="bm"><path d="M 0 0 L 54 0 A 24 24 0 0 1 54 48 A 26 26 0 0 1 54 100 L 0 100 Z" fill="#fff"/><g fill="#000"><rect x="4" y="4.7" width="8" height="6" rx="1"/><rect x="4" y="14.1" width="8" height="6" rx="1"/><rect x="4" y="23.5" width="8" height="6" rx="1"/><rect x="4" y="32.9" width="8" height="6" rx="1"/><rect x="4" y="42.3" width="8" height="6" rx="1"/><rect x="4" y="51.7" width="8" height="6" rx="1"/><rect x="4" y="61.1" width="8" height="6" rx="1"/><rect x="4" y="70.5" width="8" height="6" rx="1"/><rect x="4" y="79.9" width="8" height="6" rx="1"/><rect x="4" y="89.3" width="8" height="6" rx="1"/></g></mask></defs><rect width="80" height="100" fill="#D6362B" mask="url(#bm)"/></svg><span class="wm">BIGBOY<small>Productions</small></span></div>
-    <p>Christopher White <span aria-hidden="true">·</span> San Diego, California</p>
+    <p>Christopher White <span aria-hidden="true">·</span> San Diego, California <span aria-hidden="true">·</span> <a class="door" href="98/">The&nbsp;computer</a></p>
   </footer>
 
 </div>
+<dialog id="viewer" aria-label="Full image">
+  <button class="x" type="button">Close</button>
+  <figure class="stage">
+    <img alt="">
+    <figcaption class="cap"></figcaption>
+  </figure>
+</dialog>
 <script>
 /* Three small courtesies. The page works without any of this. */
 document.querySelectorAll('a.hero').forEach(a => a.addEventListener('click', e => {
@@ -645,6 +672,31 @@ document.addEventListener('play', e => {
   if (e.target.tagName !== 'VIDEO') return;
   document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause(); });
 }, true);
+
+/* Stills open on the page. The link still works if this script never runs. */
+(function(){
+  var viewer = document.getElementById('viewer');
+  if (!viewer || !viewer.showModal) return;
+  var img = viewer.querySelector('img');
+  var cap = viewer.querySelector('.cap');
+  var closeBtn = viewer.querySelector('.x');
+  document.querySelectorAll('a.ph, a.sheet').forEach(function(a){
+    a.addEventListener('click', function(e){
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+      var pic = a.querySelector('img');
+      e.preventDefault();
+      img.alt = pic ? pic.alt : '';
+      cap.textContent = pic ? pic.alt : '';
+      img.src = a.href;
+      viewer.showModal();
+      closeBtn.focus();
+    });
+  });
+  closeBtn.addEventListener('click', function(){ viewer.close(); });
+  viewer.addEventListener('click', function(e){ if (e.target === viewer) viewer.close(); });
+  viewer.addEventListener('cancel', function(e){ e.preventDefault(); viewer.close(); });
+  viewer.addEventListener('close', function(){ img.removeAttribute('src'); });
+})();
 </script>
 </body>
 </html>
