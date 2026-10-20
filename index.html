@@ -79,17 +79,22 @@ h1{font:800 clamp(1.875rem,8.5vw,3.375rem)/1.05 var(--display);letter-spacing:-.
 .door:hover{color:var(--red)}
 
 /* ---------- hero: the gold winner, playing, before any paragraph ---------- */
-.hero-wrap{margin:32px 0 0;background:var(--dark);position:relative}
+.scroll-rule{position:fixed;top:0;left:0;width:100%;height:2px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);z-index:20;pointer-events:none}
+.hero-wrap{margin:32px 0 0;background:var(--dark);position:relative;box-shadow:0 0 0 1px var(--rule)}
 /* The trailer file is 1280x720 with the picture burned in at 1280x532 and 94 px of black above and
    below (ffmpeg cropdetect, and the still measures the same). Frame the picture, not the bars.
    A new hero file needs this ratio checked again. */
-.hero{display:block;position:relative;width:100%;aspect-ratio:1280/532;color:var(--cream)}
-.hero img{width:100%;height:100%;object-fit:cover}
-.hero .play{position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%);transition:transform .15s ease}
-.hero:hover .play{transform:translate(-50%,-50%) scale(1.06)}
+.hero{display:block;position:relative;width:100%;aspect-ratio:1280/532;color:var(--cream);overflow:hidden}
+.hero img,.hero video.hero-ambient{width:100%;height:100%;object-fit:cover}
+.hero video.hero-ambient{position:absolute;inset:0;opacity:0;transition:opacity .45s ease;pointer-events:none}
+.hero video.hero-ambient.ready{opacity:1}
+.hero .play{position:absolute;left:50%;top:50%;width:72px;height:72px;transform:translate(-50%,-50%);transition:transform .2s ease,filter .2s ease;z-index:2}
+.hero:hover .play{transform:translate(-50%,-50%) scale(1.08);filter:drop-shadow(0 6px 18px rgba(0,0,0,.45))}
+.hero .sound-cue{position:absolute;right:12px;bottom:12px;z-index:2;padding:4px 8px;background:rgba(12,12,12,.76);border:1px solid rgba(242,239,232,.28);color:var(--cream);font:500 .6875rem/1.3 var(--mono);letter-spacing:.08em;text-transform:uppercase;pointer-events:none;transition:background .18s ease,border-color .18s ease}
+.hero:hover .sound-cue{background:var(--red);border-color:var(--red);color:#fff}
 .hero-wrap > .cap{padding:12px 16px;color:var(--cream);font-size:0.875rem;line-height:1.5;margin:0;background:var(--dark)}
 .hero-wrap > .cap b{font-weight:600}
-.hero-wrap video{display:block;width:100%;aspect-ratio:1280/532;object-fit:cover;max-height:100svh;background:#000}
+.hero-wrap > video{display:block;width:100%;aspect-ratio:1280/532;object-fit:cover;max-height:100svh;background:#000}
 
 /* ---------- intro ---------- */
 .intro{padding:48px 0;border-bottom:1px solid var(--rule)}
@@ -104,13 +109,19 @@ h2{font-family:var(--display);font-weight:800;font-size:clamp(1.5rem,3.2vw,1.75r
 /* ---------- rows: one shape everywhere, the frame is the button ---------- */
 .entry{border-top:1px solid var(--rule)}
 .entry:first-of-type{border-top:0}
-.entry > summary,.entry.static{list-style:none;display:grid;grid-template-columns:128px 1fr auto;gap:16px;align-items:start;padding:16px 8px;margin-inline:-8px;border-radius:3px}   /* the hover pill bleeds 8 px; the content sits on the column edge */
+.entry > summary,.entry.static{list-style:none;display:grid;grid-template-columns:128px 1fr auto;gap:16px;align-items:start;padding:16px 8px;margin-inline:-8px;border-radius:3px;transition:background .18s ease,box-shadow .18s ease}   /* the hover pill bleeds 8 px; the content sits on the column edge */
 .entry > summary{cursor:pointer}
 .entry > summary::-webkit-details-marker{display:none}
-.entry > summary:hover{background:var(--cream)}
-.thumb{position:relative;display:block;width:128px;aspect-ratio:16/9;background:var(--dark);overflow:hidden;box-shadow:0 0 0 1px var(--rule)}
-.thumb img{width:100%;height:100%;object-fit:cover}
-.thumb .play{position:absolute;left:50%;top:50%;width:32px;height:32px;transform:translate(-50%,-50%)}
+.entry > summary:hover{background:var(--cream);box-shadow:inset 3px 0 0 var(--red)}
+.entry[open] > summary{background:var(--cream);box-shadow:inset 3px 0 0 var(--red);margin-bottom:12px}
+.thumb{position:relative;display:block;width:128px;aspect-ratio:16/9;background:var(--dark);overflow:hidden;box-shadow:0 0 0 1px var(--rule);transition:box-shadow .18s ease}
+.entry > summary:hover .thumb{box-shadow:0 0 0 1px var(--red)}
+.thumb img{width:100%;height:100%;object-fit:cover;transition:transform .28s ease}
+.entry > summary:hover .thumb img{transform:scale(1.04)}
+.thumb video.thumb-preview{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .25s ease;pointer-events:none}
+.thumb video.thumb-preview.ready{opacity:1}
+.thumb .play{position:absolute;left:50%;top:50%;width:32px;height:32px;transform:translate(-50%,-50%);transition:transform .18s ease;z-index:2}
+.entry > summary:hover .thumb .play{transform:translate(-50%,-50%) scale(1.1)}
 .who{min-width:0;display:block}
 .who > span{display:block}
 .title{font-family:var(--ui);font-weight:600;font-size:1.0625rem;line-height:1.3;letter-spacing:-.01em}
@@ -227,11 +238,11 @@ footer p{margin:0;font-size:0.8125rem;color:var(--muted)}
   .contact{padding-top:40px}
 }
 @media (max-width:360px){.mailto{font-size:.875rem;padding:16px;gap:8px}}
-@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}html{scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}html{scroll-behavior:auto!important}.scroll-rule{display:none!important}}
 
 /* ---------- print: a one-page attachment with the credits on it ---------- */
 @media print{
-  .photo-viewer{display:none!important}
+  .photo-viewer,.scroll-rule{display:none!important}
   @page{margin:18mm 18mm 22mm}
   .section-nav,.skip{display:none}
   body{background:#fff;font-size:10.5pt;line-height:1.45}
@@ -721,9 +732,77 @@ document.addEventListener('click', e => {
   if (a && a.getAttribute('href') === location.hash) setTimeout(openHashTarget, 0);
 });
 document.addEventListener('play', e => {
-  if (e.target.tagName !== 'VIDEO') return;
-  document.querySelectorAll('video').forEach(v => { if (v !== e.target) v.pause(); });
+  if (e.target.tagName !== 'VIDEO' || e.target.classList.contains('hero-ambient') || e.target.classList.contains('thumb-preview')) return;
+  document.querySelectorAll('video').forEach(v => { if (v !== e.target && !v.classList.contains('hero-ambient') && !v.classList.contains('thumb-preview')) v.pause(); });
 }, true);
+
+/* Ambient hero loop, desktop hover previews, and top scroll rule (skipped under reduced motion). */
+(function(){
+  if (typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const rule = document.createElement('div');
+  rule.className = 'scroll-rule';
+  rule.setAttribute('aria-hidden', 'true');
+  document.body.prepend(rule);
+  let ticking = false;
+  function updateScrollRule(){
+    ticking = false;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0;
+    rule.style.transform = 'scaleX(' + ratio.toFixed(4) + ')';
+  }
+  addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(updateScrollRule); } }, { passive: true });
+  addEventListener('resize', updateScrollRule, { passive: true });
+  updateScrollRule();
+
+  const hero = document.querySelector('a.hero[data-video]');
+  if (hero) {
+    const cue = document.createElement('span');
+    cue.className = 'sound-cue';
+    cue.setAttribute('aria-hidden', 'true');
+    cue.textContent = '0:54 · Click for sound';
+    hero.appendChild(cue);
+    const ambient = document.createElement('video');
+    ambient.className = 'hero-ambient';
+    ambient.muted = true; ambient.defaultMuted = true; ambient.loop = true; ambient.playsInline = true;
+    ambient.preload = 'metadata'; ambient.src = hero.dataset.video;
+    ambient.setAttribute('aria-hidden', 'true'); ambient.tabIndex = -1;
+    ambient.addEventListener('playing', () => ambient.classList.add('ready'), { once: true });
+    hero.insertBefore(ambient, hero.querySelector('.play'));
+    ambient.play().catch(() => {});
+  }
+
+  if (typeof matchMedia === 'function' && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    document.querySelectorAll('details.entry').forEach(entry => {
+      const summary = entry.querySelector('summary');
+      const thumb = summary && summary.querySelector('.thumb');
+      const panelVideo = entry.querySelector('.panel video[src]');
+      if (!summary || !thumb || !panelVideo) return;
+      let preview = null, timer = null;
+      function stopPreview(){
+        clearTimeout(timer); timer = null;
+        if (preview) { preview.classList.remove('ready'); preview.pause(); }
+      }
+      summary.addEventListener('pointerenter', () => {
+        if (entry.open) return;
+        timer = setTimeout(() => {
+          if (entry.open) return;
+          if (!preview) {
+            preview = document.createElement('video');
+            preview.className = 'thumb-preview';
+            preview.muted = true; preview.defaultMuted = true; preview.loop = true; preview.playsInline = true;
+            preview.preload = 'metadata'; preview.src = panelVideo.getAttribute('src');
+            preview.setAttribute('aria-hidden', 'true'); preview.tabIndex = -1;
+            preview.addEventListener('playing', () => preview.classList.add('ready'));
+            thumb.insertBefore(preview, thumb.querySelector('.play'));
+          }
+          preview.play().catch(() => {});
+        }, 160);
+      });
+      summary.addEventListener('pointerleave', stopPreview);
+      entry.addEventListener('toggle', () => { if (entry.open) stopPreview(); });
+    });
+  }
+})();
 
 /* Native links remain the fallback. Each visual collection steps within its own group. */
 (function(){
