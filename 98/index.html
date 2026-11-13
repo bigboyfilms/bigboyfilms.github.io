@@ -160,7 +160,7 @@ img{display:block;max-width:100%}
 /* ============================================================
    DESKTOP
    ============================================================ */
-#desktop{position:absolute;inset:0;display:none;z-index:5;overflow:hidden}
+#desktop{position:absolute;inset:0;display:none;z-index:5;overflow:hidden;overflow:clip}   /* clip: a hidden box still scrolls when focus lands on a window dragged half off the glass */
 #desktop.on{display:block}
 /* The desktop is ink lifted about ten percent toward cream, not black. The old wall measured
    darker than its own bezel, so the tube never read as the thing giving off light, and title
@@ -521,8 +521,14 @@ p{margin:0 0 10px}
   #scan{background:repeating-linear-gradient(to bottom,rgba(0,0,0,.07) 0 1px,transparent 1px 2px);mix-blend-mode:normal}
   #vig{background:radial-gradient(ellipse at center,transparent 70%,rgba(0,0,0,.26) 100%)}
   #screen.media #scan{opacity:0}
-  .player.vertical{height:min(64vh,640px)}
+  /* a phone window is always maximized, so this must outrank .win.max .player.vertical above */
+  .player.vertical,.win.max .player.vertical{height:min(64vh,640px)}
+  /* the signature runs past the dark half of the home picture on a narrow glass */
+  .home .hero .sub{color:#cfcbc2}
 }
+/* Under about 370 px only one 148 px track fits, and the lead poster's two-cell span then invents
+   an uneven second column. Two equal columns, always, on a narrow phone. */
+@media (max-width:420px){ .films{grid-template-columns:repeat(2,minmax(0,1fr))} }
 /* Landscape phone: the chin gives back height, the home tiles and photographs use the width,
    and a playing film never grows taller than its window. */
 @media (pointer:coarse) and (max-height:500px) and (orientation:landscape){
@@ -623,13 +629,15 @@ p{margin:0 0 10px}
   .thumb img{transition:none}
 }
 </style>
+<!-- Scripts off: the monitor cannot boot, so it steps aside and the short version below can be read. -->
+<noscript><style>#room{display:none}body{overflow:auto}</style></noscript>
 </head>
 <body>
 
 <noscript>
   <div style="max-width:640px;margin:40px auto;padding:0 20px;font:14px/1.5 Inter,system-ui,sans-serif;color:#F2EFE8">
     <h1 style="font-family:Archivo,sans-serif">Christopher White</h1>
-    <p>Creative producer, filmmaker and photographer, founder of BIGBOY PRODUCTIONS, San Diego. This site is an interactive desktop and needs JavaScript. Without it, here is the short version.</p>
+    <p>Filmmaker, creative producer and photographer, founder of BIGBOY PRODUCTIONS, San Diego. This site is an interactive desktop and needs JavaScript. Without it, here is the short version. The same work is on one page at <a style="color:#E8857C" href="../">Selected Work</a>.</p>
     <p><b>Films</b>: COULROPHOBIA (2024), ECHOES OF VENGEANCE (2024), THE AMOUNT (2026), SOMEWHERE BIGGER (2026), KAI (2025), EVERETT'S SHADOW (2025). <b>AI shorts</b>: RISE ABOVE, MISCAST (AI on the Lot 2026). <b>TERRORVERSE</b>: horror label, coming soon.</p>
     <p><b>Contact</b>: <a style="color:#E8857C" href="mailto:bigboyfilms@icloud.com">bigboyfilms@icloud.com</a> · Instagram and X: @directedbywhite · YouTube: @directedbywhite · <a style="color:#E8857C" href="https://www.imdb.com/name/nm16449451/">IMDb</a></p>
   </div>
@@ -829,7 +837,7 @@ const ABOUT = {
   photo: '../assets/photos/christopher-white.jpg',
   paragraphs: [
     'I am a filmmaker, creative producer and photographer, and the founder of BIGBOY PRODUCTIONS in San Diego. The house makes work that runs from psychological horror to intimate drama, all of it built around character.',
-    'Most of the films here were made inside 48 hours, through the 48 Hour Film Project in Los Angeles and San Diego and the ABGO No Sleep Film Fest. COULROPHOBIA kept going after its weekend: Best Trailer at Best of the Fest in Los Angeles, Best Movie Poster at Night of Shorts in Milano, official selections at the San Diego International Film Festival and San Diego Film Week, and a run of festivals after that.',
+    "Most of the films here were made inside 48 hours, through the 48 Hour Film Project in Los Angeles and San Diego and AGBO's No Sleep 'til Film Fest. COULROPHOBIA kept going after its weekend: Best Trailer at Best of the Fest in Los Angeles, Best Movie Poster at Night of Shorts in Milano, official selections at the San Diego International Film Festival and San Diego Film Week, and a run of festivals after that.",
     'My photographs come from stages, fairgrounds, and the hour when the light gets interesting. Some have hung at the San Diego County Fair, and my recreation of a frame from Pearl won Best Costume Design at the ShotDeck Recreations Contest 2024. On set my rule is the same as behind the camera: small crews, fast turnarounds, and every voice in the room worth hearing.'
   ]
 };
@@ -1139,7 +1147,7 @@ const WM = {
     return null;
   },
   open(key, arg){
-    if(this.wins.has(key)){ const w = this.wins.get(key); if(w.min) this.restore(key); else this.enter(key); if(key==='photo' && arg!==undefined) viewerGo(arg); return w.el; }
+    if(this.wins.has(key)){ const w = this.wins.get(key); if(w.min) this.restore(key); else this.enter(key); if(key==='photo' && arg!==undefined) viewerGo(arg); this.route(key); return w.el; }
     const spec = this.spec(key); if(!spec) return null;
     if(key==='photo') viewer.i = (arg===undefined ? viewer.i : ((arg % PHOTOS.length) + PHOTOS.length) % PHOTOS.length);
     const el = document.createElement('section');
@@ -1162,7 +1170,7 @@ const WM = {
     el.style.left = Math.max(4, Math.min(left, W - w - 4)) + 'px'; el.style.top = Math.max(4, Math.min(top, H - 60)) + 'px';
     this.fit(el);
     /* posters and frames arrive late and change the height; fit again when they land */
-    el.addEventListener('load', () => this.fit(el), true);
+    el.addEventListener('load', () => { if(!el.dataset.moved) this.fit(el); }, true);   /* a window the visitor dragged stays where it was put */
     const rec = { el, spec, min:false, max:false, key, opener, lastFocus:null };
     this.wins.set(key, rec);
     if(isMobile() || key==='photo') this.setMax(key, true);
@@ -1239,7 +1247,11 @@ const WM = {
     const w = this.wins.get(key); if(!w || w.min || this.active===key) return;
     this.wins.forEach(o => o.el.classList.add('inactive'));
     w.el.classList.remove('inactive'); w.el.style.zIndex = ++this.z; this.active = key; renderTasks(); this.glass();
+    if(w.max) this.hush(w);
   },
+  /* A maximized window covers the whole glass (every window does on a phone), so a film left
+     playing under it is sound with no picture. */
+  hush(w){ $$('video', layer).forEach(v => { if(!w.el.contains(v)) v.pause(); }); },
   enter(key){
     const w = this.wins.get(key); if(!w || w.min) return;
     this.focus(key);
@@ -1265,15 +1277,18 @@ const WM = {
     const w = this.wins.get(key); if(!w) return;
     const v = w.el.querySelector('video'); if(v) v.pause();
     w.el.remove(); this.wins.delete(key); renderTasks(); if(!silent) AU.close();
-    const t = this.top(); if(t) this.focus(t.key); else { this.active = null; renderTasks(); this.glass(); }
+    const t = this.top(); if(t){ this.focus(t.key); this.route(t.key); } else { this.active = null; renderTasks(); this.glass(); }
     if(!this.wins.size){ setHash(''); this.cascade = 0; }
     if(!silent) this.returnFocus(w);
   },
   closeAll(silent){ Array.from(this.wins.keys()).forEach(k => this.close(k, silent)); },
   minimize(key){ const w = this.wins.get(key); if(!w) return; w.el.querySelectorAll('video').forEach(v => v.pause()); w.min = true; w.el.classList.add('min'); renderTasks(); AU.click(); const t = this.top(); if(t) this.enter(t.key); else { this.active=null; renderTasks(); this.glass(); const task = Array.from(tasks.children).find(b => b.dataset.task===key); (task || startBtn).focus({preventScroll:true}); } },
   restore(key){ const w = this.wins.get(key); if(!w) return; w.min = false; w.el.classList.remove('min'); this.enter(key); },
-  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b){ b.innerHTML = on ? GLYPH.rst : GLYPH.max; b.setAttribute('aria-label', on ? 'Restore' : 'Maximize');   /* the name changes, so no aria-pressed: "Restore, pressed" contradicts itself */ } if(!on) this.fit(w.el); },
-  toggleMax(key){ const w = this.wins.get(key); if(w) this.setMax(key, !w.max); }
+  setMax(key, on){ const w = this.wins.get(key); if(!w) return; w.max = on; w.el.classList.toggle('max', on); const b = w.el.querySelector('[data-act="max"]'); if(b){ b.innerHTML = on ? GLYPH.rst : GLYPH.max; b.setAttribute('aria-label', on ? 'Restore' : 'Maximize');   /* the name changes, so no aria-pressed: "Restore, pressed" contradicts itself */ } if(!on) this.fit(w.el); else if(this.active===key) this.hush(w); },
+  toggleMax(key){ const w = this.wins.get(key); if(w) this.setMax(key, !w.max); },
+  /* The address names the window on top. Windows with no address of their own (home, My Computer,
+     the bin) clear it, so a reload does not reopen something the visitor closed. */
+  route(key){ setHash(MAIN.includes(key) ? key : /^(film|clip):/.test(key) ? key.replace(':', '/') : key==='photo' ? 'photo/'+(viewer.i+1) : ''); }
 };
 function renderTasks(){
   const existing = new Map(Array.from(tasks.children, b => [b.dataset.task, b]));
@@ -1316,7 +1331,7 @@ layer.addEventListener('focusin', e => {
     if(!drag) return;
     let x = e.clientX - drag.L.left - drag.dx, y = e.clientY - drag.L.top - drag.dy;
     x = Math.max(-(drag.w - 70), Math.min(x, drag.L.width - 70)); y = Math.max(0, Math.min(y, drag.L.height - 24));
-    drag.el.style.left = x + 'px'; drag.el.style.top = y + 'px';
+    drag.el.style.left = x + 'px'; drag.el.style.top = y + 'px'; drag.el.dataset.moved = '1';
   });
   const end = () => { drag = null; };
   layer.addEventListener('pointerup', end); layer.addEventListener('pointercancel', end);
@@ -1357,7 +1372,7 @@ function tplFilms(){
   const card = (f, i) => {
     const n = festivalCount(f);
     const tags = [f.trailer ? 'TRAILER' : '', n ? `${n} FESTIVAL${n===1?'':'S'}` : ''].filter(Boolean).join(' · ');
-    const wins = i===0 ? f.laurels.filter(isWin) : [];
+    const wins = i===0 ? (f.laurels || []).filter(isWin) : [];
     return `
     <button class="card${i===0?' lead':''}" data-open="film:${f.key}">
       <div class="${posterCls(f,'poster')}">${f.poster ? `<img src="${u(f.poster)}" alt="" loading="lazy" ${f.pos?`style="object-position:${esc(f.pos)}"`:''} ${ONERR}>` : ''}<div class="t" aria-hidden="true" style="${f.poster && f.fit!=='art' ? 'display:none' : ''}">${esc(f.title)}</div></div>
@@ -1368,8 +1383,9 @@ function tplFilms(){
 /* Wins are not selections. Same words, set apart: the award leads in display type, the festival
    follows, and red marks a win and nothing else. Wording comes from the ledger untouched. */
 function laurelBlock(f){
-  if(!f.laurels.length) return '';
-  const wins = f.laurels.filter(isWin), rest = f.laurels.filter(l => !isWin(l));
+  const all = f.laurels || [];   /* a film added without the list must still open */
+  if(!all.length) return '';
+  const wins = all.filter(isWin), rest = all.filter(l => !isWin(l));
   const win = l => { const [a, fest] = winParts(l); return `<li><b>${esc(a)}</b>${fest ? `<span>${esc(fest)}</span>` : ''}</li>`; };
   return `<div class="laurels"><div class="kicker">Festivals and awards</div>
     ${wins.length ? `<ul class="wins">${wins.map(win).join('')}</ul>` : ''}
@@ -1592,7 +1608,7 @@ document.addEventListener('click', e => {
     if(d==='restart'){ restart(); }
     if(d==='empty'){ AU.beep(); const sb = doEl.closest('.win').querySelector('.sb span:last-child'); if(sb) sb.textContent = 'SOME THINGS YOU KEEP'; }
     if(d==='sd-cancel'){ WM.close('shutdown'); }
-    if(d==='sd-ok'){ const v = ($('input[name="sd"]:checked')||{}).value; WM.close('shutdown', true); if(v==='down') shutDown(); else if(v==='restart') restart(); }
+    if(d==='sd-ok'){ const v = ($('input[name="sd"]:checked')||{}).value; WM.close('shutdown', v!=='stay'); if(v==='down') shutDown(); else if(v==='restart') restart(); }   /* staying: close out loud, so focus goes back where it came from */
     return; }
   if(t.closest('a[href^="mailto"]') || t.closest('.social a') || t.closest('.handles a') || t.closest('.links a')) AU.click();
 });
